@@ -73,62 +73,6 @@ export function ContactForm() {
       onSubmit={handleSubmit}
       className="flex flex-col gap-6 rounded-lg border border-border bg-card p-8"
     >
-      {/* --- Your Information --- */}
-      <fieldset>
-        <legend className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
-          Your Information
-        </legend>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="fullName">
-              Full Name <span className="text-destructive">*</span>
-            </Label>
-            <Input
-              id="fullName"
-              name="fullName"
-              required
-              placeholder="John Smith"
-              className="bg-background"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="email">
-              Email Address <span className="text-destructive">*</span>
-            </Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              required
-              placeholder="john@company.com"
-              className="bg-background"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="phone">
-              Contact Number <span className="text-destructive">*</span>
-            </Label>
-            <Input
-              id="phone"
-              name="phone"
-              type="tel"
-              required
-              placeholder="+1 (555) 000-0000"
-              className="bg-background"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="company">Company Name</Label>
-            <Input
-              id="company"
-              name="company"
-              placeholder="Your company name"
-              className="bg-background"
-            />
-          </div>
-        </div>
-      </fieldset>
-
       {/* --- Product Specifications --- */}
       <fieldset>
         <legend className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
@@ -210,6 +154,62 @@ export function ContactForm() {
                 ))}
               </SelectContent>
             </Select>
+          </div>
+        </div>
+      </fieldset>
+
+      {/* --- Your Information --- */}
+      <fieldset>
+        <legend className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
+          Your Information
+        </legend>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="fullName">
+              Full Name <span className="text-destructive">*</span>
+            </Label>
+            <Input
+              id="fullName"
+              name="fullName"
+              required
+              placeholder="John Smith"
+              className="bg-background"
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="email">
+              Email Address <span className="text-destructive">*</span>
+            </Label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              required
+              placeholder="john@company.com"
+              className="bg-background"
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="phone">
+              Contact Number <span className="text-destructive">*</span>
+            </Label>
+            <Input
+              id="phone"
+              name="phone"
+              type="tel"
+              required
+              placeholder="+1 (555) 000-0000"
+              className="bg-background"
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="company">Company Name</Label>
+            <Input
+              id="company"
+              name="company"
+              placeholder="Your company name"
+              className="bg-background"
+            />
           </div>
         </div>
       </fieldset>
