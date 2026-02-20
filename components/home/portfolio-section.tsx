@@ -42,22 +42,21 @@ const portfolioItems = [
 function BentoCard({
   item,
   className,
-  sizes,
 }: {
   item: (typeof portfolioItems)[number]
   className?: string
-  sizes: string
 }) {
   return (
-    <div className={`group relative overflow-hidden rounded-lg ${className ?? ""}`}>
+    <div
+      className={`group relative h-full w-full overflow-hidden rounded-lg bg-muted ${className ?? ""}`}
+    >
       <Image
         src={item.src}
         alt={item.alt}
         fill
         className="object-cover transition-transform duration-500 group-hover:scale-105"
-        sizes={sizes}
       />
-      {/* Overlay */}
+      {/* Hover overlay */}
       <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-primary/80 via-primary/20 to-transparent p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         <span className="mb-1 w-fit rounded-full bg-accent px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-accent-foreground">
           {item.tag}
@@ -66,7 +65,7 @@ function BentoCard({
           {item.caption}
         </p>
       </div>
-      {/* Permanent subtle tag in corner */}
+      {/* Permanent tag */}
       <div className="absolute right-3 top-3 rounded-full bg-primary/70 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary-foreground backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-0">
         {item.tag}
       </div>
@@ -87,45 +86,44 @@ export function PortfolioSection() {
           </p>
         </div>
 
-        {/* Bento Grid — 4 cols x 2 rows, fully filled */}
-        <div className="mt-14 grid auto-rows-[200px] gap-3 sm:auto-rows-[240px] md:grid-cols-4 md:grid-rows-2 lg:auto-rows-[280px]">
-          {/* Large hero — cols 1-2, rows 1-2 */}
-          <BentoCard
-            item={portfolioItems[0]}
-            className="md:col-span-2 md:row-span-2"
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
-          {/* Top right pair */}
-          <BentoCard
-            item={portfolioItems[1]}
-            className="md:col-span-1 md:row-span-1"
-            sizes="(max-width: 768px) 100vw, 25vw"
-          />
-          <BentoCard
-            item={portfolioItems[2]}
-            className="md:col-span-1 md:row-span-1"
-            sizes="(max-width: 768px) 100vw, 25vw"
-          />
-          {/* Bottom right pair */}
-          <BentoCard
-            item={portfolioItems[3]}
-            className="md:col-span-1 md:row-span-1"
-            sizes="(max-width: 768px) 100vw, 25vw"
-          />
-          <BentoCard
-            item={portfolioItems[4]}
-            className="md:col-span-1 md:row-span-1"
-            sizes="(max-width: 768px) 100vw, 25vw"
-          />
-        </div>
+        {/*
+          Bento layout using explicit grid-template-rows via style prop
+          Row 1 & 2: main content area
+          Row 3: full-width panoramic strip
+        */}
+        <div
+          className="mt-14 grid gap-3 md:grid-cols-4"
+          style={{
+            gridTemplateRows: "minmax(0, 1fr)",
+          }}
+        >
+          {/* --- Top section: 2x2 hero + 4 standard tiles --- */}
 
-        {/* Second row — full-width panoramic strip */}
-        <div className="mt-3 overflow-hidden rounded-lg">
-          <BentoCard
-            item={portfolioItems[5]}
-            className="h-[160px] sm:h-[200px] lg:h-[220px]"
-            sizes="100vw"
-          />
+          {/* Large hero — spans 2 cols, 2 rows */}
+          <div className="relative min-h-[220px] md:col-span-2 md:row-span-2 md:min-h-[520px] lg:min-h-[580px]">
+            <BentoCard item={portfolioItems[0]} />
+          </div>
+
+          {/* Top-right tiles */}
+          <div className="relative min-h-[220px] md:min-h-0">
+            <BentoCard item={portfolioItems[1]} />
+          </div>
+          <div className="relative min-h-[220px] md:min-h-0">
+            <BentoCard item={portfolioItems[2]} />
+          </div>
+
+          {/* Bottom-right tiles */}
+          <div className="relative min-h-[220px] md:min-h-0">
+            <BentoCard item={portfolioItems[3]} />
+          </div>
+          <div className="relative min-h-[220px] md:min-h-0">
+            <BentoCard item={portfolioItems[4]} />
+          </div>
+
+          {/* --- Full-width panoramic strip --- */}
+          <div className="relative min-h-[180px] md:col-span-4 md:min-h-[200px] lg:min-h-[240px]">
+            <BentoCard item={portfolioItems[5]} />
+          </div>
         </div>
       </div>
     </section>
