@@ -38,30 +38,30 @@ export function TestimonialsSection() {
           {testimonials.map((testimonial) => (
             <div
               key={testimonial.name}
-              className="flex flex-col gap-6 rounded-lg border border-border bg-card p-8"
+              className="flex flex-col rounded-lg border border-border bg-card px-8 pb-10 pt-10"
             >
               {/* Stars */}
               <div className="flex gap-1">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
                     key={i}
-                    className="h-4 w-4 fill-accent text-accent"
+                    className="h-5 w-5 fill-accent text-accent"
                   />
                 ))}
               </div>
 
               {/* Quote */}
-              <div className="relative flex-1">
-                <Quote className="absolute -left-1 -top-1 h-6 w-6 text-border" />
-                <p className="pl-6 text-sm leading-relaxed text-card-foreground">
+              <div className="relative mt-8 flex-1">
+                <Quote className="absolute -left-1 -top-2 h-8 w-8 text-border" />
+                <p className="pl-10 text-base leading-relaxed text-card-foreground">
                   {testimonial.quote}
                 </p>
               </div>
 
               {/* Attribution */}
-              <div className="flex items-center gap-3 border-t border-border pt-6">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                  <span className="text-xs font-bold">
+              <div className="mt-10 flex items-center gap-4 border-t border-border pt-8">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                  <span className="text-sm font-bold">
                     {testimonial.name
                       .split(" ")
                       .map((n) => n[0])
@@ -69,10 +69,10 @@ export function TestimonialsSection() {
                   </span>
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-card-foreground">
+                  <p className="font-semibold text-card-foreground">
                     {testimonial.name}
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="mt-0.5 text-sm text-muted-foreground">
                     {testimonial.role}, {testimonial.company}
                   </p>
                 </div>

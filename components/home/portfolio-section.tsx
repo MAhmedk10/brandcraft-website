@@ -87,43 +87,44 @@ export function PortfolioSection() {
           </p>
         </div>
 
-        {/* Bento Grid */}
-        <div className="mt-14 grid auto-rows-[180px] gap-3 sm:auto-rows-[220px] md:grid-cols-4 lg:auto-rows-[260px]">
-          {/* Large: spans 2 cols, 2 rows */}
+        {/* Bento Grid — 4 cols x 2 rows, fully filled */}
+        <div className="mt-14 grid auto-rows-[200px] gap-3 sm:auto-rows-[240px] md:grid-cols-4 md:grid-rows-2 lg:auto-rows-[280px]">
+          {/* Large hero — cols 1-2, rows 1-2 */}
           <BentoCard
             item={portfolioItems[0]}
             className="md:col-span-2 md:row-span-2"
             sizes="(max-width: 768px) 100vw, 50vw"
           />
-          {/* Standard */}
+          {/* Top right pair */}
           <BentoCard
             item={portfolioItems[1]}
             className="md:col-span-1 md:row-span-1"
             sizes="(max-width: 768px) 100vw, 25vw"
           />
-          {/* Standard */}
           <BentoCard
             item={portfolioItems[2]}
             className="md:col-span-1 md:row-span-1"
             sizes="(max-width: 768px) 100vw, 25vw"
           />
-          {/* Tall: spans 1 col, 2 rows */}
+          {/* Bottom right pair */}
           <BentoCard
             item={portfolioItems[3]}
-            className="md:col-span-1 md:row-span-2"
+            className="md:col-span-1 md:row-span-1"
             sizes="(max-width: 768px) 100vw, 25vw"
           />
-          {/* Standard */}
           <BentoCard
             item={portfolioItems[4]}
             className="md:col-span-1 md:row-span-1"
             sizes="(max-width: 768px) 100vw, 25vw"
           />
-          {/* Wide: spans 2 cols, 1 row */}
+        </div>
+
+        {/* Second row — full-width panoramic strip */}
+        <div className="mt-3 overflow-hidden rounded-lg">
           <BentoCard
             item={portfolioItems[5]}
-            className="md:col-span-2 md:row-span-1"
-            sizes="(max-width: 768px) 100vw, 50vw"
+            className="h-[160px] sm:h-[200px] lg:h-[220px]"
+            sizes="100vw"
           />
         </div>
       </div>
