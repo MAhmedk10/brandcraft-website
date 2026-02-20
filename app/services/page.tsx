@@ -13,6 +13,7 @@ import {
   Factory,
   Eye,
   Heart,
+  ImageIcon,
 } from "lucide-react"
 
 export const metadata: Metadata = {
@@ -50,7 +51,8 @@ const services = [
       "Quantity from small orders to large production runs",
     ],
     cta: "Request a Patch Quote",
-    image: "/images/portfolio-1.jpg",
+    // Replace with your own image, e.g. "/images/services/patches.jpg"
+    image: "",
     imageAlt: "Custom embroidered and woven patches in various designs",
   },
   {
@@ -81,7 +83,8 @@ const services = [
       "Color variations and monochrome versions",
     ],
     cta: "Start Your Logo Design",
-    image: "/images/portfolio-4.jpg",
+    // Replace with your own image, e.g. "/images/services/logos.jpg"
+    image: "",
     imageAlt: "Custom logo designs displayed on various materials",
   },
   {
@@ -112,7 +115,8 @@ const services = [
       "Color matching and design optimization",
     ],
     cta: "Get a Printing Quote",
-    image: "/images/portfolio-3.jpg",
+    // Replace with your own image, e.g. "/images/services/printing.jpg"
+    image: "",
     imageAlt: "Screen-printed apparel and merchandise with custom designs",
   },
   {
@@ -143,7 +147,8 @@ const services = [
       "Quantity from single items to large production runs",
     ],
     cta: "Request an Embroidery Quote",
-    image: "/images/portfolio-2.jpg",
+    // Replace with your own image, e.g. "/images/services/embroidery.jpg"
+    image: "",
     imageAlt: "Precision embroidered corporate wear and branded apparel",
   },
 ]
@@ -273,14 +278,21 @@ export default function ServicesPage() {
               </div>
 
               {/* Image side */}
-              <div className={`relative aspect-[4/3] overflow-hidden rounded-lg ${index % 2 !== 0 ? "lg:order-1" : ""}`}>
-                <Image
-                  src={service.image}
-                  alt={service.imageAlt}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
+              <div className={`relative aspect-[4/3] overflow-hidden rounded-lg bg-muted ${index % 2 !== 0 ? "lg:order-1" : ""}`}>
+                {service.image ? (
+                  <Image
+                    src={service.image}
+                    alt={service.imageAlt}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                ) : (
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-3 text-muted-foreground/40">
+                    <ImageIcon className="h-16 w-16" />
+                    <span className="text-sm font-medium">Image Coming Soon</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>

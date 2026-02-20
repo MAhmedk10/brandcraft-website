@@ -1,5 +1,7 @@
-import Image from "next/image"
-import { Check } from "lucide-react"
+"use client"
+
+import { useState, useRef } from "react"
+import { Check, Play, Pause } from "lucide-react"
 
 const differentiators = [
   {
@@ -30,19 +32,56 @@ const differentiators = [
 ]
 
 export function WhyChooseUs() {
+  const [isPlaying, setIsPlaying] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  function togglePlay() {
+    if (!videoRef.current) return
+    if (isPlaying) {
+      videoRef.current.pause()
+    } else {
+      videoRef.current.play()
+    }
+    setIsPlaying(!isPlaying)
+  }
+
   return (
     <section className="bg-background py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2">
-          {/* Image */}
-          <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
-            <Image
-              src="/images/hero-about.jpg"
-              alt="Professional craftsperson inspecting custom branding products in a manufacturing facility"
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
+          {/* Video */}
+          <div className="relative aspect-video overflow-hidden rounded-lg bg-primary/5">
+            {/*
+              Replace the src below with your video file path, e.g. "/videos/showcase.mp4"
+              Place your video file in the /public/videos/ folder.
+            */}
+            <video
+              ref={videoRef}
+              className="h-full w-full object-cover"
+              loop
+              muted
+              playsInline
+              poster="/images/hero-about.jpg"
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+              // src="/videos/your-video.mp4"
+            >
+              {/* <source src="/videos/your-video.mp4" type="video/mp4" /> */}
+            </video>
+            {/* Play / Pause overlay button */}
+            <button
+              onClick={togglePlay}
+              aria-label={isPlaying ? "Pause video" : "Play video"}
+              className="absolute inset-0 flex items-center justify-center bg-primary/30 transition-colors hover:bg-primary/40"
+            >
+              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lg transition-transform hover:scale-110">
+                {isPlaying ? (
+                  <Pause className="h-6 w-6" />
+                ) : (
+                  <Play className="ml-1 h-6 w-6" />
+                )}
+              </span>
+            </button>
           </div>
 
           {/* Content */}

@@ -1,4 +1,5 @@
 import { HeroSection } from "@/components/home/hero-section"
+import { QuickQuoteForm } from "@/components/home/quick-quote-form"
 import { TrustSection } from "@/components/home/trust-section"
 import { ServicesOverview } from "@/components/home/services-overview"
 import { WhyChooseUs } from "@/components/home/why-choose-us"
@@ -11,6 +12,7 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <QuickQuoteForm />
       <TrustSection />
       <ServicesOverview />
       <WhyChooseUs />
