@@ -33,19 +33,44 @@ export default function ContactPage() {
 
       <ContactInfo />
 
-      {/* Contact Form */}
+      {/* Contact Form — side-by-side layout matching homepage */}
       <section className="bg-secondary py-20 lg:py-28">
-        <div className="mx-auto max-w-3xl px-4 lg:px-8">
-          <div className="text-center">
-            <h2 className="font-serif text-3xl font-bold tracking-tight text-secondary-foreground md:text-4xl">
-              Send Us a Message
-            </h2>
-            <p className="mt-4 text-muted-foreground">
-              Fill out the form below and we{"'"}ll get back to you as soon as possible.
-            </p>
-          </div>
-          <div className="mt-10">
-            <ContactForm />
+        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+          <div className="grid items-start gap-12 lg:grid-cols-5">
+            {/* Left copy */}
+            <div className="flex flex-col gap-4 lg:col-span-2 lg:sticky lg:top-28">
+              <p className="text-sm font-semibold uppercase tracking-widest text-accent">
+                Send Us a Message
+              </p>
+              <h2 className="font-serif text-3xl font-bold tracking-tight text-secondary-foreground md:text-4xl">
+                Request a Free Quote
+              </h2>
+              <p className="text-base leading-relaxed text-muted-foreground">
+                Fill in your project details and our team will get back to you within 24 business hours with a detailed quote. No commitments, no hidden fees.
+              </p>
+              <div className="mt-2 flex flex-col gap-3 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-accent/10 text-accent text-xs font-bold">1</span>
+                  <span>Fill in your product specifications</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-accent/10 text-accent text-xs font-bold">2</span>
+                  <span>Choose your service and backing type</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-accent/10 text-accent text-xs font-bold">3</span>
+                  <span>Add your contact information</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-accent/10 text-accent text-xs font-bold">4</span>
+                  <span>Upload your design (optional)</span>
+                </div>
+              </div>
+            </div>
+            {/* Right form */}
+            <div className="lg:col-span-3">
+              <ContactForm />
+            </div>
           </div>
         </div>
       </section>
