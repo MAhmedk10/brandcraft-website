@@ -62,8 +62,30 @@ export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [productsOpen, setProductsOpen] = useState(false)
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false)
+  const [visible, setVisible] = useState(true)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const lastScrollY = useRef(0)
+
+  // Show on scroll-up, hide on scroll-down (mobile fix)
+  useEffect(() => {
+    function onScroll() {
+      const currentY = window.scrollY
+      // Always show at the very top or when mobile menu is open
+      if (currentY < 10 || mobileOpen) {
+        setVisible(true)
+      } else if (currentY > lastScrollY.current && currentY > 64) {
+        // Scrolling down & past the header height
+        setVisible(false)
+      } else if (currentY < lastScrollY.current) {
+        // Scrolling up
+        setVisible(true)
+      }
+      lastScrollY.current = currentY
+    }
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [mobileOpen])
 
   // Close desktop dropdown on outside click
   useEffect(() => {
@@ -95,7 +117,12 @@ export function SiteHeader() {
   const isProductPage = pathname.startsWith("/products")
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+    <header
+      className={cn(
+        "fixed left-0 right-0 top-0 z-50 w-full border-b border-border/60 bg-background/95 backdrop-blur transition-transform duration-300 supports-[backdrop-filter]:bg-background/80",
+        visible ? "translate-y-0" : "-translate-y-full"
+      )}
+    >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2" aria-label="BrandCraft Co. home">
