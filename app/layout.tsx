@@ -58,8 +58,6 @@ export default function RootLayout({
         className={`${dmSans.variable} ${playfairDisplay.variable} font-sans antialiased`}
       >
         <SiteHeader />
-        {/* Spacer for fixed header height (h-16 = 4rem) */}
-        <div className="h-16" aria-hidden="true" />
         <main>{children}</main>
         <SiteFooter />
         <Analytics />
