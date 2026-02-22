@@ -1,9 +1,54 @@
+"use client"
+
+import { useCallback, useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import useEmblaCarousel from "embla-carousel-react"
+import Autoplay from "embla-carousel-autoplay"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 
+const heroImages = [
+  {
+    src: "/images/hero-home.jpg",
+    alt: "Custom branded patches, embroidered items, and printed materials showcasing premium craftsmanship",
+  },
+  {
+    src: "/images/portfolio-1.jpg",
+    alt: "Custom embroidered patches in various designs and styles",
+  },
+  {
+    src: "/images/portfolio-2.jpg",
+    alt: "Corporate polo shirts with precision logo embroidery",
+  },
+  {
+    src: "/images/portfolio-3.jpg",
+    alt: "Screen-printed t-shirts and hoodies with custom brand designs",
+  },
+  {
+    src: "/images/portfolio-4.jpg",
+    alt: "PVC and woven patches in various shapes",
+  },
+]
+
 export function HeroSection() {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+    Autoplay({ delay: 4000, stopOnInteraction: false }),
+  ])
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return
+    setActiveIndex(emblaApi.selectedScrollSnap())
+  }, [emblaApi])
+
+  useEffect(() => {
+    if (!emblaApi) return
+    onSelect()
+    emblaApi.on("select", onSelect)
+    return () => { emblaApi.off("select", onSelect) }
+  }, [emblaApi, onSelect])
+
   return (
     <section className="relative overflow-hidden bg-primary text-primary-foreground">
       <div className="mx-auto max-w-7xl px-4 py-24 lg:px-8 lg:py-32">
@@ -44,16 +89,39 @@ export function HeroSection() {
             </p>
           </div>
 
-          {/* Hero image */}
+          {/* Hero auto-carousel */}
           <div className="relative aspect-[4/3] overflow-hidden rounded-lg lg:aspect-square">
-            <Image
-              src="/images/hero-home.jpg"
-              alt="Custom branded patches, embroidered items, and printed materials showcasing premium craftsmanship"
-              fill
-              className="object-cover"
-              priority
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
+            <div className="h-full w-full overflow-hidden" ref={emblaRef}>
+              <div className="flex h-full">
+                {heroImages.map((img) => (
+                  <div key={img.src} className="relative h-full min-w-0 flex-[0_0_100%]">
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      fill
+                      className="object-cover"
+                      priority
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Dots */}
+            <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
+              {heroImages.map((img, i) => (
+                <button
+                  key={img.src}
+                  aria-label={`Go to slide ${i + 1}`}
+                  onClick={() => emblaApi?.scrollTo(i)}
+                  className={`h-1.5 rounded-full transition-all ${
+                    i === activeIndex
+                      ? "w-6 bg-accent"
+                      : "w-1.5 bg-primary-foreground/40"
+                  }`}
+                />
+              ))}
+            </div>
             <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-primary-foreground/10" />
           </div>
         </div>

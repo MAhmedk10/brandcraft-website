@@ -1,10 +1,14 @@
-import { Settings2 } from "lucide-react"
+import Image from "next/image"
+import { Settings2, ImageIcon } from "lucide-react"
 
 interface ProductCustomizationProps {
   options: string[]
+  /** Optional image path for the product customization visual, e.g. "/images/products/custom-patches-options.jpg" */
+  image?: string
+  imageAlt?: string
 }
 
-export function ProductCustomization({ options }: ProductCustomizationProps) {
+export function ProductCustomization({ options, image, imageAlt }: ProductCustomizationProps) {
   return (
     <section className="bg-secondary py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -16,6 +20,23 @@ export function ProductCustomization({ options }: ProductCustomizationProps) {
             <p className="mt-4 text-lg text-muted-foreground">
               Every detail is yours to customize. We work with your specifications to deliver exactly what you envision.
             </p>
+            {/* Product image placeholder */}
+            <div className="relative mt-8 aspect-[4/3] overflow-hidden rounded-lg bg-muted">
+              {image ? (
+                <Image
+                  src={image}
+                  alt={imageAlt || "Product customization options"}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              ) : (
+                <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-muted-foreground/40">
+                  <ImageIcon className="h-12 w-12" />
+                  <span className="text-xs font-medium">Product Image Coming Soon</span>
+                </div>
+              )}
+            </div>
           </div>
           <div className="flex flex-col gap-4">
             {options.map((option) => {
