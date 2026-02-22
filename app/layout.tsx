@@ -58,7 +58,7 @@ export default function RootLayout({
         className={`${dmSans.variable} ${playfairDisplay.variable} font-sans antialiased`}
       >
         <SiteHeader />
-        <main>{children}</main>
+        <main className="pt-16">{children}</main>
         <SiteFooter />
         <Analytics />
       </body>
