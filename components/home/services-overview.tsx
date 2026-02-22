@@ -8,7 +8,7 @@ import { ArrowLeft, ArrowRight, ImageIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const products = [
-  { title: "Custom Patches", href: "/products/custom-patches", image: "", imageAlt: "Custom patches" },
+  { title: "Custom Patches", href: "/products/custom-patches", image: "/images/portfolio-1.jpg", imageAlt: "Custom patches" },
   { title: "Jacket Patches", href: "/products/custom-jacket-patches", image: "", imageAlt: "Jacket patches" },
   { title: "Embroidered Patches", href: "/products/embroidered-patches", image: "", imageAlt: "Embroidered patches" },
   { title: "Chenille Patches", href: "/products/chenille-patches", image: "", imageAlt: "Chenille patches" },
