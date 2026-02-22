@@ -5,7 +5,7 @@ import useEmblaCarousel from "embla-carousel-react"
 import { ImageIcon, ArrowLeft, ArrowRight } from "lucide-react"
 
 interface ProductGalleryProps {
-  items: { alt: string; caption: string }[]
+  items: { src:string; alt: string; caption: string }[]
 }
 
 export function ProductGallery({ items }: ProductGalleryProps) {

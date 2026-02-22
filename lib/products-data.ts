@@ -17,9 +17,13 @@ export interface ProductData {
   valueProposition: string
   keyFeatures: { title: string; description: string }[]
   customizationOptions: string[]
+  customizationImage?: string  // ← ADD THIS (optional)
+  customizationImageAlt?: string  // ← ADD THIS (optional)
   orderingSteps: { number: string; title: string; description: string }[]
   manufacturingProcess: string[]
-  galleryPlaceholders: { alt: string; caption: string }[]
+  galleryPlaceholders: { src: string;        // ← CHANGE this from just alt/caption to include src
+alt: string;
+caption: string }[]
   pricingExplanation: string
   industriesServed: string[]
   testimonials: ProductTestimonial[]
@@ -53,6 +57,8 @@ export const products: ProductData[] = [
       "Material: Twill, felt, canvas, leather base",
       "Finish: Matte, glossy, metallic thread accents",
     ],
+    customizationImage: "/images/portfolio-1.jpg",  // ← Your image
+    customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Submit Your Design", description: "Upload your artwork or describe your concept. Our team reviews every submission." },
       { number: "02", title: "Receive Your Proof", description: "We create a detailed digital mockup for your review and approval within 24 hours." },
@@ -68,10 +74,10 @@ export const products: ProductData[] = [
       "Final packaging and secure shipping",
     ],
     galleryPlaceholders: [
-      { alt: "Custom embroidered patches collection", caption: "Embroidered Patches" },
-      { alt: "Military-style custom patches", caption: "Military & Tactical" },
-      { alt: "Corporate branding patches", caption: "Corporate Branding" },
-      { alt: "Sports team custom patches", caption: "Sports Teams" },
+      { src: "", alt: "Custom embroidered patches collection", caption: "Embroidered Patches" },
+      { src: "", alt: "Military-style custom patches", caption: "Military & Tactical" },
+      { src: "", alt: "Corporate branding patches", caption: "Corporate Branding" },
+      { src: "", alt: "Sports team custom patches", caption: "Sports Teams" },
     ],
     pricingExplanation:
       "Pricing is based on patch size, stitch count, color complexity, backing type, and order quantity. Volume discounts are available for larger orders. Request a free quote to receive an itemized estimate within 24 hours.",
@@ -133,6 +139,8 @@ export const products: ProductData[] = [
       "Detail: Up to 12 colors, metallic threads, 3D puff embroidery",
       "Finish: Matte, gloss, vintage distressed",
     ],
+    customizationImage: "",  // ← Your image
+    customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Share Your Concept", description: "Send us your design, sketch, or idea. We specialize in translating concepts into jacket-ready patches." },
       { number: "02", title: "Digital Proof", description: "Receive a detailed mockup showing how your patch will look on outerwear." },
@@ -148,10 +156,10 @@ export const products: ProductData[] = [
       "Secure packaging for safe delivery",
     ],
     galleryPlaceholders: [
-      { alt: "Biker jacket back patches", caption: "Biker Club Patches" },
-      { alt: "Letterman jacket patches", caption: "Letterman Jackets" },
-      { alt: "Corporate outerwear patches", caption: "Corporate Outerwear" },
-      { alt: "Fashion jacket patches", caption: "Fashion Brands" },
+      { src: "", alt: "Biker jacket back patches", caption: "Biker Club Patches" },
+      { src: "", alt: "Letterman jacket patches", caption: "Letterman Jackets" },
+      { src: "", alt: "Corporate outerwear patches", caption: "Corporate Outerwear" },
+      { src: "", alt: "Fashion jacket patches", caption: "Fashion Brands" },
     ],
     pricingExplanation:
       "Jacket patch pricing depends on size, complexity, material type, and order quantity. Large back patches are priced per square inch of embroidery. Contact us for a detailed quote.",
@@ -203,6 +211,8 @@ export const products: ProductData[] = [
       "Size: 1 inch to 12+ inches",
       "Special effects: 3D puff, metallic thread, glow-in-the-dark",
     ],
+    customizationImage: "",  // ← Your image
+    customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Upload Artwork", description: "Send your logo or design in any common file format." },
       { number: "02", title: "Digitization & Proof", description: "Our technicians digitize your design and send a detailed mockup." },
@@ -218,10 +228,10 @@ export const products: ProductData[] = [
       "Backing application and final packaging",
     ],
     galleryPlaceholders: [
-      { alt: "Embroidered corporate patches", caption: "Corporate Branding" },
-      { alt: "Embroidered military patches", caption: "Military & Tactical" },
-      { alt: "Embroidered sports patches", caption: "Sports & Athletics" },
-      { alt: "Embroidered fashion patches", caption: "Fashion & Apparel" },
+      { src: "", alt: "Embroidered corporate patches", caption: "Corporate Branding" },
+      { src: "", alt: "Embroidered military patches", caption: "Military & Tactical" },
+      { src: "", alt: "Embroidered sports patches", caption: "Sports & Athletics" },
+      { src: "", alt: "Embroidered fashion patches", caption: "Fashion & Apparel" },
     ],
     pricingExplanation:
       "Embroidered patch pricing is based on size, embroidery coverage percentage, number of colors, and quantity. Higher coverage increases cost but delivers a more premium look. Volume discounts start at 100 units.",
@@ -273,6 +283,8 @@ export const products: ProductData[] = [
       "Combination: Chenille with embroidered detail accents",
       "Border: Chain-stitch, merrowed, or clean-cut edge",
     ],
+    customizationImage: "",  // ← Your image
+    customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Design Consultation", description: "Share your design concept. We advise on how to optimize it for chenille production." },
       { number: "02", title: "Mockup Approval", description: "Review a detailed rendering showing colors, textures, and dimensions." },
@@ -288,10 +300,10 @@ export const products: ProductData[] = [
       "Hand inspection and trimming",
     ],
     galleryPlaceholders: [
-      { alt: "Chenille letterman patches", caption: "Varsity Letters" },
-      { alt: "Chenille mascot patches", caption: "Mascot Designs" },
-      { alt: "Chenille streetwear patches", caption: "Streetwear Brands" },
-      { alt: "Chenille logo patches", caption: "Custom Logos" },
+      { src: "", alt: "Chenille letterman patches", caption: "Varsity Letters" },
+      { src: "", alt: "Chenille mascot patches", caption: "Mascot Designs" },
+      { src: "", alt: "Chenille streetwear patches", caption: "Streetwear Brands" },
+      { src: "", alt: "Chenille logo patches", caption: "Custom Logos" },
     ],
     pricingExplanation:
       "Chenille patch pricing depends on size, number of yarn colors, complexity of the design, and whether embroidered accents are included. Chenille patches are typically priced higher than standard embroidered patches due to the specialized production process.",
@@ -343,6 +355,8 @@ export const products: ProductData[] = [
       "Size: 1 inch to 6+ inches",
       "Backing: Sew-on, iron-on, adhesive",
     ],
+    customizationImage: "",  // ← Your image
+  customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Choose Your Style", description: "Select material, technique, and finish for your leather patches." },
       { number: "02", title: "Proof & Sample", description: "Receive a digital proof and optional physical sample." },
@@ -358,10 +372,10 @@ export const products: ProductData[] = [
       "Individual inspection and packaging",
     ],
     galleryPlaceholders: [
-      { alt: "Debossed leather patches", caption: "Debossed Leather" },
-      { alt: "Laser engraved leather patches", caption: "Laser Engraved" },
-      { alt: "Leather patches on denim", caption: "Denim Applications" },
-      { alt: "Leather patches on bags", caption: "Bag & Accessory" },
+      { src: "", alt: "Debossed leather patches", caption: "Debossed Leather" },
+      { src: "", alt: "Laser engraved leather patches", caption: "Laser Engraved" },
+      { src: "", alt: "Leather patches on denim", caption: "Denim Applications" },
+      { src: "", alt: "Leather patches on bags", caption: "Bag & Accessory" },
     ],
     pricingExplanation:
       "Leather patch pricing varies by material (genuine vs. synthetic), technique (debossing, laser, print), size, and quantity. Genuine leather commands a premium but delivers an unmatched quality impression.",
@@ -413,6 +427,8 @@ export const products: ProductData[] = [
       "Size: 0.75 inches to 6+ inches",
       "Backing: Iron-on, sew-on, velcro, adhesive",
     ],
+    customizationImage: "",  // ← Your image
+  customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Submit Design", description: "Provide your detailed artwork or high-resolution logo file." },
       { number: "02", title: "Weaving Proof", description: "Receive a digital proof optimized for woven production." },
@@ -428,10 +444,10 @@ export const products: ProductData[] = [
       "Quality inspection for thread consistency",
     ],
     galleryPlaceholders: [
-      { alt: "Woven corporate patches", caption: "Corporate Branding" },
-      { alt: "Woven detailed logo patches", caption: "Detailed Logos" },
-      { alt: "Small woven label patches", caption: "Label Patches" },
-      { alt: "Woven flag patches", caption: "Flag Patches" },
+      { src: "", alt: "Woven corporate patches", caption: "Corporate Branding" },
+      { src: "", alt: "Woven detailed logo patches", caption: "Detailed Logos" },
+      { src: "", alt: "Small woven label patches", caption: "Label Patches" },
+      { src: "", alt: "Woven flag patches", caption: "Flag Patches" },
     ],
     pricingExplanation:
       "Woven patch pricing is based on size, number of colors, and order quantity. Woven patches are competitively priced with embroidered patches and offer better value for detailed designs.",
@@ -483,6 +499,8 @@ export const products: ProductData[] = [
       "Detail: Photo-quality resolution up to 1200 DPI",
       "Stretch: Flexible transfer that moves with fabric",
     ],
+    customizationImage: "",  // ← Your image
+  customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Upload Artwork", description: "Send high-resolution designs in any common format." },
       { number: "02", title: "Print Preview", description: "Review a color-accurate digital preview of your transfer." },
@@ -498,10 +516,10 @@ export const products: ProductData[] = [
       "Packaging and shipping",
     ],
     galleryPlaceholders: [
-      { alt: "DTF printed t-shirts", caption: "Custom T-Shirts" },
-      { alt: "DTF full-color hoodies", caption: "Full-Color Hoodies" },
-      { alt: "DTF printed tote bags", caption: "Tote Bags" },
-      { alt: "DTF transfers on film", caption: "Transfer Sheets" },
+      { src: "", alt: "DTF printed t-shirts", caption: "Custom T-Shirts" },
+      { src: "", alt: "DTF full-color hoodies", caption: "Full-Color Hoodies" },
+      { src: "", alt: "DTF printed tote bags", caption: "Tote Bags" },
+      { src: "", alt: "DTF transfers on film", caption: "Transfer Sheets" },
     ],
     pricingExplanation:
       "DTF pricing is based on print size and quantity. There are no screen setup fees, making it ideal for small runs and multi-color designs. Volume discounts are available for larger orders.",
@@ -553,6 +571,8 @@ export const products: ProductData[] = [
       "Colors: Full color range with Pantone matching",
       "Dual backing: Iron-on with optional sew-on border",
     ],
+    customizationImage: "",  // ← Your image
+  customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Design Submission", description: "Send your artwork or work with our design team." },
       { number: "02", title: "Proof Approval", description: "Review your digital mockup with iron-on backing specified." },
@@ -568,10 +588,10 @@ export const products: ProductData[] = [
       "Secure shipping",
     ],
     galleryPlaceholders: [
-      { alt: "Iron-on embroidered patches", caption: "Embroidered Iron-On" },
-      { alt: "Iron-on patches for uniforms", caption: "Uniform Patches" },
-      { alt: "DIY iron-on patches", caption: "DIY Applications" },
-      { alt: "Iron-on patches for retail", caption: "Retail Products" },
+      { src: "", alt: "Iron-on embroidered patches", caption: "Embroidered Iron-On" },
+      { src: "", alt: "Iron-on patches for uniforms", caption: "Uniform Patches" },
+      { src: "", alt: "DIY iron-on patches", caption: "DIY Applications" },
+      { src: "", alt: "Iron-on patches for retail", caption: "Retail Products" },
     ],
     pricingExplanation:
       "Iron-on patches have a small surcharge over standard sew-on patches to cover the adhesive backing application. Pricing otherwise follows the same structure based on size, style, and quantity.",
@@ -623,6 +643,8 @@ export const products: ProductData[] = [
       "Fold: Center fold, end fold, straight cut, mitre fold",
       "Attachment: Sew-in, adhesive, string, safety pin, barb",
     ],
+    customizationImage: "",  // ← Your image
+  customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Specify Requirements", description: "Share your label type, size, material, and design needs." },
       { number: "02", title: "Design & Proof", description: "Review detailed mockups with material and finish specifications." },
@@ -638,10 +660,10 @@ export const products: ProductData[] = [
       "Quality inspection and packaging",
     ],
     galleryPlaceholders: [
-      { alt: "Woven clothing labels", caption: "Woven Labels" },
-      { alt: "Custom hang tags", caption: "Hang Tags" },
-      { alt: "Care and size labels", caption: "Care Labels" },
-      { alt: "Premium foil hang tags", caption: "Foil Stamped Tags" },
+      { src: "", alt: "Woven clothing labels", caption: "Woven Labels" },
+      { src: "", alt: "Custom hang tags", caption: "Hang Tags" },
+      { src: "", alt: "Care and size labels", caption: "Care Labels" },
+      { src: "", alt: "Premium foil hang tags", caption: "Foil Stamped Tags" },
     ],
     pricingExplanation:
       "Label and hangtag pricing varies by type, material, size, print method, and finishing options. Woven labels are priced per unit with volume discounts. Hangtags are priced per piece based on card stock weight and finishing.",
@@ -693,6 +715,8 @@ export const products: ProductData[] = [
       "Shape: Standard and custom die-cut",
       "Compliance: Military spec MIL-DTL-3394 available",
     ],
+    customizationImage: "",  // ← Your image
+  customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Specify Requirements", description: "Tell us your application, size, material, and any special features needed." },
       { number: "02", title: "Tactical Proof", description: "Receive a detailed proof with velcro backing specifications." },
@@ -708,10 +732,10 @@ export const products: ProductData[] = [
       "Packaging with optional loop panels",
     ],
     galleryPlaceholders: [
-      { alt: "Military velcro patches", caption: "Military & Tactical" },
-      { alt: "Law enforcement velcro patches", caption: "Law Enforcement" },
-      { alt: "Morale velcro patches", caption: "Morale Patches" },
-      { alt: "Corporate velcro patches", caption: "Corporate ID Patches" },
+      { src: "", alt: "Military velcro patches", caption: "Military & Tactical" },
+      { src: "", alt: "Law enforcement velcro patches", caption: "Law Enforcement" },
+      { src: "", alt: "Morale velcro patches", caption: "Morale Patches" },
+      { src: "", alt: "Corporate velcro patches", caption: "Corporate ID Patches" },
     ],
     pricingExplanation:
       "Velcro patch pricing includes the hook-side backing. Loop panels are available separately. Pricing varies by face material, size, and any special features (IR, glow). Military-spec production may carry a premium.",
@@ -763,6 +787,8 @@ export const products: ProductData[] = [
       "Shape: Any custom shape with precision molding",
       "Backing: Velcro, sew loops, pin, adhesive, magnetic",
     ],
+    customizationImage: "",  // ← Your image
+  customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Send Your Design", description: "Provide artwork or concept for PVC conversion." },
       { number: "02", title: "Mold Design Proof", description: "Review a 3D rendering showing layers, colors, and dimensions." },
@@ -778,10 +804,10 @@ export const products: ProductData[] = [
       "Backing attachment and quality inspection",
     ],
     galleryPlaceholders: [
-      { alt: "3D PVC tactical patches", caption: "3D Tactical Patches" },
-      { alt: "PVC brand patches", caption: "Brand Patches" },
-      { alt: "Glow-in-the-dark PVC patches", caption: "Glow Patches" },
-      { alt: "PVC morale patches", caption: "Morale Patches" },
+      { src: "", alt: "3D PVC tactical patches", caption: "3D Tactical Patches" },
+      { src: "", alt: "PVC brand patches", caption: "Brand Patches" },
+      { src: "", alt: "Glow-in-the-dark PVC patches", caption: "Glow Patches" },
+      { src: "", alt: "PVC morale patches", caption: "Morale Patches" },
     ],
     pricingExplanation:
       "PVC patch pricing includes a one-time mold fee (waived on reorders) plus per-unit costs based on size, number of colors/layers, and quantity. 3D patches cost more than 2D due to additional mold complexity.",
@@ -833,6 +859,8 @@ export const products: ProductData[] = [
       "Shape: Die-cut to design, kiss-cut on sheets",
       "Adhesive: Permanent, removable, or repositionable",
     ],
+    customizationImage: "",  // ← Your image
+  customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Upload Design", description: "Send your artwork and specify size, material, and finish preferences." },
       { number: "02", title: "Digital Proof", description: "Review a color-accurate proof with die-cut outline." },
@@ -848,10 +876,10 @@ export const products: ProductData[] = [
       "Packaging by count or on sheets",
     ],
     galleryPlaceholders: [
-      { alt: "Custom die-cut brand stickers", caption: "Brand Stickers" },
-      { alt: "Holographic stickers", caption: "Holographic Finish" },
-      { alt: "Laptop and product stickers", caption: "Product Stickers" },
-      { alt: "Outdoor vinyl stickers", caption: "Outdoor Vinyl" },
+      { src: "", alt: "Custom die-cut brand stickers", caption: "Brand Stickers" },
+      { src: "", alt: "Holographic stickers", caption: "Holographic Finish" },
+      { src: "", alt: "Laptop and product stickers", caption: "Product Stickers" },
+      { src: "", alt: "Outdoor vinyl stickers", caption: "Outdoor Vinyl" },
     ],
     pricingExplanation:
       "Sticker pricing is based on size, material, finish, and quantity. Vinyl stickers with laminate are priced slightly higher than paper stickers. Volume discounts are significant at 500+ units.",
@@ -903,6 +931,8 @@ export const products: ProductData[] = [
       "Shape: Standard or custom die-cut",
       "Backing: Iron-on, sew-on, velcro, adhesive",
     ],
+    customizationImage: "",  // ← Your image
+  customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Send High-Res Artwork", description: "Provide high-resolution images or designs for sublimation." },
       { number: "02", title: "Color Proof", description: "Review a color-accurate digital proof of your sublimated patch." },
@@ -918,10 +948,10 @@ export const products: ProductData[] = [
       "Color accuracy inspection",
     ],
     galleryPlaceholders: [
-      { alt: "Photo-quality sublimation patches", caption: "Photo Patches" },
-      { alt: "Full-color sublimation patches", caption: "Full-Color Designs" },
-      { alt: "Sublimation patches on uniforms", caption: "Uniform Applications" },
-      { alt: "Gradient sublimation patches", caption: "Gradient Designs" },
+      { src: "", alt: "Photo-quality sublimation patches", caption: "Photo Patches" },
+      { src: "", alt: "Full-color sublimation patches", caption: "Full-Color Designs" },
+      { src: "", alt: "Sublimation patches on uniforms", caption: "Uniform Applications" },
+      { src: "", alt: "Gradient sublimation patches", caption: "Gradient Designs" },
     ],
     pricingExplanation:
       "Sublimation patch pricing is based on size and quantity only. There are no per-color charges, making it the most cost-effective option for multi-color and photographic designs.",
@@ -973,6 +1003,8 @@ export const products: ProductData[] = [
       "Shape: Die-cut to any custom shape",
       "Adhesive: Permanent or tamper-evident",
     ],
+    customizationImage: "",  // ← Your image
+  customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Design Submission", description: "Provide your artwork with areas designated for holographic effect." },
       { number: "02", title: "Proof Review", description: "Approve a digital simulation of the holographic sticker design." },
@@ -988,10 +1020,10 @@ export const products: ProductData[] = [
       "Quality inspection for effect and adhesion",
     ],
     galleryPlaceholders: [
-      { alt: "Holographic brand stickers", caption: "Brand Stickers" },
-      { alt: "Holographic product labels", caption: "Product Labels" },
-      { alt: "Holographic special edition stickers", caption: "Special Editions" },
-      { alt: "Holographic security labels", caption: "Security Labels" },
+      { src: "", alt: "Holographic brand stickers", caption: "Brand Stickers" },
+      { src: "", alt: "Holographic product labels", caption: "Product Labels" },
+      { src: "", alt: "Holographic special edition stickers", caption: "Special Editions" },
+      { src: "", alt: "Holographic security labels", caption: "Security Labels" },
     ],
     pricingExplanation:
       "Holographic sticker pricing includes the premium holographic material base. Pricing varies by size, print complexity, and quantity. Holographic stickers are priced slightly above standard vinyl due to material costs.",
@@ -1043,6 +1075,8 @@ export const products: ProductData[] = [
       "Add-ons: Custom labels, hangtags, packaging",
       "Sizing: XS to 5XL with custom sizing available",
     ],
+    customizationImage: "",  // ← Your image
+  customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Consultation", description: "Discuss garment types, decoration methods, and branding requirements." },
       { number: "02", title: "Sampling", description: "Receive a decorated sample for fit, color, and quality approval." },
@@ -1058,10 +1092,10 @@ export const products: ProductData[] = [
       "Labeling, packaging, and shipping",
     ],
     galleryPlaceholders: [
-      { alt: "Custom printed t-shirts", caption: "Custom T-Shirts" },
-      { alt: "Embroidered polo shirts", caption: "Embroidered Polos" },
-      { alt: "Branded hoodies", caption: "Branded Hoodies" },
-      { alt: "Custom workwear", caption: "Corporate Workwear" },
+      { src: "", alt: "Custom printed t-shirts", caption: "Custom T-Shirts" },
+      { src: "", alt: "Embroidered polo shirts", caption: "Embroidered Polos" },
+      { src: "", alt: "Branded hoodies", caption: "Branded Hoodies" },
+      { src: "", alt: "Custom workwear", caption: "Corporate Workwear" },
     ],
     pricingExplanation:
       "Apparel pricing includes garment cost plus decoration charges. Pricing varies by garment brand, decoration method, number of print locations, and order quantity. Volume discounts are substantial.",
@@ -1113,6 +1147,8 @@ export const products: ProductData[] = [
       "Colors: Full custom dyeing or select from blank range",
       "Sizing: XS to 5XL with custom size runs",
     ],
+    customizationImage: "",  // ← Your image
+  customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Design & Specification", description: "Choose style, fabric, color, decoration, and details." },
       { number: "02", title: "Sample Production", description: "Physical sample produced for your approval before full production." },
@@ -1128,10 +1164,10 @@ export const products: ProductData[] = [
       "Individual packaging and shipping",
     ],
     galleryPlaceholders: [
-      { alt: "Custom embroidered hoodies", caption: "Embroidered Hoodies" },
-      { alt: "Custom tracksuit sets", caption: "Tracksuit Sets" },
-      { alt: "Streetwear hoodies", caption: "Streetwear Collection" },
-      { alt: "Team tracksuits", caption: "Team Tracksuits" },
+      { src: "", alt: "Custom embroidered hoodies", caption: "Embroidered Hoodies" },
+      { src: "", alt: "Custom tracksuit sets", caption: "Tracksuit Sets" },
+      { src: "", alt: "Streetwear hoodies", caption: "Streetwear Collection" },
+      { src: "", alt: "Team tracksuits", caption: "Team Tracksuits" },
     ],
     pricingExplanation:
       "Hoodie and tracksuit pricing depends on fabric weight, construction complexity, decoration method, and order quantity. Custom-made from scratch costs more than decorating blank garments. Contact us for detailed pricing.",
@@ -1183,6 +1219,8 @@ export const products: ProductData[] = [
       "Hardware: Snap buttons in matching or contrasting metal",
       "Details: Inside pockets, name embroidery, graduation year",
     ],
+    customizationImage: "",  // ← Your image
+  customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Design Your Jacket", description: "Select colors, materials, and customization options." },
       { number: "02", title: "Approve Sample", description: "Review a physical sample jacket with your specifications." },
@@ -1198,10 +1236,10 @@ export const products: ProductData[] = [
       "Individual quality inspection",
     ],
     galleryPlaceholders: [
-      { alt: "Classic letterman jackets", caption: "Classic Varsity" },
-      { alt: "Custom school letterman jackets", caption: "School Colors" },
-      { alt: "Letterman jacket chenille detail", caption: "Chenille Detail" },
-      { alt: "Premium letterman jacket collection", caption: "Collection" },
+      { src: "", alt: "Classic letterman jackets", caption: "Classic Varsity" },
+      { src: "", alt: "Custom school letterman jackets", caption: "School Colors" },
+      { src: "", alt: "Letterman jacket chenille detail", caption: "Chenille Detail" },
+      { src: "", alt: "Premium letterman jacket collection", caption: "Collection" },
     ],
     pricingExplanation:
       "Letterman jacket pricing depends on materials (genuine vs. faux leather), level of customization, and order quantity. Individual name customization is available. Contact us for a detailed quote based on your specifications.",
@@ -1253,6 +1291,8 @@ export const products: ProductData[] = [
       "Hardware: Custom zippers, snaps, buckles, grommets",
       "Lining: Quilted, mesh, removable thermal",
     ],
+    customizationImage: "",  // ← Your image
+  customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Specify Your Build", description: "Choose leather, style, and customization details." },
       { number: "02", title: "Sample Review", description: "Approve a sample jacket with your specifications." },
@@ -1268,10 +1308,10 @@ export const products: ProductData[] = [
       "Conditioning, inspection, and packaging",
     ],
     galleryPlaceholders: [
-      { alt: "Custom biker leather jackets", caption: "Leather Jackets" },
-      { alt: "Biker jacket with patches", caption: "Patched Jackets" },
-      { alt: "Motorcycle club jackets", caption: "Club Jackets" },
-      { alt: "Racing style biker jackets", caption: "Racing Style" },
+      { src: "", alt: "Custom biker leather jackets", caption: "Leather Jackets" },
+      { src: "", alt: "Biker jacket with patches", caption: "Patched Jackets" },
+      { src: "", alt: "Motorcycle club jackets", caption: "Club Jackets" },
+      { src: "", alt: "Racing style biker jackets", caption: "Racing Style" },
     ],
     pricingExplanation:
       "Biker jacket pricing varies significantly based on leather type, construction complexity, and level of customization. Basic decorated jackets start at a different price point than fully custom-built jackets. Request a detailed quote.",
@@ -1323,6 +1363,8 @@ export const products: ProductData[] = [
       "Revisions: Unlimited revisions until satisfaction",
       "Add-ons: Color variations, size adaptations, format conversions",
     ],
+    customizationImage: "",  // ← Your image
+  customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Submit Source Material", description: "Send your image, sketch, or concept description." },
       { number: "02", title: "Vector Conversion", description: "Our artists create precise vector artwork from your source." },
@@ -1338,10 +1380,10 @@ export const products: ProductData[] = [
       "Quality review for production readiness",
     ],
     galleryPlaceholders: [
-      { alt: "Vector logo conversion", caption: "Logo Vectorization" },
-      { alt: "Sketch to vector art", caption: "Sketch Conversion" },
-      { alt: "Complex vector illustration", caption: "Complex Illustrations" },
-      { alt: "Production-ready vector art", caption: "Production Ready" },
+      { src: "", alt: "Vector logo conversion", caption: "Logo Vectorization" },
+      { src: "", alt: "Sketch to vector art", caption: "Sketch Conversion" },
+      { src: "", alt: "Complex vector illustration", caption: "Complex Illustrations" },
+      { src: "", alt: "Production-ready vector art", caption: "Production Ready" },
     ],
     pricingExplanation:
       "Vector art pricing is based on complexity, from simple logos to detailed illustrations. All projects include unlimited revisions and delivery in multiple formats. Rush service is available.",
@@ -1393,6 +1435,8 @@ export const products: ProductData[] = [
       "Underlay: Proper underlay for fabric stability",
       "Special: 3D puff, applique, sequin, metallic thread",
     ],
+    customizationImage: "",  // ← Your image
+  customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Submit Artwork", description: "Send your logo or design in any format." },
       { number: "02", title: "Digitization", description: "Our digitizers convert your art into optimized stitch files." },
@@ -1408,10 +1452,10 @@ export const products: ProductData[] = [
       "Format conversion and delivery",
     ],
     galleryPlaceholders: [
-      { alt: "Digitized embroidery file preview", caption: "Stitch Preview" },
-      { alt: "Embroidered result from digitizing", caption: "Production Result" },
-      { alt: "Complex digitizing work", caption: "Complex Designs" },
-      { alt: "3D puff digitizing", caption: "3D Puff Embroidery" },
+      { src: "", alt: "Digitized embroidery file preview", caption: "Stitch Preview" },
+      { src: "", alt: "Embroidered result from digitizing", caption: "Production Result" },
+      { src: "", alt: "Complex digitizing work", caption: "Complex Designs" },
+      { src: "", alt: "3D puff digitizing", caption: "3D Puff Embroidery" },
     ],
     pricingExplanation:
       "Digitizing pricing is based on stitch count and complexity. Simple logos start at competitive rates, with complex designs priced accordingly. All orders include multiple format outputs and revisions.",
