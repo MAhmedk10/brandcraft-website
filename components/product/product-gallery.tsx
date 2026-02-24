@@ -1,11 +1,11 @@
 "use client"
-
 import { useCallback, useEffect, useState } from "react"
 import useEmblaCarousel from "embla-carousel-react"
+import Image from "next/image"
 import { ImageIcon, ArrowLeft, ArrowRight } from "lucide-react"
 
 interface ProductGalleryProps {
-  items: { src:string; alt: string; caption: string }[]
+  items: { src: string; alt: string; caption: string }[]
 }
 
 export function ProductGallery({ items }: ProductGalleryProps) {
@@ -16,13 +16,11 @@ export function ProductGallery({ items }: ProductGalleryProps) {
   })
   const [canPrev, setCanPrev] = useState(false)
   const [canNext, setCanNext] = useState(false)
-
   const onSelect = useCallback(() => {
     if (!emblaApi) return
     setCanPrev(emblaApi.canScrollPrev())
     setCanNext(emblaApi.canScrollNext())
   }, [emblaApi])
-
   useEffect(() => {
     if (!emblaApi) return
     onSelect()
@@ -33,7 +31,6 @@ export function ProductGallery({ items }: ProductGalleryProps) {
       emblaApi.off("reInit", onSelect)
     }
   }, [emblaApi, onSelect])
-
   return (
     <section className="bg-background py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -74,9 +71,20 @@ export function ProductGallery({ items }: ProductGalleryProps) {
                 className="min-w-0 flex-[0_0_100%] pl-4 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%]"
               >
                 <div className="group relative flex aspect-[4/3] flex-col items-center justify-center gap-3 overflow-hidden rounded-lg bg-muted text-muted-foreground/40 transition-transform duration-300 hover:scale-105">
-                  {/* Placeholder — replace with <Image> when photos are added */}
-                  <ImageIcon className="h-12 w-12" />
-                  <span className="text-xs font-medium text-center px-2">{item.caption}</span>
+                  {item.src ? (
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                  ) : (
+                    <>
+                      <ImageIcon className="h-12 w-12" />
+                      <span className="text-xs font-medium text-center px-2">{item.caption}</span>
+                    </>
+                  )}
                 </div>
               </div>
             ))}
