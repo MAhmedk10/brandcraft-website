@@ -95,7 +95,7 @@ export function SiteHeader() {
   const isProductPage = pathname.startsWith("/products")
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background backdrop-blur-none" style={{ WebkitBackfaceVisibility: "hidden" }}>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2" aria-label="BrandCraft Co. home">
@@ -212,7 +212,7 @@ export function SiteHeader() {
 
       {/* Mobile nav */}
       {mobileOpen && (
-        <div className="max-h-[80vh] overflow-y-auto border-t border-border md:hidden">
+        <div className="max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-border md:hidden">
           <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4" aria-label="Mobile navigation">
             {/* Home */}
             <Link

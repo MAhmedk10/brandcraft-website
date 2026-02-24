@@ -67,7 +67,9 @@ export default async function ProductPage({
       <ProductKeyFeatures features={product.keyFeatures} />
 
       {/* 3. Customization Options */}
-      <ProductCustomization options={product.customizationOptions} />
+      <ProductCustomization options={product.customizationOptions}
+      image={product.customizationImage}  // ← Add this
+      imageAlt={product.customizationImageAlt || `${product.title} customization options`} />
 
       {/* 4. How to Order */}
       <ProductHowToOrder steps={product.orderingSteps} ctaText={product.ctaText} />
