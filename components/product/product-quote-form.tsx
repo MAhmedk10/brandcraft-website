@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Send, Upload, CheckCircle2 } from "lucide-react"
+import { Send, Upload, CheckCircle2, Loader2 } from "lucide-react"
 
 const backingOptions = [
   "Iron-On",
@@ -30,11 +30,31 @@ interface ProductQuoteFormProps {
 
 export function ProductQuoteForm({ serviceTitle }: ProductQuoteFormProps) {
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
   const [fileName, setFileName] = useState("")
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setSubmitted(true)
+    setLoading(true)
+    setError("")
+
+    try {
+      const formData = new FormData(e.currentTarget)
+      const res = await fetch("/api/quote", { method: "POST", body: formData })
+      const data = await res.json()
+
+      if (!res.ok) {
+        setError(data.error || "Something went wrong. Please try again.")
+        return
+      }
+
+      setSubmitted(true)
+    } catch {
+      setError("Network error. Please check your connection and try again.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (submitted) {
@@ -186,13 +206,27 @@ export function ProductQuoteForm({ serviceTitle }: ProductQuoteFormProps) {
               />
             </div>
 
+            {error && (
+              <p className="mt-4 text-sm text-destructive">{error}</p>
+            )}
+
             <Button
               type="submit"
               size="lg"
+              disabled={loading}
               className="mt-8 w-full bg-accent text-accent-foreground hover:bg-accent/90 sm:w-auto"
             >
-              <Send className="mr-2 h-4 w-4" />
-              Request Free Quote
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Submitting...
+                </>
+              ) : (
+                <>
+                  <Send className="mr-2 h-4 w-4" />
+                  Request Free Quote
+                </>
+              )}
             </Button>
           </form>
         </div>
