@@ -15,6 +15,7 @@ export async function POST(request: Request) {
     const quantity = formData.get("quantity") as string | null
     const service = formData.get("service") as string | null
     const backing = formData.get("backing") as string | null
+    const message = formData.get("message") as string | null
     const file = formData.get("file") as File | null
 
     // Validate required fields
@@ -48,6 +49,7 @@ export async function POST(request: Request) {
           <tr><td style="padding:8px 12px;border:1px solid #e5e7eb;font-weight:600">Dimensions</td><td style="padding:8px 12px;border:1px solid #e5e7eb">${width || "—"}" x ${height || "—"}"</td></tr>
           <tr><td style="padding:8px 12px;border:1px solid #e5e7eb;font-weight:600">Quantity</td><td style="padding:8px 12px;border:1px solid #e5e7eb">${quantity || "—"}</td></tr>
           ${fileUrl ? `<tr><td style="padding:8px 12px;border:1px solid #e5e7eb;font-weight:600">Design File</td><td style="padding:8px 12px;border:1px solid #e5e7eb"><a href="${fileUrl}">View Uploaded File</a></td></tr>` : ""}
+          ${message ? `<tr><td style="padding:8px 12px;border:1px solid #e5e7eb;font-weight:600">Project Description</td><td style="padding:8px 12px;border:1px solid #e5e7eb">${message}</td></tr>` : ""}
         </table>
       `,
     })

@@ -63,7 +63,7 @@ export default function ContactPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="flex h-5 w-5 items-center justify-center rounded-full bg-accent/10 text-accent text-xs font-bold">4</span>
-                  <span>Upload your design (optional)</span>
+                  <span>Upload your design</span>
                 </div>
               </div>
             </div>

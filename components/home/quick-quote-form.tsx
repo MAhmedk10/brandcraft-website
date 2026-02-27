@@ -168,7 +168,9 @@ export function QuickQuoteForm() {
               </legend>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="service">Service</Label>
+                  <Label htmlFor="service">
+                    Service <span className="text-destructive">*</span>
+                  </Label>
                   <Select name="service" required>
                     <SelectTrigger id="service">
                       <SelectValue placeholder="Select a service" />
@@ -207,7 +209,9 @@ export function QuickQuoteForm() {
               </legend>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="quote-name">Full Name</Label>
+                  <Label htmlFor="quote-name">
+                    Full Name <span className="text-destructive">*</span>
+                  </Label>
                   <Input
                     id="quote-name"
                     name="name"
@@ -216,7 +220,9 @@ export function QuickQuoteForm() {
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="quote-email">Email Address</Label>
+                  <Label htmlFor="quote-email">
+                    Email Address <span className="text-destructive">*</span>
+                  </Label>
                   <Input
                     id="quote-email"
                     name="email"
@@ -226,7 +232,9 @@ export function QuickQuoteForm() {
                   />
                 </div>
                 <div className="flex flex-col gap-1.5 sm:col-span-2">
-                  <Label htmlFor="quote-phone">Contact Number</Label>
+                  <Label htmlFor="quote-phone">
+                    Contact Number <span className="text-destructive">*</span>
+                  </Label>
                   <Input
                     id="quote-phone"
                     name="phone"

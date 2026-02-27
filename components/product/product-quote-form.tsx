@@ -181,15 +181,21 @@ export function ProductQuoteForm({ serviceTitle }: ProductQuoteFormProps) {
               </legend>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="pq-name">Full Name</Label>
+                  <Label htmlFor="pq-name">
+                    Full Name <span className="text-destructive">*</span>
+                  </Label>
                   <Input id="pq-name" name="name" placeholder="John Doe" required />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="pq-email">Email Address</Label>
+                  <Label htmlFor="pq-email">
+                    Email Address <span className="text-destructive">*</span>
+                  </Label>
                   <Input id="pq-email" name="email" type="email" placeholder="john@company.com" required />
                 </div>
                 <div className="flex flex-col gap-1.5 sm:col-span-2">
-                  <Label htmlFor="pq-phone">Contact Number</Label>
+                  <Label htmlFor="pq-phone">
+                    Contact Number <span className="text-destructive">*</span>
+                  </Label>
                   <Input id="pq-phone" name="phone" type="tel" placeholder="+1 (555) 000-0000" required />
                 </div>
               </div>
