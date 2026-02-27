@@ -499,7 +499,7 @@ export const products: ProductData[] = [
       "Detail: Photo-quality resolution up to 1200 DPI",
       "Stretch: Flexible transfer that moves with fabric",
     ],
-    customizationImage: "",  // ← Your image
+    customizationImage: "/images/heat-dtf/heat-dtf-2.jpeg",  // ← Your image
   customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Upload Artwork", description: "Send high-resolution designs in any common format." },
@@ -516,10 +516,10 @@ export const products: ProductData[] = [
       "Packaging and shipping",
     ],
     galleryPlaceholders: [
-      { src: "", alt: "DTF printed t-shirts", caption: "Custom T-Shirts" },
-      { src: "", alt: "DTF full-color hoodies", caption: "Full-Color Hoodies" },
-      { src: "", alt: "DTF printed tote bags", caption: "Tote Bags" },
-      { src: "", alt: "DTF transfers on film", caption: "Transfer Sheets" },
+      { src: "/images/heat-dtf/heat-dtf-1.jpeg", alt: "DTF printed t-shirts", caption: "Custom T-Shirts" },
+      { src: "/images/heat-dtf/heat-dtf-3.jpeg", alt: "DTF full-color hoodies", caption: "Full-Color Hoodies" },
+      { src: "/images/heat-dtf/heat-dtf-5.jpeg", alt: "DTF printed tote bags", caption: "Tote Bags" },
+      { src: "/images/heat-dtf/heat-dtf-6.jpg", alt: "DTF transfers on film", caption: "Transfer Sheets" },
     ],
     pricingExplanation:
       "DTF pricing is based on print size and quantity. There are no screen setup fees, making it ideal for small runs and multi-color designs. Volume discounts are available for larger orders.",
@@ -643,7 +643,7 @@ export const products: ProductData[] = [
       "Fold: Center fold, end fold, straight cut, mitre fold",
       "Attachment: Sew-in, adhesive, string, safety pin, barb",
     ],
-    customizationImage: "",  // ← Your image
+    customizationImage: "/images/hangtags/hangtag-label-1.jpg",  // ← Your image
   customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Specify Requirements", description: "Share your label type, size, material, and design needs." },
@@ -660,10 +660,10 @@ export const products: ProductData[] = [
       "Quality inspection and packaging",
     ],
     galleryPlaceholders: [
-      { src: "", alt: "Woven clothing labels", caption: "Woven Labels" },
-      { src: "", alt: "Custom hang tags", caption: "Hang Tags" },
-      { src: "", alt: "Care and size labels", caption: "Care Labels" },
-      { src: "", alt: "Premium foil hang tags", caption: "Foil Stamped Tags" },
+      { src: "/images/hangtags/hangtag-label-2.jpg", alt: "Woven clothing labels", caption: "Woven Labels" },
+      { src: "/images/hangtags/hangtag-label-3.jpeg", alt: "Custom hang tags", caption: "Hang Tags" },
+      { src: "/images/hangtags/hangtag-label-4.jpeg", alt: "Care and size labels", caption: "Care Labels" },
+      { src: "/images/hangtags/hangtag-label-5.jpeg", alt: "Premium foil hang tags", caption: "Foil Stamped Tags" },
     ],
     pricingExplanation:
       "Label and hangtag pricing varies by type, material, size, print method, and finishing options. Woven labels are priced per unit with volume discounts. Hangtags are priced per piece based on card stock weight and finishing.",
@@ -859,7 +859,7 @@ export const products: ProductData[] = [
       "Shape: Die-cut to design, kiss-cut on sheets",
       "Adhesive: Permanent, removable, or repositionable",
     ],
-    customizationImage: "",  // ← Your image
+    customizationImage: "/images/die-cut-sticker/die-cut-sticker-5.jpg",  // ← Your image
   customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Upload Design", description: "Send your artwork and specify size, material, and finish preferences." },
@@ -876,10 +876,10 @@ export const products: ProductData[] = [
       "Packaging by count or on sheets",
     ],
     galleryPlaceholders: [
-      { src: "", alt: "Custom die-cut brand stickers", caption: "Brand Stickers" },
-      { src: "", alt: "Holographic stickers", caption: "Holographic Finish" },
-      { src: "", alt: "Laptop and product stickers", caption: "Product Stickers" },
-      { src: "", alt: "Outdoor vinyl stickers", caption: "Outdoor Vinyl" },
+      { src: "/images/die-cut-sticker/die-cut-sticker-2.jpeg", alt: "Custom die-cut brand stickers", caption: "Brand Stickers" },
+      { src: "/images/die-cut-sticker/die-cut-sticker-6.jpg", alt: "Holographic stickers", caption: "Holographic Finish" },
+      { src: "/images/die-cut-sticker/die-cut-sticker-7.jpg", alt: "Laptop and product stickers", caption: "Product Stickers" },
+      { src: "/images/die-cut-sticker/die-cut-sticker-4.jpeg", alt: "Outdoor vinyl stickers", caption: "Outdoor Vinyl" },
     ],
     pricingExplanation:
       "Sticker pricing is based on size, material, finish, and quantity. Vinyl stickers with laminate are priced slightly higher than paper stickers. Volume discounts are significant at 500+ units.",
@@ -1003,7 +1003,7 @@ export const products: ProductData[] = [
       "Shape: Die-cut to any custom shape",
       "Adhesive: Permanent or tamper-evident",
     ],
-    customizationImage: "",  // ← Your image
+    customizationImage: "/images/holographic-sticker/holographic-sticker-6.jpeg",  // ← Your image
   customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Design Submission", description: "Provide your artwork with areas designated for holographic effect." },
@@ -1020,10 +1020,10 @@ export const products: ProductData[] = [
       "Quality inspection for effect and adhesion",
     ],
     galleryPlaceholders: [
-      { src: "", alt: "Holographic brand stickers", caption: "Brand Stickers" },
-      { src: "", alt: "Holographic product labels", caption: "Product Labels" },
-      { src: "", alt: "Holographic special edition stickers", caption: "Special Editions" },
-      { src: "", alt: "Holographic security labels", caption: "Security Labels" },
+      { src: "/images/holographic-sticker/holographic-sticker-2.jpeg", alt: "Holographic brand stickers", caption: "Brand Stickers" },
+      { src: "/images/holographic-sticker/holographic-sticker-3.jpeg", alt: "Holographic product labels", caption: "Product Labels" },
+      { src: "/images/holographic-sticker/holographic-sticker-4.jpeg", alt: "Holographic special edition stickers", caption: "Special Editions" },
+      { src: "/images/holographic-sticker/holographic-sticker-1.jpeg", alt: "Holographic security labels", caption: "Security Labels" },
     ],
     pricingExplanation:
       "Holographic sticker pricing includes the premium holographic material base. Pricing varies by size, print complexity, and quantity. Holographic stickers are priced slightly above standard vinyl due to material costs.",
@@ -1075,7 +1075,7 @@ export const products: ProductData[] = [
       "Add-ons: Custom labels, hangtags, packaging",
       "Sizing: XS to 5XL with custom sizing available",
     ],
-    customizationImage: "",  // ← Your image
+    customizationImage: "/images/custom-apparel/custom-apparel-2.jpeg",  // ← Your image
   customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Consultation", description: "Discuss garment types, decoration methods, and branding requirements." },
@@ -1092,10 +1092,10 @@ export const products: ProductData[] = [
       "Labeling, packaging, and shipping",
     ],
     galleryPlaceholders: [
-      { src: "", alt: "Custom printed t-shirts", caption: "Custom T-Shirts" },
-      { src: "", alt: "Embroidered polo shirts", caption: "Embroidered Polos" },
-      { src: "", alt: "Branded hoodies", caption: "Branded Hoodies" },
-      { src: "", alt: "Custom workwear", caption: "Corporate Workwear" },
+      { src: "/images/custom-apparel/custom-apparel-1.jpeg", alt: "Custom printed t-shirts", caption: "Custom T-Shirts" },
+      { src: "/images/custom-apparel/custom-apparel-3.jpeg", alt: "Embroidered polo shirts", caption: "Embroidered Polos" },
+      { src: "/images/custom-apparel/custom-apparel-4.jpeg", alt: "Branded hoodies", caption: "Branded Hoodies" },
+      { src: "/images/custom-apparel/custom-apparel-5.jpeg", alt: "Custom workwear", caption: "Corporate Workwear" },
     ],
     pricingExplanation:
       "Apparel pricing includes garment cost plus decoration charges. Pricing varies by garment brand, decoration method, number of print locations, and order quantity. Volume discounts are substantial.",
@@ -1147,7 +1147,7 @@ export const products: ProductData[] = [
       "Colors: Full custom dyeing or select from blank range",
       "Sizing: XS to 5XL with custom size runs",
     ],
-    customizationImage: "",  // ← Your image
+    customizationImage: "/images/hoodies/hoodies-2.jpg",  // ← Your image
   customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Design & Specification", description: "Choose style, fabric, color, decoration, and details." },
@@ -1164,10 +1164,10 @@ export const products: ProductData[] = [
       "Individual packaging and shipping",
     ],
     galleryPlaceholders: [
-      { src: "", alt: "Custom embroidered hoodies", caption: "Embroidered Hoodies" },
-      { src: "", alt: "Custom tracksuit sets", caption: "Tracksuit Sets" },
-      { src: "", alt: "Streetwear hoodies", caption: "Streetwear Collection" },
-      { src: "", alt: "Team tracksuits", caption: "Team Tracksuits" },
+      { src: "/images/hoodies/hoodies-1.jpg", alt: "Custom embroidered hoodies", caption: "Embroidered Hoodies" },
+      { src: "/images/hoodies/hoodies-3.jpg", alt: "Custom tracksuit sets", caption: "Tracksuit Sets" },
+      { src: "/images/hoodies/hoodies-4.jpg", alt: "Streetwear hoodies", caption: "Streetwear Collection" },
+      { src: "/images/hoodies/hoodies-5.jpg", alt: "Team tracksuits", caption: "Team Tracksuits" },
     ],
     pricingExplanation:
       "Hoodie and tracksuit pricing depends on fabric weight, construction complexity, decoration method, and order quantity. Custom-made from scratch costs more than decorating blank garments. Contact us for detailed pricing.",
@@ -1219,7 +1219,7 @@ export const products: ProductData[] = [
       "Hardware: Snap buttons in matching or contrasting metal",
       "Details: Inside pockets, name embroidery, graduation year",
     ],
-    customizationImage: "",  // ← Your image
+    customizationImage: "/images/letterman-jackets/letterman-jacket-1.jpg",  // ← Your image
   customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Design Your Jacket", description: "Select colors, materials, and customization options." },
@@ -1236,10 +1236,10 @@ export const products: ProductData[] = [
       "Individual quality inspection",
     ],
     galleryPlaceholders: [
-      { src: "", alt: "Classic letterman jackets", caption: "Classic Varsity" },
-      { src: "", alt: "Custom school letterman jackets", caption: "School Colors" },
-      { src: "", alt: "Letterman jacket chenille detail", caption: "Chenille Detail" },
-      { src: "", alt: "Premium letterman jacket collection", caption: "Collection" },
+      { src: "/images/letterman-jackets/letterman-jacket-2.jpg", alt: "Classic letterman jackets", caption: "Classic Varsity" },
+      { src: "/images/letterman-jackets/letterman-jacket-3.jpg", alt: "Custom school letterman jackets", caption: "School Colors" },
+      { src: "/images/letterman-jackets/letterman-jacket-4.jpg", alt: "Letterman jacket chenille detail", caption: "Chenille Detail" },
+      { src: "/images/letterman-jackets/letterman-jacket-5.jpg", alt: "Premium letterman jacket collection", caption: "Collection" },
     ],
     pricingExplanation:
       "Letterman jacket pricing depends on materials (genuine vs. faux leather), level of customization, and order quantity. Individual name customization is available. Contact us for a detailed quote based on your specifications.",
@@ -1291,7 +1291,7 @@ export const products: ProductData[] = [
       "Hardware: Custom zippers, snaps, buckles, grommets",
       "Lining: Quilted, mesh, removable thermal",
     ],
-    customizationImage: "",  // ← Your image
+    customizationImage: "/images/biker-jackets/biker-jacket-4.png",  // ← Your image
   customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Specify Your Build", description: "Choose leather, style, and customization details." },
@@ -1308,10 +1308,10 @@ export const products: ProductData[] = [
       "Conditioning, inspection, and packaging",
     ],
     galleryPlaceholders: [
-      { src: "", alt: "Custom biker leather jackets", caption: "Leather Jackets" },
-      { src: "", alt: "Biker jacket with patches", caption: "Patched Jackets" },
-      { src: "", alt: "Motorcycle club jackets", caption: "Club Jackets" },
-      { src: "", alt: "Racing style biker jackets", caption: "Racing Style" },
+      { src: "/images/biker-jackets/biker-jacket-1.jpg", alt: "Custom biker leather jackets", caption: "Leather Jackets" },
+      { src: "/images/biker-jackets/biker-jacket-2.png", alt: "Biker jacket with patches", caption: "Patched Jackets" },
+      { src: "/images/biker-jackets/biker-jacket-3.png", alt: "Motorcycle club jackets", caption: "Club Jackets" },
+      { src: "/images/biker-jackets/biker-jacket-5.jpg", alt: "Racing style biker jackets", caption: "Racing Style" },
     ],
     pricingExplanation:
       "Biker jacket pricing varies significantly based on leather type, construction complexity, and level of customization. Basic decorated jackets start at a different price point than fully custom-built jackets. Request a detailed quote.",
@@ -1363,7 +1363,7 @@ export const products: ProductData[] = [
       "Revisions: Unlimited revisions until satisfaction",
       "Add-ons: Color variations, size adaptations, format conversions",
     ],
-    customizationImage: "",  // ← Your image
+    customizationImage: "/images/vector-art/vector-art-2.jpeg",  // ← Your image
   customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Submit Source Material", description: "Send your image, sketch, or concept description." },
@@ -1380,10 +1380,10 @@ export const products: ProductData[] = [
       "Quality review for production readiness",
     ],
     galleryPlaceholders: [
-      { src: "", alt: "Vector logo conversion", caption: "Logo Vectorization" },
-      { src: "", alt: "Sketch to vector art", caption: "Sketch Conversion" },
-      { src: "", alt: "Complex vector illustration", caption: "Complex Illustrations" },
-      { src: "", alt: "Production-ready vector art", caption: "Production Ready" },
+      { src: "/images/vector-art/vector-art-1.jpeg", alt: "Vector logo conversion", caption: "Logo Vectorization" },
+      { src: "/images/vector-art/vector-art-3.jpeg", alt: "Sketch to vector art", caption: "Sketch Conversion" },
+      { src: "/images/vector-art/vector-art-4.jpeg", alt: "Complex vector illustration", caption: "Complex Illustrations" },
+      { src: "/images/vector-art/vector-art-5.jpeg", alt: "Production-ready vector art", caption: "Production Ready" },
     ],
     pricingExplanation:
       "Vector art pricing is based on complexity, from simple logos to detailed illustrations. All projects include unlimited revisions and delivery in multiple formats. Rush service is available.",
@@ -1435,7 +1435,7 @@ export const products: ProductData[] = [
       "Underlay: Proper underlay for fabric stability",
       "Special: 3D puff, applique, sequin, metallic thread",
     ],
-    customizationImage: "",  // ← Your image
+    customizationImage: "/images/embroidery-digitizing/embroidery-digitizing-1.png",  // ← Your image
   customizationImageAlt: "Custom patch options showing different sizes, materials and backing types",  // ← Optional alt text
     orderingSteps: [
       { number: "01", title: "Submit Artwork", description: "Send your logo or design in any format." },
@@ -1452,10 +1452,10 @@ export const products: ProductData[] = [
       "Format conversion and delivery",
     ],
     galleryPlaceholders: [
-      { src: "", alt: "Digitized embroidery file preview", caption: "Stitch Preview" },
-      { src: "", alt: "Embroidered result from digitizing", caption: "Production Result" },
-      { src: "", alt: "Complex digitizing work", caption: "Complex Designs" },
-      { src: "", alt: "3D puff digitizing", caption: "3D Puff Embroidery" },
+      { src: "/images/embroidery-digitizing/embroidery-digitizing-2.png", alt: "Digitized embroidery file preview", caption: "Stitch Preview" },
+      { src: "/images/embroidery-digitizing/embroidery-digitizing-3.jpg", alt: "Embroidered result from digitizing", caption: "Production Result" },
+      { src: "/images/embroidery-digitizing/embroidery-digitizing-4.png", alt: "Complex digitizing work", caption: "Complex Designs" },
+      { src: "/images/embroidery-digitizing/embroidery-digitizing-5.png", alt: "3D puff digitizing", caption: "3D Puff Embroidery" },
     ],
     pricingExplanation:
       "Digitizing pricing is based on stitch count and complexity. Simple logos start at competitive rates, with complex designs priced accordingly. All orders include multiple format outputs and revisions.",
