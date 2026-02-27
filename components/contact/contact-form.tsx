@@ -14,36 +14,27 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Send, Upload, CheckCircle2, Loader2 } from "lucide-react"
-
-const serviceOptions = [
-  "Custom Patches",
-  "Logo Design",
-  "Screen Printing",
-  "Embroidery",
-  "PVC / Rubber Patches",
-  "Woven Patches",
-  "Other",
-]
-
-const backingOptions = [
-  "Iron-On",
-  "Velcro (Hook & Loop)",
-  "Sew-On",
-  "Adhesive / Sticker",
-  "Pin Back",
-  "Magnetic",
-  "No Backing",
-  "Not Sure",
-]
+import { serviceOptions, backingOptions } from "@/lib/form-constants"
 
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [fileName, setFileName] = useState("")
+  const [fileError, setFileError] = useState("")
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    
+    // Validate file upload is present
+    const formData = new FormData(e.currentTarget)
+    const file = formData.get("file") as File | null
+    if (!file || file.size === 0) {
+      setFileError("Please upload your design file")
+      return
+    }
+    setFileError("")
+    
     setLoading(true)
     setError("")
 
@@ -225,15 +216,16 @@ export function ContactForm() {
         </div>
       </fieldset>
 
-      {/* 4 — File upload */}
+      {/* 4 — File upload - REQUIRED */}
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="contact-file">
-          Upload Your Design{" "}
-          <span className="text-muted-foreground font-normal">(optional)</span>
+          Upload Your Design <span className="text-destructive">*</span>
         </Label>
         <label
           htmlFor="contact-file"
-          className="flex cursor-pointer items-center gap-3 rounded-md border border-dashed border-border bg-background px-4 py-3 text-sm text-muted-foreground transition-colors hover:border-accent hover:text-accent"
+          className={`flex cursor-pointer items-center gap-3 rounded-md border border-dashed bg-background px-4 py-3 text-sm transition-colors hover:border-accent hover:text-accent ${
+            fileError ? "border-destructive text-destructive" : "border-border text-muted-foreground"
+          }`}
         >
           <Upload className="h-4 w-4 shrink-0" />
           <span className="truncate">
@@ -246,19 +238,26 @@ export function ContactForm() {
           type="file"
           accept=".png,.jpg,.jpeg,.pdf,.ai,.eps,.svg"
           className="sr-only"
-          onChange={(e) => setFileName(e.target.files?.[0]?.name ?? "")}
+          onChange={(e) => {
+            setFileName(e.target.files?.[0]?.name ?? "")
+            setFileError("")
+          }}
         />
+        {fileError && (
+          <p className="text-sm text-destructive">{fileError}</p>
+        )}
       </div>
 
-      {/* 5 — Message */}
+      {/* 5 — Project Description - REQUIRED */}
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="contact-message">
-          Project Description / Message
+          Project Description <span className="text-destructive">*</span>
         </Label>
         <Textarea
           id="contact-message"
           name="message"
           rows={4}
+          required
           placeholder="Tell us about your project, timeline, and any specific requirements..."
           className="resize-none bg-background"
         />

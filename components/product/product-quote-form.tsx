@@ -11,18 +11,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
 import { Send, Upload, CheckCircle2, Loader2 } from "lucide-react"
-
-const backingOptions = [
-  "Iron-On",
-  "Velcro (Hook & Loop)",
-  "Sew-On",
-  "Adhesive / Sticker",
-  "Pin Back",
-  "Magnetic",
-  "No Backing",
-  "Not Sure",
-]
+import { serviceOptions, backingOptions } from "@/lib/form-constants"
 
 interface ProductQuoteFormProps {
   serviceTitle: string
@@ -33,9 +24,20 @@ export function ProductQuoteForm({ serviceTitle }: ProductQuoteFormProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [fileName, setFileName] = useState("")
+  const [fileError, setFileError] = useState("")
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    
+    // Validate file upload is present
+    const formData = new FormData(e.currentTarget)
+    const file = formData.get("file") as File | null
+    if (!file || file.size === 0) {
+      setFileError("Please upload your design file")
+      return
+    }
+    setFileError("")
+    
     setLoading(true)
     setError("")
 
@@ -143,8 +145,19 @@ export function ProductQuoteForm({ serviceTitle }: ProductQuoteFormProps) {
               </legend>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="pq-service">Service</Label>
-                  <Input id="pq-service" name="service" value={serviceTitle} readOnly className="bg-muted" />
+                  <Label htmlFor="pq-service">
+                    Service <span className="text-destructive">*</span>
+                  </Label>
+                  <Select name="service" defaultValue={serviceTitle} required>
+                    <SelectTrigger id="pq-service">
+                      <SelectValue placeholder="Select a service" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {serviceOptions.map((opt) => (
+                        <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <Label htmlFor="pq-backing">Backing Type</Label>
@@ -182,14 +195,16 @@ export function ProductQuoteForm({ serviceTitle }: ProductQuoteFormProps) {
               </div>
             </fieldset>
 
+            {/* File upload - REQUIRED */}
             <div className="mt-6 flex flex-col gap-1.5">
               <Label htmlFor="pq-file">
-                Upload Your Design{" "}
-                <span className="text-muted-foreground">(optional)</span>
+                Upload Your Design <span className="text-destructive">*</span>
               </Label>
               <label
                 htmlFor="pq-file"
-                className="flex cursor-pointer items-center gap-3 rounded-md border border-dashed border-border px-4 py-3 text-sm text-muted-foreground transition-colors hover:border-accent hover:text-accent"
+                className={`flex cursor-pointer items-center gap-3 rounded-md border border-dashed px-4 py-3 text-sm transition-colors hover:border-accent hover:text-accent ${
+                  fileError ? "border-destructive text-destructive" : "border-border text-muted-foreground"
+                }`}
               >
                 <Upload className="h-4 w-4 shrink-0" />
                 <span className="truncate">
@@ -202,7 +217,28 @@ export function ProductQuoteForm({ serviceTitle }: ProductQuoteFormProps) {
                 type="file"
                 accept=".png,.jpg,.jpeg,.pdf,.ai,.eps,.svg"
                 className="sr-only"
-                onChange={(e) => setFileName(e.target.files?.[0]?.name ?? "")}
+                onChange={(e) => {
+                  setFileName(e.target.files?.[0]?.name ?? "")
+                  setFileError("")
+                }}
+              />
+              {fileError && (
+                <p className="text-sm text-destructive">{fileError}</p>
+              )}
+            </div>
+
+            {/* Project Description - REQUIRED */}
+            <div className="mt-6 flex flex-col gap-1.5">
+              <Label htmlFor="pq-message">
+                Project Description <span className="text-destructive">*</span>
+              </Label>
+              <Textarea
+                id="pq-message"
+                name="message"
+                rows={4}
+                required
+                placeholder="Tell us about your project, timeline, and any specific requirements..."
+                className="resize-none"
               />
             </div>
 
