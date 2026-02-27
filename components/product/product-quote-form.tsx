@@ -11,18 +11,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Send, Upload, CheckCircle2 } from "lucide-react"
-
-const backingOptions = [
-  "Iron-On",
-  "Velcro (Hook & Loop)",
-  "Sew-On",
-  "Adhesive / Sticker",
-  "Pin Back",
-  "Magnetic",
-  "No Backing",
-  "Not Sure",
-]
+import { Textarea } from "@/components/ui/textarea"
+import { Send, Upload, CheckCircle2, Loader2 } from "lucide-react"
+import { serviceOptions, backingOptions } from "@/lib/form-constants"
 
 interface ProductQuoteFormProps {
   serviceTitle: string
@@ -30,11 +21,42 @@ interface ProductQuoteFormProps {
 
 export function ProductQuoteForm({ serviceTitle }: ProductQuoteFormProps) {
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
   const [fileName, setFileName] = useState("")
+  const [fileError, setFileError] = useState("")
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setSubmitted(true)
+    
+    // Validate file upload is present
+    const formData = new FormData(e.currentTarget)
+    const file = formData.get("file") as File | null
+    if (!file || file.size === 0) {
+      setFileError("Please upload your design file")
+      return
+    }
+    setFileError("")
+    
+    setLoading(true)
+    setError("")
+
+    try {
+      const formData = new FormData(e.currentTarget)
+      const res = await fetch("/api/quote", { method: "POST", body: formData })
+      const data = await res.json()
+
+      if (!res.ok) {
+        setError(data.error || "Something went wrong. Please try again.")
+        return
+      }
+
+      setSubmitted(true)
+    } catch {
+      setError("Network error. Please check your connection and try again.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (submitted) {
@@ -123,8 +145,19 @@ export function ProductQuoteForm({ serviceTitle }: ProductQuoteFormProps) {
               </legend>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="pq-service">Service</Label>
-                  <Input id="pq-service" name="service" value={serviceTitle} readOnly className="bg-muted" />
+                  <Label htmlFor="pq-service">
+                    Service <span className="text-destructive">*</span>
+                  </Label>
+                  <Select name="service" defaultValue={serviceTitle} required>
+                    <SelectTrigger id="pq-service">
+                      <SelectValue placeholder="Select a service" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {serviceOptions.map((opt) => (
+                        <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <Label htmlFor="pq-backing">Backing Type</Label>
@@ -148,28 +181,36 @@ export function ProductQuoteForm({ serviceTitle }: ProductQuoteFormProps) {
               </legend>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="pq-name">Full Name</Label>
+                  <Label htmlFor="pq-name">
+                    Full Name <span className="text-destructive">*</span>
+                  </Label>
                   <Input id="pq-name" name="name" placeholder="John Doe" required />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="pq-email">Email Address</Label>
+                  <Label htmlFor="pq-email">
+                    Email Address <span className="text-destructive">*</span>
+                  </Label>
                   <Input id="pq-email" name="email" type="email" placeholder="john@company.com" required />
                 </div>
                 <div className="flex flex-col gap-1.5 sm:col-span-2">
-                  <Label htmlFor="pq-phone">Contact Number</Label>
+                  <Label htmlFor="pq-phone">
+                    Contact Number <span className="text-destructive">*</span>
+                  </Label>
                   <Input id="pq-phone" name="phone" type="tel" placeholder="+1 (555) 000-0000" required />
                 </div>
               </div>
             </fieldset>
 
+            {/* File upload - REQUIRED */}
             <div className="mt-6 flex flex-col gap-1.5">
               <Label htmlFor="pq-file">
-                Upload Your Design{" "}
-                <span className="text-muted-foreground">(optional)</span>
+                Upload Your Design <span className="text-destructive">*</span>
               </Label>
               <label
                 htmlFor="pq-file"
-                className="flex cursor-pointer items-center gap-3 rounded-md border border-dashed border-border px-4 py-3 text-sm text-muted-foreground transition-colors hover:border-accent hover:text-accent"
+                className={`flex cursor-pointer items-center gap-3 rounded-md border border-dashed px-4 py-3 text-sm transition-colors hover:border-accent hover:text-accent ${
+                  fileError ? "border-destructive text-destructive" : "border-border text-muted-foreground"
+                }`}
               >
                 <Upload className="h-4 w-4 shrink-0" />
                 <span className="truncate">
@@ -182,17 +223,52 @@ export function ProductQuoteForm({ serviceTitle }: ProductQuoteFormProps) {
                 type="file"
                 accept=".png,.jpg,.jpeg,.pdf,.ai,.eps,.svg"
                 className="sr-only"
-                onChange={(e) => setFileName(e.target.files?.[0]?.name ?? "")}
+                onChange={(e) => {
+                  setFileName(e.target.files?.[0]?.name ?? "")
+                  setFileError("")
+                }}
+              />
+              {fileError && (
+                <p className="text-sm text-destructive">{fileError}</p>
+              )}
+            </div>
+
+            {/* Project Description - REQUIRED */}
+            <div className="mt-6 flex flex-col gap-1.5">
+              <Label htmlFor="pq-message">
+                Project Description <span className="text-destructive">*</span>
+              </Label>
+              <Textarea
+                id="pq-message"
+                name="message"
+                rows={4}
+                required
+                placeholder="Tell us about your project, timeline, and any specific requirements..."
+                className="resize-none"
               />
             </div>
+
+            {error && (
+              <p className="mt-4 text-sm text-destructive">{error}</p>
+            )}
 
             <Button
               type="submit"
               size="lg"
+              disabled={loading}
               className="mt-8 w-full bg-accent text-accent-foreground hover:bg-accent/90 sm:w-auto"
             >
-              <Send className="mr-2 h-4 w-4" />
-              Request Free Quote
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Submitting...
+                </>
+              ) : (
+                <>
+                  <Send className="mr-2 h-4 w-4" />
+                  Request Free Quote
+                </>
+              )}
             </Button>
           </form>
         </div>

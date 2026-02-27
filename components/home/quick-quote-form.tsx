@@ -11,37 +11,48 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Send, Upload, CheckCircle2 } from "lucide-react"
-
-const serviceOptions = [
-  "Custom Patches",
-  "Logo Design",
-  "Screen Printing",
-  "Embroidery",
-  "PVC / Rubber Patches",
-  "Woven Patches",
-  "Other",
-]
-
-const backingOptions = [
-  "Iron-On",
-  "Velcro (Hook & Loop)",
-  "Sew-On",
-  "Adhesive / Sticker",
-  "Pin Back",
-  "Magnetic",
-  "No Backing",
-  "Not Sure",
-]
+import { Textarea } from "@/components/ui/textarea"
+import { Send, Upload, CheckCircle2, Loader2 } from "lucide-react"
+import { serviceOptions, backingOptions } from "@/lib/form-constants"
 
 export function QuickQuoteForm() {
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
   const [fileName, setFileName] = useState("")
+  const [fileError, setFileError] = useState("")
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    // TODO: Wire up to your backend / email service
-    setSubmitted(true)
+    
+    // Validate file upload is present
+    const formData = new FormData(e.currentTarget)
+    const file = formData.get("file") as File | null
+    if (!file || file.size === 0) {
+      setFileError("Please upload your design file")
+      return
+    }
+    setFileError("")
+    
+    setLoading(true)
+    setError("")
+
+    try {
+      const formData = new FormData(e.currentTarget)
+      const res = await fetch("/api/quote", { method: "POST", body: formData })
+      const data = await res.json()
+
+      if (!res.ok) {
+        setError(data.error || "Something went wrong. Please try again.")
+        return
+      }
+
+      setSubmitted(true)
+    } catch {
+      setError("Network error. Please check your connection and try again.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (submitted) {
@@ -157,7 +168,9 @@ export function QuickQuoteForm() {
               </legend>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="service">Service</Label>
+                  <Label htmlFor="service">
+                    Service <span className="text-destructive">*</span>
+                  </Label>
                   <Select name="service" required>
                     <SelectTrigger id="service">
                       <SelectValue placeholder="Select a service" />
@@ -196,7 +209,9 @@ export function QuickQuoteForm() {
               </legend>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="quote-name">Full Name</Label>
+                  <Label htmlFor="quote-name">
+                    Full Name <span className="text-destructive">*</span>
+                  </Label>
                   <Input
                     id="quote-name"
                     name="name"
@@ -205,7 +220,9 @@ export function QuickQuoteForm() {
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="quote-email">Email Address</Label>
+                  <Label htmlFor="quote-email">
+                    Email Address <span className="text-destructive">*</span>
+                  </Label>
                   <Input
                     id="quote-email"
                     name="email"
@@ -215,7 +232,9 @@ export function QuickQuoteForm() {
                   />
                 </div>
                 <div className="flex flex-col gap-1.5 sm:col-span-2">
-                  <Label htmlFor="quote-phone">Contact Number</Label>
+                  <Label htmlFor="quote-phone">
+                    Contact Number <span className="text-destructive">*</span>
+                  </Label>
                   <Input
                     id="quote-phone"
                     name="phone"
@@ -227,15 +246,16 @@ export function QuickQuoteForm() {
               </div>
             </fieldset>
 
-            {/* File upload */}
+            {/* File upload - REQUIRED */}
             <div className="mt-6 flex flex-col gap-1.5">
               <Label htmlFor="quote-file">
-                Upload Your Design{" "}
-                <span className="text-muted-foreground">(optional)</span>
+                Upload Your Design <span className="text-destructive">*</span>
               </Label>
               <label
                 htmlFor="quote-file"
-                className="flex cursor-pointer items-center gap-3 rounded-md border border-dashed border-border px-4 py-3 text-sm text-muted-foreground transition-colors hover:border-accent hover:text-accent"
+                className={`flex cursor-pointer items-center gap-3 rounded-md border border-dashed px-4 py-3 text-sm transition-colors hover:border-accent hover:text-accent ${
+                  fileError ? "border-destructive text-destructive" : "border-border text-muted-foreground"
+                }`}
               >
                 <Upload className="h-4 w-4 shrink-0" />
                 <span className="truncate">
@@ -248,19 +268,52 @@ export function QuickQuoteForm() {
                 type="file"
                 accept=".png,.jpg,.jpeg,.pdf,.ai,.eps,.svg"
                 className="sr-only"
-                onChange={(e) =>
+                onChange={(e) => {
                   setFileName(e.target.files?.[0]?.name ?? "")
-                }
+                  setFileError("")
+                }}
+              />
+              {fileError && (
+                <p className="text-sm text-destructive">{fileError}</p>
+              )}
+            </div>
+
+            {/* Project Description - REQUIRED */}
+            <div className="mt-6 flex flex-col gap-1.5">
+              <Label htmlFor="quote-message">
+                Project Description <span className="text-destructive">*</span>
+              </Label>
+              <Textarea
+                id="quote-message"
+                name="message"
+                rows={4}
+                required
+                placeholder="Tell us about your project, timeline, and any specific requirements..."
+                className="resize-none"
               />
             </div>
+
+            {error && (
+              <p className="mt-4 text-sm text-destructive">{error}</p>
+            )}
 
             <Button
               type="submit"
               size="lg"
+              disabled={loading}
               className="mt-8 w-full bg-accent text-accent-foreground hover:bg-accent/90 sm:w-auto"
             >
-              <Send className="mr-2 h-4 w-4" />
-              Request Free Quote
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Submitting...
+                </>
+              ) : (
+                <>
+                  <Send className="mr-2 h-4 w-4" />
+                  Request Free Quote
+                </>
+              )}
             </Button>
           </form>
         </div>
