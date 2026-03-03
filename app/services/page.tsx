@@ -8,6 +8,7 @@ import { ServicesFaq } from "@/components/services/services-faq"
 import { TrustSection } from "@/components/home/trust-section"
 import { ProcessSection } from "@/components/home/process-section"
 import { TestimonialsSection } from "@/components/home/testimonials-section"
+import { CtaSection } from "@/components/home/cta-section"
 
 export const metadata: Metadata = {
   title: "Services - Custom Patches, Stickers, Apparel & Design",
@@ -257,6 +258,9 @@ export default function ServicesPage() {
 
       {/* FAQ Section */}
       <ServicesFaq />
+
+      {/* Final CTA */}
+      <CtaSection />
     </>
   )
 }
