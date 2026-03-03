@@ -5,7 +5,6 @@ import { ArrowRight, Layers, Sticker, Shirt, PenTool } from "lucide-react"
 // Note: Icon components are used in the nav section below, iconName strings are passed to ServiceCategorySection
 import { ServiceCategorySection } from "@/components/services/service-category-section"
 import { ServicesFaq } from "@/components/services/services-faq"
-import { QuickQuoteForm } from "@/components/home/quick-quote-form"
 import { TrustSection } from "@/components/home/trust-section"
 import { ProcessSection } from "@/components/home/process-section"
 import { TestimonialsSection } from "@/components/home/testimonials-section"
@@ -180,7 +179,7 @@ export default function ServicesPage() {
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-                  <Link href="#quote">
+                  <Link href="/contact">
                     Get a Free Quote
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
@@ -252,11 +251,6 @@ export default function ServicesPage() {
 
       {/* Process Section */}
       <ProcessSection />
-
-      {/* Quick Quote Form */}
-      <div id="quote">
-        <QuickQuoteForm />
-      </div>
 
       {/* Testimonials */}
       <TestimonialsSection />

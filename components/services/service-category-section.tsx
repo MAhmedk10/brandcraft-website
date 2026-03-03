@@ -207,7 +207,7 @@ export function ServiceCategorySection({
               {products.map((product) => (
                 <div
                   key={product.name}
-                  className="min-w-0 flex-[0_0_80%] pl-4 sm:flex-[0_0_45%] lg:flex-[0_0_30%] xl:flex-[0_0_20%]"
+                  className="min-w-0 flex-[0_0_85%] pl-4 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%]"
                 >
                   <Link href={product.href} className="group block">
                     <div className="overflow-hidden rounded-lg border border-border bg-card transition-all hover:border-accent hover:shadow-lg">
@@ -218,7 +218,7 @@ export function ServiceCategorySection({
                             alt={product.imageAlt}
                             fill
                             className="object-cover transition-transform duration-500 group-hover:scale-105"
-                            sizes="(max-width: 640px) 80vw, (max-width: 1024px) 45vw, 20vw"
+                            sizes="(max-width: 640px) 85vw, (max-width: 1024px) 50vw, 33vw"
                           />
                         ) : (
                           <div className="flex h-full w-full items-center justify-center text-muted-foreground/40">
