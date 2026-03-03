@@ -5,9 +5,18 @@ import Link from "next/link"
 import Image from "next/image"
 import useEmblaCarousel from "embla-carousel-react"
 import Autoplay from "embla-carousel-autoplay"
-import { ArrowLeft, ArrowRight, Check, ImageIcon } from "lucide-react"
+import { ArrowLeft, ArrowRight, Check, ImageIcon, Layers, Sticker, Shirt, PenTool } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import type { LucideIcon } from "lucide-react"
+
+// Icon mapping for server-to-client serialization
+const iconMap = {
+  Layers,
+  Sticker,
+  Shirt,
+  PenTool,
+} as const
+
+type IconName = keyof typeof iconMap
 
 interface Product {
   name: string
@@ -19,7 +28,7 @@ interface Product {
 
 interface ServiceCategorySectionProps {
   id: string
-  icon: LucideIcon
+  iconName: IconName
   title: string
   description: string
   benefits: string[]
@@ -31,7 +40,7 @@ interface ServiceCategorySectionProps {
 
 export function ServiceCategorySection({
   id,
-  icon: Icon,
+  iconName,
   title,
   description,
   benefits,
@@ -40,6 +49,7 @@ export function ServiceCategorySection({
   galleryImages,
   reversed = false,
 }: ServiceCategorySectionProps) {
+  const Icon = iconMap[iconName]
   // Gallery carousel with autoplay
   const [galleryRef, galleryApi] = useEmblaCarousel(
     { loop: true, align: "start" },

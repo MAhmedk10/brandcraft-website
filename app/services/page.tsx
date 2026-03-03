@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Layers, Sticker, Shirt, PenTool } from "lucide-react"
+// Note: Icon components are used in the nav section below, iconName strings are passed to ServiceCategorySection
 import { ServiceCategorySection } from "@/components/services/service-category-section"
 import { ServicesFaq } from "@/components/services/services-faq"
 import { QuickQuoteForm } from "@/components/home/quick-quote-form"
@@ -25,7 +26,7 @@ const stats = [
 // Category 1: Custom Patches
 const patchesCategory = {
   id: "patches",
-  icon: Layers,
+  iconName: "Layers" as const,
   title: "Custom Patches",
   description: "Premium patches in multiple materials and finishes for uniforms, merchandise, and branding.",
   benefits: [
@@ -65,7 +66,7 @@ const patchesCategory = {
 // Category 2: Stickers & Labels
 const stickersCategory = {
   id: "stickers",
-  icon: Sticker,
+  iconName: "Sticker" as const,
   title: "Stickers & Labels",
   description: "High-quality custom stickers and professional labels for products and promotions.",
   benefits: [
@@ -97,7 +98,7 @@ const stickersCategory = {
 // Category 3: Custom Apparel
 const apparelCategory = {
   id: "apparel",
-  icon: Shirt,
+  iconName: "Shirt" as const,
   title: "Custom Apparel",
   description: "Premium custom clothing from casual wear to specialty jackets, fully customized to your brand.",
   benefits: [
@@ -131,7 +132,7 @@ const apparelCategory = {
 // Category 4: Design Services
 const designCategory = {
   id: "design",
-  icon: PenTool,
+  iconName: "PenTool" as const,
   title: "Design Services",
   description: "Professional design services to bring your vision to life, production-ready.",
   benefits: [
