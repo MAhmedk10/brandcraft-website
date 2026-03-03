@@ -1,352 +1,266 @@
 import type { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import {
-  ArrowRight,
-  Layers,
-  Palette,
-  Printer,
-  Shirt,
-  Check,
-  ShieldCheck,
-  Factory,
-  Eye,
-  Heart,
-  ImageIcon,
-} from "lucide-react"
+import { ArrowRight, Layers, Sticker, Shirt, PenTool } from "lucide-react"
+// Note: Icon components are used in the nav section below, iconName strings are passed to ServiceCategorySection
+import { ServiceCategorySection } from "@/components/services/services-category-section"
+import { ServicesFaq } from "@/components/services/services-faq"
+import { TrustSection } from "@/components/home/trust-section"
+import { ProcessSection } from "@/components/home/process-section"
+import { TestimonialsSection } from "@/components/home/testimonials-section"
+import { CtaSection } from "@/components/home/cta-section"
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Services - Custom Patches, Stickers, Apparel & Design",
   description:
-    "Comprehensive custom branding solutions: custom patches, logo design, printing, and embroidery services for businesses that demand quality.",
+    "Explore our complete range of custom branding products: patches, stickers, apparel, and design services. Premium quality backed by decades of expertise.",
 }
 
-const services = [
-  {
-    id: "patches",
-    icon: Layers,
-    title: "Custom Patches",
-    description:
-      "Custom patches are a versatile branding solution perfect for uniforms, merchandise, promotional items, and team identification. We create durable, professionally designed patches that represent your brand with precision and pride.",
-    benefits: [
-      "Durable construction using premium materials",
-      "Multiple finish options (woven, embroidered, PVC, rubber)",
-      "Customizable sizes, shapes, and designs",
-      "Perfect for uniforms, jackets, bags, and merchandise",
-      "Affordable for bulk orders",
-    ],
-    useCases: [
-      "Corporate uniforms and team wear",
-      "Military and law enforcement identification",
-      "Sports teams and athletic organizations",
-      "Promotional merchandise and giveaways",
-      "Brand loyalty and membership programs",
-    ],
-    options: [
-      "Material selection (woven, embroidered, PVC, rubber, twill)",
-      "Size and shape (standard or custom die-cut)",
-      "Backing options (velcro, iron-on, sew-on)",
-      "Color matching to brand specifications",
-      "Quantity from small orders to large production runs",
-    ],
-    cta: "Request a Patch Quote",
-    // Replace with your own image, e.g. "/images/services/patches.jpg"
-    image: "",
-    imageAlt: "Custom embroidered and woven patches in various designs",
-  },
-  {
-    id: "logos",
-    icon: Palette,
-    title: "Logo Design & Creation",
-    description:
-      "A strong logo is the foundation of your brand identity. Our design team creates custom logos that capture your brand essence and work across all applications\u2014from embroidery to printing to digital use.",
-    benefits: [
-      "Professional design from experienced creatives",
-      "Multiple design concepts and revisions",
-      "Logos optimized for all applications",
-      "Digital files ready for production",
-      "Brand guidelines documentation included",
-    ],
-    useCases: [
-      "New business branding and identity",
-      "Brand refresh and modernization",
-      "Logos for merchandise and apparel",
-      "Digital and print applications",
-      "Embroidery and patch production",
-    ],
-    options: [
-      "Full custom design from scratch",
-      "Logo redesign and modernization",
-      "Design concepts tailored to your industry",
-      "Multiple format delivery (vector, raster, embroidery-ready)",
-      "Color variations and monochrome versions",
-    ],
-    cta: "Start Your Logo Design",
-    // Replace with your own image, e.g. "/images/services/logos.jpg"
-    image: "",
-    imageAlt: "Custom logo designs displayed on various materials",
-  },
-  {
-    id: "printing",
-    icon: Printer,
-    title: "Printing Services",
-    description:
-      "From screen printing to digital printing, we deliver vibrant, durable prints on apparel, merchandise, and promotional materials. Our printing solutions combine quality craftsmanship with modern technology.",
-    benefits: [
-      "High-quality screen printing and digital printing",
-      "Vibrant colors and sharp detail",
-      "Durable prints that withstand washing and wear",
-      "Fast turnaround on orders",
-      "Flexible quantities from small to large runs",
-    ],
-    useCases: [
-      "Corporate apparel and uniforms",
-      "Team merchandise and promotional items",
-      "Event merchandise and branded giveaways",
-      "Retail merchandise production",
-      "Custom promotional products",
-    ],
-    options: [
-      "Screen printing for bulk orders",
-      "Digital printing for small runs and full-color designs",
-      "Apparel types (t-shirts, hoodies, hats, bags)",
-      "Placement options (front, back, sleeves)",
-      "Color matching and design optimization",
-    ],
-    cta: "Get a Printing Quote",
-    // Replace with your own image, e.g. "/images/services/printing.jpg"
-    image: "",
-    imageAlt: "Screen-printed apparel and merchandise with custom designs",
-  },
-  {
-    id: "embroidery",
-    icon: Shirt,
-    title: "Embroidery Services",
-    description:
-      "Premium embroidery adds sophistication and durability to corporate wear, team uniforms, and branded merchandise. Our precision embroidery combines traditional craftsmanship with modern technology.",
-    benefits: [
-      "High-quality embroidery with precision stitching",
-      "Premium thread and materials",
-      "Professional appearance suitable for corporate environments",
-      "Durable and long-lasting",
-      "Perfect for uniforms, polos, and branded wear",
-    ],
-    useCases: [
-      "Corporate uniforms and professional wear",
-      "Team uniforms and sports apparel",
-      "Branded merchandise and promotional items",
-      "Executive gifts and premium merchandise",
-      "Professional identification and branding",
-    ],
-    options: [
-      "Thread color selection from extensive palette",
-      "Stitch density and detail options",
-      "Placement on garments (chest, sleeve, back)",
-      "Garment types (polos, jackets, caps, bags)",
-      "Quantity from single items to large production runs",
-    ],
-    cta: "Request an Embroidery Quote",
-    // Replace with your own image, e.g. "/images/services/embroidery.jpg"
-    image: "",
-    imageAlt: "Precision embroidered corporate wear and branded apparel",
-  },
+const stats = [
+  { value: "20+", label: "Years Experience" },
+  { value: "50K+", label: "Orders Delivered" },
+  { value: "98%", label: "Client Satisfaction" },
+  { value: "24hr", label: "Quote Response" },
 ]
 
-const qualityStandards = [
-  {
-    icon: ShieldCheck,
-    title: "Materials",
-    description:
-      "We source only premium materials from trusted suppliers. Every material is inspected for quality before production begins.",
-  },
-  {
-    icon: Factory,
-    title: "Production Process",
-    description:
-      "Our manufacturing process combines traditional techniques with modern technology. Each step is carefully monitored to ensure consistency and precision.",
-  },
-  {
-    icon: Eye,
-    title: "Quality Inspection",
-    description:
-      "Every finished product undergoes rigorous quality inspection before shipment. We check for color accuracy, stitch quality, durability, and overall finish.",
-  },
-  {
-    icon: Heart,
-    title: "Customer Satisfaction",
-    description:
-      "Your satisfaction is our priority. We stand behind every product we create and are committed to making things right if any issues arise.",
-  },
-]
+// Category 1: Custom Patches
+const patchesCategory = {
+  id: "patches",
+  iconName: "Layers" as const,
+  title: "Custom Patches",
+  description: "Premium patches in multiple materials and finishes for uniforms, merchandise, and branding.",
+  benefits: [
+    "Durable construction using premium materials",
+    "Multiple finish options (woven, embroidered, PVC, leather)",
+    "Customizable sizes, shapes, and designs",
+    "Perfect for uniforms, jackets, bags, and merchandise",
+    "Affordable pricing for bulk orders",
+  ],
+  useCases: [
+    "Corporate uniforms and team wear",
+    "Military and law enforcement identification",
+    "Sports teams and athletic organizations",
+    "Promotional merchandise and giveaways",
+    "Motorcycle clubs and band merchandise",
+  ],
+  products: [
+    { name: "Custom Patches", href: "/products/custom-patches", image: "/images/custom-patches/custom-patch-2.jpeg", imageAlt: "Custom patches", description: "Versatile patches for any application" },
+    { name: "Jacket Patches", href: "/products/custom-jacket-patches", image: "/images/custom-jacket-patches/custom-jacket-patch-6.jpeg", imageAlt: "Jacket patches", description: "Large back patches and sleeve designs" },
+    { name: "Embroidered Patches", href: "/products/embroidered-patches", image: "/images/embroidered-patches/embroidered-patch-3.jpeg", imageAlt: "Embroidered patches", description: "Classic stitched designs with premium thread" },
+    { name: "Chenille Patches", href: "/products/chenille-patches", image: "/images/chenille-patches/chenille-patch-3.jpeg", imageAlt: "Chenille patches", description: "Soft, textured letterman-style patches" },
+    { name: "Leather Patches", href: "/products/leather-patches", image: "/images/leather-patches/leather-patch-1.jpeg", imageAlt: "Leather patches", description: "Premium leather with debossed designs" },
+    { name: "Woven Patches", href: "/products/woven-patches", image: "/images/woven-patches/woven-patch-2.jpeg", imageAlt: "Woven patches", description: "Fine detail patches with smooth finish" },
+    { name: "Iron On Patches", href: "/products/iron-on-patches", image: "/images/iron-on-patches/iron-on-patch-5.jpeg", imageAlt: "Iron on patches", description: "Easy heat-activated application" },
+    { name: "Velcro Patches", href: "/products/velcro-patches", image: "/images/velcro-patches/velcro-patch-1.jpeg", imageAlt: "Velcro patches", description: "Removable hook and loop backing" },
+    { name: "PVC Patches", href: "/products/pvc-patches", image: "/images/pvc-patches/pvc-patch-2.jpeg", imageAlt: "PVC patches", description: "Durable rubber 3D patches" },
+    { name: "Sublimation Patches", href: "/products/sublimation-patches", image: "/images/sublimation-patches/sublimation-patch-1.jpeg", imageAlt: "Sublimation patches", description: "Full-color photo-quality prints" },
+  ],
+  galleryImages: [
+    { src: "/images/custom-patches/custom-patch-2.jpeg", alt: "Custom embroidered patch showcase" },
+    { src: "/images/embroidered-patches/embroidered-patch-3.jpeg", alt: "Embroidered patches collection" },
+    { src: "/images/pvc-patches/pvc-patch-2.jpeg", alt: "PVC rubber patches" },
+    { src: "/images/chenille-patches/chenille-patch-3.jpeg", alt: "Chenille letterman patches" },
+  ],
+}
+
+// Category 2: Stickers & Labels
+const stickersCategory = {
+  id: "stickers",
+  iconName: "Sticker" as const,
+  title: "Stickers & Labels",
+  description: "High-quality custom stickers and professional labels for products and promotions.",
+  benefits: [
+    "Premium vinyl material for durability",
+    "Weather-resistant and waterproof options",
+    "Custom shapes with precise die-cutting",
+    "Vibrant full-color printing",
+    "Multiple finish options (matte, gloss, holographic)",
+  ],
+  useCases: [
+    "Product packaging and branding",
+    "Promotional giveaways and marketing",
+    "Retail merchandise and accessories",
+    "Event branding and festivals",
+    "Personal expression and decor",
+  ],
+  products: [
+    { name: "Die Cut Stickers", href: "/products/die-cut-stickers", image: "/images/die-cut-sticker/die-cut-sticker-5.jpg", imageAlt: "Die cut stickers", description: "Custom-shaped premium vinyl stickers" },
+    { name: "Holographic Stickers", href: "/products/holographic-stickers", image: "/images/holographic-sticker/holographic-sticker-6.jpeg", imageAlt: "Holographic stickers", description: "Eye-catching rainbow effect stickers" },
+    { name: "Hangtags & Labels", href: "/products/hangtags-labels", image: "/images/hangtags/hangtag-label-1.jpg", imageAlt: "Hangtags and labels", description: "Professional product tags and woven labels" },
+  ],
+  galleryImages: [
+    { src: "/images/die-cut-sticker/die-cut-sticker-5.jpg", alt: "Die cut stickers showcase" },
+    { src: "/images/holographic-sticker/holographic-sticker-6.jpeg", alt: "Holographic stickers collection" },
+    { src: "/images/hangtags/hangtag-label-1.jpg", alt: "Hangtags and woven labels" },
+  ],
+}
+
+// Category 3: Custom Apparel
+const apparelCategory = {
+  id: "apparel",
+  iconName: "Shirt" as const,
+  title: "Custom Apparel",
+  description: "Premium custom clothing from casual wear to specialty jackets, fully customized to your brand.",
+  benefits: [
+    "High-quality garments from trusted brands",
+    "Multiple decoration methods available",
+    "Full customization of colors and styles",
+    "Sizes from XS to 5XL available",
+    "Perfect for teams, events, and retail",
+  ],
+  useCases: [
+    "Corporate uniforms and professional wear",
+    "Sports teams and athletic organizations",
+    "Band and music industry merchandise",
+    "School and university apparel",
+    "Retail and e-commerce brands",
+  ],
+  products: [
+    { name: "Custom Apparel", href: "/products/custom-apparel", image: "/images/custom-apparel/custom-apparel-2.jpeg", imageAlt: "Custom apparel", description: "T-shirts, polos, and branded clothing" },
+    { name: "Hoodies & Tracksuits", href: "/products/hoodies-tracksuits", image: "/images/hoodies/hoodies-2.jpg", imageAlt: "Hoodies and tracksuits", description: "Premium comfort wear with custom branding" },
+    { name: "Letterman Jackets", href: "/products/letterman-jackets", image: "/images/letterman-jackets/letterman-jacket-1.jpg", imageAlt: "Letterman jackets", description: "Classic varsity style with custom details" },
+    { name: "Biker Jackets", href: "/products/biker-jackets", image: "/images/biker-jackets/biker-jacket-4.png", imageAlt: "Biker jackets", description: "Custom leather and textile motorcycle jackets" },
+  ],
+  galleryImages: [
+    { src: "/images/custom-apparel/custom-apparel-2.jpeg", alt: "Custom apparel showcase" },
+    { src: "/images/hoodies/hoodies-2.jpg", alt: "Custom hoodies collection" },
+    { src: "/images/letterman-jackets/letterman-jacket-1.jpg", alt: "Letterman jackets" },
+    { src: "/images/biker-jackets/biker-jacket-4.png", alt: "Custom biker jackets" },
+  ],
+}
+
+// Category 4: Design Services
+const designCategory = {
+  id: "design",
+  iconName: "PenTool" as const,
+  title: "Design Services",
+  description: "Professional design services to bring your vision to life, production-ready.",
+  benefits: [
+    "Experienced professional designers",
+    "Fast turnaround on artwork",
+    "Multiple revision rounds included",
+    "Production-ready file formats",
+    "Free consultation and guidance",
+  ],
+  useCases: [
+    "Logo design and brand identity",
+    "Artwork conversion and cleanup",
+    "Embroidery digitizing for production",
+    "Heat transfer print preparation",
+    "Custom illustration and graphics",
+  ],
+  products: [
+    { name: "Vector Art", href: "/products/vector-art", image: "/images/vector-art/vector-art-2.jpeg", imageAlt: "Vector art services", description: "Clean scalable artwork for any application" },
+    { name: "Embroidery Digitizing", href: "/products/embroidery-digitizing", image: "/images/embroidery-digitizing/embroidery-digitizing-1.png", imageAlt: "Embroidery digitizing", description: "Convert artwork to stitch-ready files" },
+    { name: "Heat Transfer DTF", href: "/products/heat-transfer-dtf-print", image: "/images/heat-dtf/heat-dtf-2.jpeg", imageAlt: "DTF printing", description: "Vibrant full-color garment transfers" },
+  ],
+  galleryImages: [
+    { src: "/images/vector-art/vector-art-2.jpeg", alt: "Vector art conversion" },
+    { src: "/images/embroidery-digitizing/embroidery-digitizing-1.png", alt: "Embroidery digitizing service" },
+    { src: "/images/heat-dtf/heat-dtf-2.jpeg", alt: "DTF heat transfer prints" },
+  ],
+}
 
 export default function ServicesPage() {
   return (
     <>
-      {/* Page Header */}
+      {/* Hero Section */}
       <section className="relative bg-primary py-20 text-primary-foreground lg:py-28">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-widest text-primary-foreground/60">
-              What We Offer
-            </p>
-            <h1 className="mt-4 font-serif text-4xl font-bold tracking-tight md:text-5xl">
-              Our Services
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-primary-foreground/80">
-              Comprehensive custom branding solutions designed for businesses that demand quality. Whether you need custom patches, logo design, printing, or embroidery, we deliver premium results backed by decades of manufacturing expertise.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Introduction */}
-      <section className="bg-background py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-lg leading-relaxed text-muted-foreground">
-              We specialize in creating high-quality, custom branding solutions for businesses, teams, and organizations of all sizes. From initial design concept to final delivery, we handle every aspect of the customization process with precision and professionalism.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Individual Services */}
-      {services.map((service, index) => (
-        <section
-          key={service.id}
-          id={service.id}
-          className={index % 2 === 0 ? "bg-secondary py-20 lg:py-28" : "bg-background py-20 lg:py-28"}
-        >
-          <div className="mx-auto max-w-7xl px-4 lg:px-8">
-            <div className={`grid items-start gap-12 lg:grid-cols-2 ${index % 2 !== 0 ? "lg:direction-rtl" : ""}`}>
-              {/* Content side */}
-              <div className={`flex flex-col gap-8 ${index % 2 !== 0 ? "lg:order-2" : ""}`}>
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground">
-                    <service.icon className="h-5 w-5" />
-                  </div>
-                  <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-                    {service.title}
-                  </h2>
-                </div>
-
-                <p className="text-base leading-relaxed text-muted-foreground">
-                  {service.description}
-                </p>
-
-                {/* Benefits */}
-                <div>
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
-                    Key Benefits
-                  </h3>
-                  <ul className="mt-3 flex flex-col gap-2">
-                    {service.benefits.map((benefit) => (
-                      <li key={benefit} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                        {benefit}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Use Cases */}
-                <div>
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
-                    Use Cases
-                  </h3>
-                  <ul className="mt-3 flex flex-col gap-2">
-                    {service.useCases.map((useCase) => (
-                      <li key={useCase} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                        {useCase}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <Button
-                  asChild
-                  size="lg"
-                  className="w-fit bg-accent text-accent-foreground hover:bg-accent/90"
-                >
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <div className="max-w-xl">
+              <p className="text-sm font-semibold uppercase tracking-widest text-primary-foreground/60">
+                Complete Branding Solutions
+              </p>
+              <h1 className="mt-4 font-serif text-4xl font-bold tracking-tight md:text-5xl">
+                Premium Products for Every Brand
+              </h1>
+              <p className="mt-6 text-lg leading-relaxed text-primary-foreground/80">
+                From custom patches to premium apparel, we offer a comprehensive range of branding products. Every item is crafted with precision and backed by decades of manufacturing expertise.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
                   <Link href="/contact">
-                    {service.cta}
+                    Get a Free Quote
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-              </div>
-
-              {/* Image side */}
-              <div className={`relative aspect-[4/3] overflow-hidden rounded-lg bg-muted ${index % 2 !== 0 ? "lg:order-1" : ""}`}>
-                {service.image ? (
-                  <Image
-                    src={service.image}
-                    alt={service.imageAlt}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                ) : (
-                  <div className="flex h-full w-full flex-col items-center justify-center gap-3 text-muted-foreground/40">
-                    <ImageIcon className="h-16 w-16" />
-                    <span className="text-sm font-medium">Image Coming Soon</span>
-                  </div>
-                )}
+                <Button asChild variant="outline" size="lg" className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10">
+                  <Link href="#patches">Explore Products</Link>
+                </Button>
               </div>
             </div>
+            {/* Stats grid */}
+            <div className="grid grid-cols-2 gap-4">
+              {stats.map((stat) => (
+                <div key={stat.label} className="rounded-lg border border-primary-foreground/10 bg-primary-foreground/5 p-6 text-center">
+                  <p className="font-serif text-3xl font-bold text-accent md:text-4xl">{stat.value}</p>
+                  <p className="mt-1 text-sm text-primary-foreground/70">{stat.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </section>
-      ))}
+        </div>
+      </section>
 
-      {/* Quality Standards */}
-      <section className="bg-primary py-20 text-primary-foreground lg:py-28">
+      {/* Category Navigation */}
+      <section className="border-b border-border bg-background py-6">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="text-center">
-            <h2 className="font-serif text-3xl font-bold tracking-tight md:text-4xl">
-              Our Commitment to Quality
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-primary-foreground/70">
-              Every project we undertake is held to the highest standards of craftsmanship and quality.
-            </p>
-          </div>
-
-          <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {qualityStandards.map((standard) => (
-              <div key={standard.title} className="flex flex-col gap-4 rounded-lg border border-primary-foreground/10 p-6">
-                <standard.icon className="h-8 w-8 text-accent" />
-                <h3 className="font-serif text-lg font-semibold">{standard.title}</h3>
-                <p className="text-sm leading-relaxed text-primary-foreground/70">
-                  {standard.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="bg-background py-20 lg:py-28">
-        <div className="mx-auto max-w-3xl px-4 text-center lg:px-8">
-          <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-            Ready to Get Started?
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            {"Let's bring your branding vision to life. Contact our team today to discuss your project requirements and get a detailed quote."}
-          </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-              <Link href="/contact">
-                Request a Quote
-                <ArrowRight className="ml-2 h-4 w-4" />
+          <nav className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
+            {[
+              { id: "patches", label: "Custom Patches", icon: Layers },
+              { id: "stickers", label: "Stickers & Labels", icon: Sticker },
+              { id: "apparel", label: "Custom Apparel", icon: Shirt },
+              { id: "design", label: "Design Services", icon: PenTool },
+            ].map((item) => (
+              <Link
+                key={item.id}
+                href={`#${item.id}`}
+                className="flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:border-accent hover:text-accent"
+              >
+                <item.icon className="h-4 w-4" />
+                {item.label}
               </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg">
-              <Link href="/contact">Schedule a Consultation</Link>
-            </Button>
-          </div>
+            ))}
+          </nav>
         </div>
       </section>
+
+      {/* Category 1: Custom Patches */}
+      <ServiceCategorySection {...patchesCategory} />
+
+      {/* Divider */}
+      {/* <div className="bg-secondary py-1" /> */}
+
+      {/* Category 2: Stickers & Labels */}
+      <div className="bg-secondary"><ServiceCategorySection {...stickersCategory} reversed /></div>
+
+      {/* Divider */}
+      {/* <div className="bg-secondary py-1" /> */}
+
+      {/* Category 3: Custom Apparel */}
+      <ServiceCategorySection {...apparelCategory} />
+
+      {/* Divider */}
+      {/* <div className="bg-secondary py-1" /> */}
+
+      {/* Category 4: Design Services */}
+      <div className="bg-secondary"><ServiceCategorySection {...designCategory} reversed /></div>
+
+      {/* Process Section */}
+      <ProcessSection />
+
+      {/* Trust Section */}
+      <TrustSection />
+
+      {/* Testimonials */}
+      <TestimonialsSection />
+
+      {/* FAQ Section */}
+      <ServicesFaq />
+
+      {/* Final CTA */}
+      <CtaSection />
     </>
   )
 }
