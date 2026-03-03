@@ -1,303 +1,247 @@
 import type { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import {
   ArrowRight,
   Layers,
-  Palette,
-  Printer,
+  Sticker,
   Shirt,
+  PenTool,
   Check,
   ShieldCheck,
   Factory,
   Eye,
   Heart,
   ImageIcon,
+  Users,
+  Zap,
+  Globe,
 } from "lucide-react"
+import { TrustSection } from "@/components/home/trust-section"
+import { ProcessSection } from "@/components/home/process-section"
+import { TestimonialsSection } from "@/components/home/testimonials-section"
+import { CtaSection } from "@/components/home/cta-section"
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Services - All Products & Solutions",
   description:
-    "Comprehensive custom branding solutions: custom patches, logo design, printing, and embroidery services for businesses that demand quality.",
+    "Explore our complete range of 20+ custom branding products: patches, stickers, apparel, and design services. Premium quality for businesses that demand excellence.",
 }
 
-const services = [
+// Product categories with all 20 products
+const productCategories = [
   {
     id: "patches",
     icon: Layers,
     title: "Custom Patches",
-    description:
-      "Custom patches are a versatile branding solution perfect for uniforms, merchandise, promotional items, and team identification. We create durable, professionally designed patches that represent your brand with precision and pride.",
-    benefits: [
-      "Durable construction using premium materials",
-      "Multiple finish options (woven, embroidered, PVC, rubber)",
-      "Customizable sizes, shapes, and designs",
-      "Perfect for uniforms, jackets, bags, and merchandise",
-      "Affordable for bulk orders",
+    description: "Premium patches in multiple materials and finishes for uniforms, merchandise, and branding.",
+    products: [
+      { name: "Custom Patches", href: "/products/custom-patches", description: "Versatile patches for any application" },
+      { name: "Custom Jacket Patches", href: "/products/custom-jacket-patches", description: "Large back patches and sleeve designs" },
+      { name: "Embroidered Patches", href: "/products/embroidered-patches", description: "Classic stitched designs with premium thread" },
+      { name: "Chenille Patches", href: "/products/chenille-patches", description: "Soft, textured letterman-style patches" },
+      { name: "Leather Patches", href: "/products/leather-patches", description: "Premium leather with debossed or laser designs" },
+      { name: "Woven Patches", href: "/products/woven-patches", description: "Fine detail patches with smooth finish" },
+      { name: "Iron On Patches", href: "/products/iron-on-patches", description: "Easy heat-activated application" },
+      { name: "Velcro Patches", href: "/products/velcro-patches", description: "Removable hook and loop backing" },
+      { name: "PVC Patches", href: "/products/pvc-patches", description: "Durable rubber 3D patches" },
+      { name: "Sublimation Patches", href: "/products/sublimation-patches", description: "Full-color photo-quality prints" },
     ],
-    useCases: [
-      "Corporate uniforms and team wear",
-      "Military and law enforcement identification",
-      "Sports teams and athletic organizations",
-      "Promotional merchandise and giveaways",
-      "Brand loyalty and membership programs",
-    ],
-    options: [
-      "Material selection (woven, embroidered, PVC, rubber, twill)",
-      "Size and shape (standard or custom die-cut)",
-      "Backing options (velcro, iron-on, sew-on)",
-      "Color matching to brand specifications",
-      "Quantity from small orders to large production runs",
-    ],
-    cta: "Request a Patch Quote",
-    // Replace with your own image, e.g. "/images/services/patches.jpg"
-    image: "",
-    imageAlt: "Custom embroidered and woven patches in various designs",
   },
   {
-    id: "logos",
-    icon: Palette,
-    title: "Logo Design & Creation",
-    description:
-      "A strong logo is the foundation of your brand identity. Our design team creates custom logos that capture your brand essence and work across all applications\u2014from embroidery to printing to digital use.",
-    benefits: [
-      "Professional design from experienced creatives",
-      "Multiple design concepts and revisions",
-      "Logos optimized for all applications",
-      "Digital files ready for production",
-      "Brand guidelines documentation included",
+    id: "stickers",
+    icon: Sticker,
+    title: "Stickers & Labels",
+    description: "High-quality custom stickers and professional labels for products and promotions.",
+    products: [
+      { name: "Die Cut Stickers", href: "/products/die-cut-stickers", description: "Custom-shaped premium vinyl stickers" },
+      { name: "Holographic Stickers", href: "/products/holographic-stickers", description: "Eye-catching rainbow effect stickers" },
+      { name: "Hangtags & Labels", href: "/products/hangtags-labels", description: "Professional product tags and woven labels" },
     ],
-    useCases: [
-      "New business branding and identity",
-      "Brand refresh and modernization",
-      "Logos for merchandise and apparel",
-      "Digital and print applications",
-      "Embroidery and patch production",
-    ],
-    options: [
-      "Full custom design from scratch",
-      "Logo redesign and modernization",
-      "Design concepts tailored to your industry",
-      "Multiple format delivery (vector, raster, embroidery-ready)",
-      "Color variations and monochrome versions",
-    ],
-    cta: "Start Your Logo Design",
-    // Replace with your own image, e.g. "/images/services/logos.jpg"
-    image: "",
-    imageAlt: "Custom logo designs displayed on various materials",
   },
   {
-    id: "printing",
-    icon: Printer,
-    title: "Printing Services",
-    description:
-      "From screen printing to digital printing, we deliver vibrant, durable prints on apparel, merchandise, and promotional materials. Our printing solutions combine quality craftsmanship with modern technology.",
-    benefits: [
-      "High-quality screen printing and digital printing",
-      "Vibrant colors and sharp detail",
-      "Durable prints that withstand washing and wear",
-      "Fast turnaround on orders",
-      "Flexible quantities from small to large runs",
-    ],
-    useCases: [
-      "Corporate apparel and uniforms",
-      "Team merchandise and promotional items",
-      "Event merchandise and branded giveaways",
-      "Retail merchandise production",
-      "Custom promotional products",
-    ],
-    options: [
-      "Screen printing for bulk orders",
-      "Digital printing for small runs and full-color designs",
-      "Apparel types (t-shirts, hoodies, hats, bags)",
-      "Placement options (front, back, sleeves)",
-      "Color matching and design optimization",
-    ],
-    cta: "Get a Printing Quote",
-    // Replace with your own image, e.g. "/images/services/printing.jpg"
-    image: "",
-    imageAlt: "Screen-printed apparel and merchandise with custom designs",
-  },
-  {
-    id: "embroidery",
+    id: "apparel",
     icon: Shirt,
-    title: "Embroidery Services",
-    description:
-      "Premium embroidery adds sophistication and durability to corporate wear, team uniforms, and branded merchandise. Our precision embroidery combines traditional craftsmanship with modern technology.",
-    benefits: [
-      "High-quality embroidery with precision stitching",
-      "Premium thread and materials",
-      "Professional appearance suitable for corporate environments",
-      "Durable and long-lasting",
-      "Perfect for uniforms, polos, and branded wear",
+    title: "Custom Apparel",
+    description: "Premium custom clothing from casual wear to specialty jackets, fully customized to your brand.",
+    products: [
+      { name: "Custom Apparel", href: "/products/custom-apparel", description: "T-shirts, polos, and branded clothing" },
+      { name: "Hoodies & Tracksuits", href: "/products/hoodies-tracksuits", description: "Premium comfort wear with custom branding" },
+      { name: "Letterman Jackets", href: "/products/letterman-jackets", description: "Classic varsity style with custom details" },
+      { name: "Biker Jackets", href: "/products/biker-jackets", description: "Custom leather and textile motorcycle jackets" },
     ],
-    useCases: [
-      "Corporate uniforms and professional wear",
-      "Team uniforms and sports apparel",
-      "Branded merchandise and promotional items",
-      "Executive gifts and premium merchandise",
-      "Professional identification and branding",
+  },
+  {
+    id: "design",
+    icon: PenTool,
+    title: "Design Services",
+    description: "Professional design services to bring your vision to life, production-ready.",
+    products: [
+      { name: "Vector Art", href: "/products/vector-art", description: "Clean scalable artwork for any application" },
+      { name: "Embroidery Digitizing", href: "/products/embroidery-digitizing", description: "Convert artwork to stitch-ready files" },
+      { name: "Heat Transfer DTF", href: "/products/heat-transfer-dtf-print", description: "Vibrant full-color garment transfers" },
     ],
-    options: [
-      "Thread color selection from extensive palette",
-      "Stitch density and detail options",
-      "Placement on garments (chest, sleeve, back)",
-      "Garment types (polos, jackets, caps, bags)",
-      "Quantity from single items to large production runs",
-    ],
-    cta: "Request an Embroidery Quote",
-    // Replace with your own image, e.g. "/images/services/embroidery.jpg"
-    image: "",
-    imageAlt: "Precision embroidered corporate wear and branded apparel",
   },
 ]
 
 const qualityStandards = [
   {
     icon: ShieldCheck,
-    title: "Materials",
-    description:
-      "We source only premium materials from trusted suppliers. Every material is inspected for quality before production begins.",
+    title: "Premium Materials",
+    description: "We source only the highest-quality materials from trusted suppliers worldwide.",
   },
   {
     icon: Factory,
-    title: "Production Process",
-    description:
-      "Our manufacturing process combines traditional techniques with modern technology. Each step is carefully monitored to ensure consistency and precision.",
+    title: "Expert Production",
+    description: "Traditional craftsmanship combined with modern technology for superior results.",
   },
   {
     icon: Eye,
     title: "Quality Inspection",
-    description:
-      "Every finished product undergoes rigorous quality inspection before shipment. We check for color accuracy, stitch quality, durability, and overall finish.",
+    description: "Every product undergoes rigorous inspection before shipping.",
   },
   {
     icon: Heart,
-    title: "Customer Satisfaction",
-    description:
-      "Your satisfaction is our priority. We stand behind every product we create and are committed to making things right if any issues arise.",
+    title: "100% Satisfaction",
+    description: "We stand behind every product and are committed to your complete satisfaction.",
   },
+]
+
+const stats = [
+  { value: "20+", label: "Years Experience" },
+  { value: "50K+", label: "Orders Delivered" },
+  { value: "98%", label: "Client Satisfaction" },
+  { value: "24hr", label: "Quote Response" },
+]
+
+const industries = [
+  { icon: Users, name: "Corporate & Enterprise" },
+  { icon: Shirt, name: "Sports Teams & Clubs" },
+  { icon: Factory, name: "Military & Law Enforcement" },
+  { icon: Globe, name: "Bands & Music Industry" },
+  { icon: Zap, name: "Motorcycle Clubs" },
+  { icon: Heart, name: "Schools & Universities" },
 ]
 
 export default function ServicesPage() {
   return (
     <>
-      {/* Page Header */}
+      {/* Hero Section */}
       <section className="relative bg-primary py-20 text-primary-foreground lg:py-28">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-widest text-primary-foreground/60">
-              What We Offer
-            </p>
-            <h1 className="mt-4 font-serif text-4xl font-bold tracking-tight md:text-5xl">
-              Our Services
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-primary-foreground/80">
-              Comprehensive custom branding solutions designed for businesses that demand quality. Whether you need custom patches, logo design, printing, or embroidery, we deliver premium results backed by decades of manufacturing expertise.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Introduction */}
-      <section className="bg-background py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-lg leading-relaxed text-muted-foreground">
-              We specialize in creating high-quality, custom branding solutions for businesses, teams, and organizations of all sizes. From initial design concept to final delivery, we handle every aspect of the customization process with precision and professionalism.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Individual Services */}
-      {services.map((service, index) => (
-        <section
-          key={service.id}
-          id={service.id}
-          className={index % 2 === 0 ? "bg-secondary py-20 lg:py-28" : "bg-background py-20 lg:py-28"}
-        >
-          <div className="mx-auto max-w-7xl px-4 lg:px-8">
-            <div className={`grid items-start gap-12 lg:grid-cols-2 ${index % 2 !== 0 ? "lg:direction-rtl" : ""}`}>
-              {/* Content side */}
-              <div className={`flex flex-col gap-8 ${index % 2 !== 0 ? "lg:order-2" : ""}`}>
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground">
-                    <service.icon className="h-5 w-5" />
-                  </div>
-                  <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-                    {service.title}
-                  </h2>
-                </div>
-
-                <p className="text-base leading-relaxed text-muted-foreground">
-                  {service.description}
-                </p>
-
-                {/* Benefits */}
-                <div>
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
-                    Key Benefits
-                  </h3>
-                  <ul className="mt-3 flex flex-col gap-2">
-                    {service.benefits.map((benefit) => (
-                      <li key={benefit} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                        {benefit}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Use Cases */}
-                <div>
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
-                    Use Cases
-                  </h3>
-                  <ul className="mt-3 flex flex-col gap-2">
-                    {service.useCases.map((useCase) => (
-                      <li key={useCase} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                        {useCase}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <Button
-                  asChild
-                  size="lg"
-                  className="w-fit bg-accent text-accent-foreground hover:bg-accent/90"
-                >
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <div className="max-w-xl">
+              <p className="text-sm font-semibold uppercase tracking-widest text-primary-foreground/60">
+                Complete Branding Solutions
+              </p>
+              <h1 className="mt-4 font-serif text-4xl font-bold tracking-tight md:text-5xl">
+                20+ Premium Products for Your Brand
+              </h1>
+              <p className="mt-6 text-lg leading-relaxed text-primary-foreground/80">
+                From custom patches to premium apparel, we offer a comprehensive range of branding products. Every item is crafted with precision and backed by decades of manufacturing expertise.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
                   <Link href="/contact">
-                    {service.cta}
+                    Get a Free Quote
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-              </div>
-
-              {/* Image side */}
-              <div className={`relative aspect-[4/3] overflow-hidden rounded-lg bg-muted ${index % 2 !== 0 ? "lg:order-1" : ""}`}>
-                {service.image ? (
-                  <Image
-                    src={service.image}
-                    alt={service.imageAlt}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                ) : (
-                  <div className="flex h-full w-full flex-col items-center justify-center gap-3 text-muted-foreground/40">
-                    <ImageIcon className="h-16 w-16" />
-                    <span className="text-sm font-medium">Image Coming Soon</span>
-                  </div>
-                )}
+                <Button asChild variant="outline" size="lg" className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10">
+                  <Link href="#products">Explore Products</Link>
+                </Button>
               </div>
             </div>
+            {/* Stats grid */}
+            <div className="grid grid-cols-2 gap-4">
+              {stats.map((stat) => (
+                <div key={stat.label} className="rounded-lg border border-primary-foreground/10 bg-primary-foreground/5 p-6 text-center">
+                  <p className="font-serif text-3xl font-bold text-accent md:text-4xl">{stat.value}</p>
+                  <p className="mt-1 text-sm text-primary-foreground/70">{stat.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </section>
-      ))}
+        </div>
+      </section>
+
+      {/* Product Categories */}
+      <section id="products" className="bg-background py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+          <div className="text-center">
+            <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+              Our Complete Product Range
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
+              Explore all 20 products across 4 categories, each crafted with premium materials and expert attention to detail.
+            </p>
+          </div>
+
+          <div className="mt-16 space-y-16">
+            {productCategories.map((category, catIndex) => (
+              <div key={category.id} id={category.id} className={catIndex % 2 !== 0 ? "rounded-2xl bg-secondary p-8 lg:p-12" : ""}>
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                    <category.icon className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-2xl font-bold text-foreground">{category.title}</h3>
+                    <p className="text-sm text-muted-foreground">{category.description}</p>
+                  </div>
+                </div>
+
+                <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                  {category.products.map((product) => (
+                    <Link
+                      key={product.name}
+                      href={product.href}
+                      className="group flex flex-col rounded-lg border border-border bg-card p-5 transition-all hover:border-accent hover:shadow-md"
+                    >
+                      {/* Placeholder for product image */}
+                      <div className="mb-4 flex aspect-square items-center justify-center rounded-md bg-muted">
+                        <ImageIcon className="h-8 w-8 text-muted-foreground/30" />
+                      </div>
+                      <h4 className="font-semibold text-card-foreground group-hover:text-accent">{product.name}</h4>
+                      <p className="mt-1 flex-1 text-xs text-muted-foreground">{product.description}</p>
+                      <span className="mt-3 inline-flex items-center text-xs font-medium text-accent">
+                        Learn more <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Industries We Serve */}
+      <section className="bg-secondary py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+          <div className="text-center">
+            <h2 className="font-serif text-3xl font-bold tracking-tight text-secondary-foreground md:text-4xl">
+              Industries We Serve
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
+              Trusted by organizations across diverse industries for quality and reliability.
+            </p>
+          </div>
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+            {industries.map((industry) => (
+              <div key={industry.name} className="flex flex-col items-center gap-3 rounded-lg border border-border bg-card p-6 text-center">
+                <industry.icon className="h-8 w-8 text-accent" />
+                <p className="text-sm font-medium text-card-foreground">{industry.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Trust Section */}
+      <TrustSection />
+
+      {/* Process Section */}
+      <ProcessSection />
 
       {/* Quality Standards */}
       <section className="bg-primary py-20 text-primary-foreground lg:py-28">
@@ -307,46 +251,70 @@ export default function ServicesPage() {
               Our Commitment to Quality
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-primary-foreground/70">
-              Every project we undertake is held to the highest standards of craftsmanship and quality.
+              Every project we undertake is held to the highest standards of craftsmanship.
             </p>
           </div>
-
           <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {qualityStandards.map((standard) => (
               <div key={standard.title} className="flex flex-col gap-4 rounded-lg border border-primary-foreground/10 p-6">
                 <standard.icon className="h-8 w-8 text-accent" />
                 <h3 className="font-serif text-lg font-semibold">{standard.title}</h3>
-                <p className="text-sm leading-relaxed text-primary-foreground/70">
-                  {standard.description}
-                </p>
+                <p className="text-sm leading-relaxed text-primary-foreground/70">{standard.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Testimonials */}
+      <TestimonialsSection />
+
+      {/* Why Choose Us - Feature List */}
       <section className="bg-background py-20 lg:py-28">
-        <div className="mx-auto max-w-3xl px-4 text-center lg:px-8">
-          <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-            Ready to Get Started?
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            {"Let's bring your branding vision to life. Contact our team today to discuss your project requirements and get a detailed quote."}
-          </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-              <Link href="/contact">
-                Request a Quote
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg">
-              <Link href="/contact">Schedule a Consultation</Link>
-            </Button>
+        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <div>
+              <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+                Why Businesses Choose Us
+              </h2>
+              <p className="mt-4 text-lg text-muted-foreground">
+                We combine traditional craftsmanship with modern technology to deliver exceptional results every time.
+              </p>
+              <ul className="mt-8 flex flex-col gap-4">
+                {[
+                  "No minimum order requirements on most products",
+                  "Free design assistance and mockups",
+                  "Fast turnaround times without compromising quality",
+                  "Competitive pricing for bulk orders",
+                  "Dedicated account manager for every project",
+                  "Worldwide shipping with tracking",
+                ].map((feature) => (
+                  <li key={feature} className="flex items-start gap-3">
+                    <Check className="mt-1 h-5 w-5 shrink-0 text-accent" />
+                    <span className="text-muted-foreground">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <Button asChild size="lg" className="mt-8 bg-accent text-accent-foreground hover:bg-accent/90">
+                <Link href="/contact">
+                  Start Your Project
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="flex aspect-square items-center justify-center rounded-lg bg-muted">
+                  <ImageIcon className="h-12 w-12 text-muted-foreground/30" />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
+
+      {/* CTA */}
+      <CtaSection />
     </>
   )
 }
