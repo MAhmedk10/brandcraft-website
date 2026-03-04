@@ -61,6 +61,7 @@ export default async function ProductPage({
         description={product.heroDescription}
         valueProposition={product.valueProposition}
         ctaText={product.ctaText}
+        galleryImages={product.galleryPlaceholders}
       />
 
       {/* 2. Key Features */}
