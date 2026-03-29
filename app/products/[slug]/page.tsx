@@ -68,7 +68,7 @@ export default async function ProductPage({
       {/* 2. Key Features */}
       <ProductKeyFeatures features={product.keyFeatures} />
 
-      {/* 3. Patch Options (only for patch products) */}
+      {/* 3. Patch Options — patch products only */}
       {product.isPatchProduct && product.patchOptions && (
         <PatchOptionsSection
           productTitle={product.title}
@@ -76,22 +76,26 @@ export default async function ProductPage({
         />
       )}
 
-      {/* 4. Customization Options */}
-      <ProductCustomization options={product.customizationOptions}
-      image={product.customizationImage}  // ← Add this
-      imageAlt={product.customizationImageAlt || `${product.title} customization options`} />
+      {/* 4. Backing Options — patch products only */}
+      {product.isPatchProduct && <BackingOptionsSection />}
 
-      {/* 4. How to Order */}
-      <ProductHowToOrder steps={product.orderingSteps} ctaText={product.ctaText} />
+      {/* Non-patch: Customization Options */}
+      {!product.isPatchProduct && (
+        <ProductCustomization
+          options={product.customizationOptions}
+          image={product.customizationImage}
+          imageAlt={product.customizationImageAlt || `${product.title} customization options`}
+        />
+      )}
 
       {/* 5. Quote / Order Form */}
       <ProductQuoteForm serviceTitle={product.title} />
 
-      {/* 6. Backing Options (only for patch products) */}
-      {product.isPatchProduct && <BackingOptionsSection />}
-
-      {/* 7. Gallery */}
+      {/* 6. Gallery */}
       <ProductGallery items={product.galleryPlaceholders} />
+
+      {/* 7. How to Order / Manufacturing step-by-step */}
+      <ProductHowToOrder steps={product.orderingSteps} ctaText={product.ctaText} />
 
       {/* 7. Manufacturing Process */}
       <ProductManufacturing steps={product.manufacturingProcess} />
