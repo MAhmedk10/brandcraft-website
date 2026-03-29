@@ -88,14 +88,14 @@ export default async function ProductPage({
         />
       )}
 
-      {/* 5. Quote / Order Form */}
+      {/* 5. How to Order */}
+      <ProductHowToOrder steps={product.orderingSteps} ctaText={product.ctaText} />
+
+      {/* 6. Quote / Order Form */}
       <ProductQuoteForm serviceTitle={product.title} />
 
-      {/* 6. Gallery */}
+      {/* 7. Gallery */}
       <ProductGallery items={product.galleryPlaceholders} />
-
-      {/* 7. How to Order / Manufacturing step-by-step */}
-      <ProductHowToOrder steps={product.orderingSteps} ctaText={product.ctaText} />
 
       {/* 7. Manufacturing Process */}
       <ProductManufacturing steps={product.manufacturingProcess} />
