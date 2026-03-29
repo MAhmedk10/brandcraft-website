@@ -156,25 +156,28 @@ const products: Product[] = [
 ]
 
 export function ServicesOverview() {
+  const visibleProducts = products.slice(0, 10)
+  const gridProducts = visibleProducts.slice(0, 9)
+  const centreProduct = visibleProducts[9]
+
   return (
     <section className="bg-secondary py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        {/* Header */}
-        <div>
+        {/* Header — centred */}
+        <div className="text-center">
           <h2 className="font-serif text-3xl font-bold tracking-tight text-secondary-foreground md:text-4xl">
             Our Products
           </h2>
-          <p className="mt-3 max-w-xl text-lg text-muted-foreground">
+          <p className="mx-auto mt-3 max-w-xl text-lg text-muted-foreground">
             Browse our full range of custom branding solutions.
           </p>
         </div>
 
-        {/* Grid Layout */}
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {products.map((product) => (
+        {/* 3-3-3 Grid (first 9 products) */}
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {gridProducts.map((product) => (
             <Link key={product.href} href={product.href} className="group">
               <div className="flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card transition-all hover:shadow-lg">
-                {/* Image area */}
                 <div className="relative aspect-square overflow-hidden bg-muted">
                   {product.image ? (
                     <Image
@@ -182,7 +185,7 @@ export function ServicesOverview() {
                       alt={product.imageAlt}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                   ) : (
                     <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-muted-foreground/40">
@@ -191,8 +194,6 @@ export function ServicesOverview() {
                     </div>
                   )}
                 </div>
-
-                {/* Content */}
                 <div className="flex flex-grow flex-col gap-3 px-5 py-4">
                   <h3 className="font-serif text-lg font-semibold text-card-foreground">
                     {product.title}
@@ -208,6 +209,42 @@ export function ServicesOverview() {
               </div>
             </Link>
           ))}
+        </div>
+
+        {/* 10th card — centred */}
+        <div className="mt-6 flex justify-center">
+          <Link href={centreProduct.href} className="group w-full sm:w-1/2 lg:w-1/3">
+            <div className="flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card transition-all hover:shadow-lg">
+              <div className="relative aspect-square overflow-hidden bg-muted">
+                {centreProduct.image ? (
+                  <Image
+                    src={centreProduct.image}
+                    alt={centreProduct.imageAlt}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                ) : (
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-muted-foreground/40">
+                    <ImageIcon className="h-10 w-10" />
+                    <span className="text-xs font-medium">Image Coming Soon</span>
+                  </div>
+                )}
+              </div>
+              <div className="flex flex-grow flex-col gap-3 px-5 py-4">
+                <h3 className="font-serif text-lg font-semibold text-card-foreground">
+                  {centreProduct.title}
+                </h3>
+                <p className="flex-grow text-sm leading-relaxed text-muted-foreground">
+                  {centreProduct.description}
+                </p>
+                <div className="flex items-center gap-2 text-accent transition-transform group-hover:translate-x-1">
+                  <span className="text-sm font-medium">Learn more</span>
+                  <ArrowRight className="h-4 w-4" />
+                </div>
+              </div>
+            </div>
+          </Link>
         </div>
       </div>
     </section>
