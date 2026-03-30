@@ -78,23 +78,52 @@ export function ProductHero({ title, description, valueProposition, ctaText, gal
           </div>
 
           {/* Auto-carousel */}
-          <div className="relative aspect-[4/3] overflow-hidden rounded-lg lg:aspect-square">
+          <div className="relative aspect-[4/3] lg:aspect-square">
+            {/* Carousel viewport */}
             <div className="h-full w-full overflow-hidden" ref={emblaRef}>
               <div className="flex h-full">
                 {galleryImages.map((img) => (
-                  <div key={img.src} className="relative h-full min-w-0 flex-[0_0_100%]">
+                  <div
+                    key={img.src}
+                    className="relative h-full min-w-0 flex-[0_0_100%]"
+                    style={{ background: "oklch(0.18 0.01 60)" }}
+                  >
                     <Image
                       src={img.src}
                       alt={img.alt}
                       fill
-                      className="object-cover"
+                      className="object-contain"
+                      style={{ mixBlendMode: "luminosity" }}
                       priority
                       sizes="(max-width: 1024px) 100vw, 50vw"
+                    />
+                    {/* Radial vignette — fades image edges into the hero bg */}
+                    <div
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        background:
+                          "radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, oklch(0.18 0.01 60) 100%)",
+                      }}
                     />
                   </div>
                 ))}
               </div>
             </div>
+
+            {/* Reflection strip below the carousel */}
+            <div
+              className="pointer-events-none absolute left-0 right-0"
+              style={{
+                top: "100%",
+                height: "30%",
+                background:
+                  "linear-gradient(to bottom, oklch(0.18 0.01 60 / 0.35) 0%, transparent 100%)",
+                transform: "scaleY(-1)",
+                filter: "blur(4px)",
+                opacity: 0.45,
+              }}
+            />
+
             {/* Dots */}
             <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
               {galleryImages.map((img, i) => (
@@ -110,7 +139,6 @@ export function ProductHero({ title, description, valueProposition, ctaText, gal
                 />
               ))}
             </div>
-            <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-primary-foreground/10" />
           </div>
         </div>
       </div>
