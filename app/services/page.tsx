@@ -3,7 +3,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Layers, Sticker, Shirt, PenTool } from "lucide-react"
 // Note: Icon components are used in the nav section below, iconName strings are passed to ServiceCategorySection
-import { ServiceCategorySection } from "@/components/services/service-category-section"
+import { ServiceCategorySection } from "@/components/services/services-category-section"
 import { ServicesFaq } from "@/components/services/services-faq"
 import { TrustSection } from "@/components/home/trust-section"
 import { ProcessSection } from "@/components/home/process-section"
@@ -230,28 +230,28 @@ export default function ServicesPage() {
       <ServiceCategorySection {...patchesCategory} />
 
       {/* Divider */}
-      <div className="bg-secondary py-1" />
+      {/* <div className="bg-secondary py-1" /> */}
 
       {/* Category 2: Stickers & Labels */}
-      <ServiceCategorySection {...stickersCategory} reversed />
+      <div className="bg-secondary"><ServiceCategorySection {...stickersCategory} reversed /></div>
 
       {/* Divider */}
-      <div className="bg-secondary py-1" />
+      {/* <div className="bg-secondary py-1" /> */}
 
       {/* Category 3: Custom Apparel */}
       <ServiceCategorySection {...apparelCategory} />
 
       {/* Divider */}
-      <div className="bg-secondary py-1" />
+      {/* <div className="bg-secondary py-1" /> */}
 
       {/* Category 4: Design Services */}
-      <ServiceCategorySection {...designCategory} reversed />
-
-      {/* Trust Section */}
-      <TrustSection />
+      <div className="bg-secondary"><ServiceCategorySection {...designCategory} reversed /></div>
 
       {/* Process Section */}
       <ProcessSection />
+
+      {/* Trust Section */}
+      <TrustSection />
 
       {/* Testimonials */}
       <TestimonialsSection />
