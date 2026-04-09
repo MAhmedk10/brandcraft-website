@@ -20,6 +20,8 @@ import { ProductIndustries } from "@/components/product/product-industries"
 import { ProductFAQSection } from "@/components/product/product-faq"
 import { ProductRelated } from "@/components/product/product-related"
 import { ProductCTA } from "@/components/product/product-cta"
+import { PatchOptionsSection } from "@/components/product/patch-options-section"
+import { BackingOptionsSection } from "@/components/product/backing-options-section"
 
 // Pre-generate all 20 product pages at build time
 export function generateStaticParams() {
@@ -66,18 +68,33 @@ export default async function ProductPage({
       {/* 2. Key Features */}
       <ProductKeyFeatures features={product.keyFeatures} />
 
-      {/* 3. Customization Options */}
-      <ProductCustomization options={product.customizationOptions}
-      image={product.customizationImage}  // ← Add this
-      imageAlt={product.customizationImageAlt || `${product.title} customization options`} />
+      {/* 3. Patch Options — patch products only */}
+      {product.isPatchProduct && product.patchOptions && (
+        <PatchOptionsSection
+          productTitle={product.title}
+          options={product.patchOptions}
+        />
+      )}
 
-      {/* 4. How to Order */}
+      {/* 4. Backing Options — patch products only */}
+      {product.isPatchProduct && <BackingOptionsSection />}
+
+      {/* Non-patch: Customization Options */}
+      {!product.isPatchProduct && (
+        <ProductCustomization
+          options={product.customizationOptions}
+          image={product.customizationImage}
+          imageAlt={product.customizationImageAlt || `${product.title} customization options`}
+        />
+      )}
+
+      {/* 5. How to Order */}
       <ProductHowToOrder steps={product.orderingSteps} ctaText={product.ctaText} />
 
-      {/* 5. Quote / Order Form */}
+      {/* 6. Quote / Order Form */}
       <ProductQuoteForm serviceTitle={product.title} />
 
-      {/* 6. Gallery */}
+      {/* 7. Gallery */}
       <ProductGallery items={product.galleryPlaceholders} />
 
       {/* 7. Manufacturing Process */}

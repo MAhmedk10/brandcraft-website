@@ -10,6 +10,12 @@ export interface ProductFAQ {
   answer: string
 }
 
+export interface PatchOption {
+  name: string
+  description: string
+  image?: string
+}
+
 export interface ProductData {
   slug: string
   title: string
@@ -17,13 +23,11 @@ export interface ProductData {
   valueProposition: string
   keyFeatures: { title: string; description: string }[]
   customizationOptions: string[]
-  customizationImage?: string  // ← ADD THIS (optional)
-  customizationImageAlt?: string  // ← ADD THIS (optional)
+  customizationImage?: string
+  customizationImageAlt?: string
   orderingSteps: { number: string; title: string; description: string }[]
   manufacturingProcess: string[]
-  galleryPlaceholders: { src: string;        // ← CHANGE this from just alt/caption to include src
-alt: string;
-caption: string }[]
+  galleryPlaceholders: { src: string; alt: string; caption: string }[]
   pricingExplanation: string
   industriesServed: string[]
   testimonials: ProductTestimonial[]
@@ -32,6 +36,9 @@ caption: string }[]
   ctaText: string
   whyChooseUs: { title: string; description: string }[]
   stats: { value: string; label: string }[]
+  // Patch-specific options (only for patch products)
+  isPatchProduct?: boolean
+  patchOptions?: PatchOption[]
 }
 
 export const products: ProductData[] = [
@@ -117,6 +124,13 @@ export const products: ProductData[] = [
       { value: "20+", label: "Years Experience" },
       { value: "99%", label: "On-Time Delivery" },
     ],
+    isPatchProduct: true,
+    patchOptions: [
+      { name: "Mix & Match Custom", description: "Combine any backing, style, and material to create your perfect patch. Complete customization for your unique vision with unlimited design possibilities.", image: "/images/patch-options/custom/mix-match-option.png" },
+      { name: "Premium Custom", description: "Top-tier materials and finishes for brands that demand the best. Features premium threads, metallic accents, and luxury backing options.", image: "/images/patch-options/custom/premium-option.png" },
+      { name: "Economy Custom", description: "Quality patches at competitive prices for budget-conscious orders. Perfect for large quantities without compromising on core quality.", image: "/images/patch-options/custom/economy-option.png" },
+      { name: "Limited Edition", description: "Special run patches with unique finishes and numbered editions. Create collectible patches that stand out from the crowd.", image: "/images/patch-options/custom/limited-edition-option.png" },
+    ],
   },
   {
     slug: "custom-jacket-patches",
@@ -188,6 +202,13 @@ export const products: ProductData[] = [
       { value: "500+", label: "Clubs & Teams Served" },
       { value: "14in+", label: "Max Patch Size" },
       { value: "48hr", label: "Proof Turnaround" },
+    ],
+    isPatchProduct: true,
+    patchOptions: [
+      { name: "Jacket-Sized Standard", description: "Perfect size for leather jackets, denim, and apparel. The classic choice for wearable branding with optimal visibility and proportion.", image: "/images/patch-options/jacket/standard-option.png" },
+      { name: "Extra-Large Impact", description: "Make a statement with oversized patches up to 14 inches. Perfect for statement pieces and prominent back placement on jackets.", image: "/images/patch-options/jacket/extra-large-option.png" },
+      { name: "Interlocking Design", description: "Multiple small patches that connect to form one complete design. Creates visual interest and dimension across your jacket.", image: "/images/patch-options/jacket/interlocking-option.png" },
+      { name: "Curved & Contoured", description: "Rocker-style patches designed to follow the natural curves of jackets. Classic look for motorcycle clubs and teams.", image: "/images/patch-options/jacket/curved-option.png" },
     ],
   },
   {
@@ -261,6 +282,13 @@ export const products: ProductData[] = [
       { value: "100%", label: "Max Coverage" },
       { value: "7-10", label: "Day Turnaround" },
     ],
+    isPatchProduct: true,
+    patchOptions: [
+      { name: "Classic Embroidered", description: "Timeless thread-on-twill construction with rich texture and vibrant colors. Perfect for uniforms, branding, and merchandise that needs to make a lasting impression.", image: "/images/patch-options/embroidered/classic-option.png" },
+      { name: "3D Puff Embroidery", description: "Add dimension with raised foam backing beneath the stitching. Creates a playful, modern look that stands out on jackets and apparel.", image: "/images/patch-options/embroidered/3dpuff-option.png" },
+      { name: "Metallic Thread", description: "Elevate your design with shimmering gold, silver, or holographic threads. Ideal for premium branding that catches the light.", image: "/images/patch-options/embroidered/metallic-option.png" },
+      { name: "Glow-in-the-Dark", description: "Choose phosphorescent threads for patches that glow at night. Perfect for safety applications, events, or eye-catching merchandise.", image: "/images/patch-options/embroidered/glow-option.png" },
+    ],
   },
   {
     slug: "chenille-patches",
@@ -332,6 +360,13 @@ export const products: ProductData[] = [
       { value: "1,000+", label: "Schools Served" },
       { value: "50+", label: "Yarn Colors" },
       { value: "100%", label: "Hand Inspected" },
+    ],
+    isPatchProduct: true,
+    patchOptions: [
+      { name: "Classic Chenille", description: "Soft, fuzzy threads create a plush varsity feel. The timeless choice for letterman jackets, school gear, and retro branding.", image: "/images/patch-options/chenille/classic-option.png" },
+      { name: "Shadowed Chenille", description: "Add depth with shadow effects beneath the main design. Creates a sophisticated layered look with added dimension.", image: "/images/patch-options/chenille/shadow-option.png" },
+      { name: "Gradient Chenille", description: "Blend multiple colors seamlessly across your design. Perfect for creating ombre effects and smooth color transitions.", image: "/images/patch-options/chenille/gradient-option.png" },
+      { name: "Embroidered Accent", description: "Combine chenille texture with embroidered details for intricate designs. Best of both worlds for complex logos.", image: "/images/patch-options/chenille/accent-option.png" },
     ],
   },
   {
@@ -405,6 +440,12 @@ export const products: ProductData[] = [
       { value: "5", label: "Technique Options" },
       { value: "24hr", label: "Proof Turnaround" },
     ],
+    isPatchProduct: true,
+    patchOptions: [
+      { name: "Debossed Leather", description: "Clean, pressed design creates a minimalist sophisticated look. The refined choice for premium branding and luxury applications.", image: "/images/patch-options/leather/debossed-option.png" },
+      { name: "Full-Color Printed", description: "Print full-color designs directly onto leather. Perfect for intricate logos and multi-color artwork on a premium surface.", image: "/images/patch-options/leather/printed-option.png" },
+      { name: "Laser Etched", description: "Precision laser cutting for fine detail and sharp edges. Ideal for detailed text and delicate designs with crisp lines.", image: "/images/patch-options/leather/laser-option.png" },
+    ],
   },
   {
     slug: "woven-patches",
@@ -476,6 +517,12 @@ export const products: ProductData[] = [
       { value: "12", label: "Max Colors" },
       { value: "3mm", label: "Min Text Size" },
       { value: "99%", label: "Quality Rate" },
+    ],
+    isPatchProduct: true,
+    patchOptions: [
+      { name: "Fine Woven", description: "Sharp, intricate detail with smooth texture. Perfect for complex logos and designs that demand precision and clarity.", image: "/images/patch-options/woven/fine-option.png" },
+      { name: "Ultra-Fine Woven", description: "The highest thread count for micro-details and delicate text. Reserved for designs that need the finest craftsmanship.", image: "/images/patch-options/woven/ultrafine-option.png" },
+      { name: "Jacquard Woven", description: "Multi-color woven construction without screen printing. Creates rich color blends naturally within the weave for premium results.", image: "/images/patch-options/woven/jacquard-option.png" },
     ],
   },
   {
@@ -621,6 +668,12 @@ export const products: ProductData[] = [
       { value: "15sec", label: "Application Time" },
       { value: "98%", label: "Satisfaction Rate" },
     ],
+    isPatchProduct: true,
+    patchOptions: [
+      { name: "Standard Heat Seal", description: "Quick and easy application with heat gun or home iron. Perfect for DIY projects and on-demand customization with reliable adhesion.", image: "/images/patch-options/iron-on/standard-option.png" },
+      { name: "Heavy-Duty Heat Seal", description: "Stronger adhesive for industrial-grade durability. Designed for high-stress applications and frequent washing requirements.", image: "/images/patch-options/iron-on/heavyduty-option.png" },
+      { name: "Peel-and-Stick Backing", description: "No heat required—just peel and apply. Ideal for temporary applications, events, or costumes where quick application is key.", image: "/images/patch-options/iron-on/peelstick-option.png" },
+    ],
   },
   {
     slug: "hangtags-labels",
@@ -765,6 +818,12 @@ export const products: ProductData[] = [
       { value: "1000+", label: "Reattach Cycles" },
       { value: "48hr", label: "Proof Time" },
     ],
+    isPatchProduct: true,
+    patchOptions: [
+      { name: "Hook Side (Rough)", description: "Industrial-strength hook backing. Sticks securely to loop-backed surfaces for repeated attachment and removal.", image: "/images/patch-options/velcro/hook-option.png" },
+      { name: "Loop Side (Soft)", description: "Soft, looped backing for comfort. Ideal for patches worn close to skin or in comfort-sensitive applications.", image: "/images/patch-options/velcro/loop-option.png" },
+      { name: "Dual-Sided Velcro", description: "Both hook and loop integrated. Maximum versatility for various velcro-backed surfaces and applications.", image: "/images/patch-options/velcro/dual-option.png" },
+    ],
   },
   {
     slug: "pvc-patches",
@@ -836,6 +895,12 @@ export const products: ProductData[] = [
       { value: "3D", label: "Molding Capable" },
       { value: "8", label: "Max Colors" },
       { value: "100%", label: "Waterproof" },
+    ],
+    isPatchProduct: true,
+    patchOptions: [
+      { name: "Standard PVC", description: "Durable, waterproof rubber coating. The practical choice for outdoor and industrial applications with long-lasting performance.", image: "/images/patch-options/pvc/standard-option.png" },
+      { name: "Gloss PVC", description: "High-shine reflective finish for high-visibility branding. Perfect for modern aesthetics and eye-catching designs.", image: "/images/patch-options/pvc/gloss-option.png" },
+      { name: "Soft PVC", description: "Flexible, bendable rubber that conforms to contoured surfaces. Great for applications requiring a more comfortable feel.", image: "/images/patch-options/pvc/soft-option.png" },
     ],
   },
   {
@@ -980,6 +1045,12 @@ export const products: ProductData[] = [
       { value: "CMYK", label: "Full Color" },
       { value: "1200", label: "DPI Quality" },
       { value: "Permanent", label: "Color Bond" },
+    ],
+    isPatchProduct: true,
+    patchOptions: [
+      { name: "Full-Color Photo", description: "Photorealistic prints directly onto the patch material. Perfect for photo-based designs and complex artwork with unlimited colors.", image: "/images/patch-options/sublimation/photo-option.png" },
+      { name: "Gradient & Blend", description: "Smooth color transitions and blended effects. Ideal for sunset images, gradients, and artistic designs with seamless fades.", image: "/images/patch-options/sublimation/gradient-option.png" },
+      { name: "Fine Detail", description: "High-resolution printing at 1200 DPI for micro-details and crisp text. Reserved for designs requiring the sharpest clarity.", image: "/images/patch-options/sublimation/detail-option.png" },
     ],
   },
   {
