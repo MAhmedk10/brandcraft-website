@@ -13,6 +13,11 @@ interface PatchOptionsSectionProps {
 }
 
 export function PatchOptionsSection({ productTitle, options }: PatchOptionsSectionProps) {
+  // Separate main grid items from the last item if total is 4 (needs centering)
+  const needsCenteredLast = options.length === 4
+  const gridOptions = needsCenteredLast ? options.slice(0, 3) : options
+  const centeredOption = needsCenteredLast ? options[3] : null
+
   return (
     <section className="bg-background py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -28,7 +33,7 @@ export function PatchOptionsSection({ productTitle, options }: PatchOptionsSecti
 
         {/* Grid */}
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {options.map((option) => (
+          {gridOptions.map((option) => (
             <div
               key={option.name}
               className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-shadow hover:shadow-lg"
@@ -63,6 +68,40 @@ export function PatchOptionsSection({ productTitle, options }: PatchOptionsSecti
             </div>
           ))}
         </div>
+
+        {/* 4th card centered when total is 4 */}
+        {centeredOption && (
+          <div className="mt-6 flex justify-center">
+            <div className="w-full sm:w-1/2 lg:w-1/3">
+              <div className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card transition-shadow hover:shadow-lg">
+                <div className="relative aspect-square overflow-hidden bg-muted">
+                  {centeredOption.image ? (
+                    <Image
+                      src={centeredOption.image}
+                      alt={centeredOption.name}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-muted-foreground/40">
+                      <ImageIcon className="h-12 w-12" />
+                      <span className="text-xs font-medium">Image Coming Soon</span>
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-grow flex-col gap-2 p-5">
+                  <h3 className="font-serif text-lg font-semibold text-card-foreground">
+                    {centeredOption.name}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {centeredOption.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   )

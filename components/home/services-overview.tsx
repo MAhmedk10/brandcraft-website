@@ -211,9 +211,9 @@ export function ServicesOverview() {
           ))}
         </div>
 
-        {/* 10th card — centred */}
-        <div className="mt-6 flex justify-center">
-          <Link href={centreProduct.href} className="group w-full sm:w-1/2 lg:w-1/3">
+        {/* 10th card — left-aligned on 2-col (sm), centred on 3-col (lg) */}
+        <div className="mt-6 flex justify-start lg:justify-center">
+          <Link href={centreProduct.href} className="group w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
             <div className="flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card transition-all hover:shadow-lg">
               <div className="relative aspect-square overflow-hidden bg-muted">
                 {centreProduct.image ? (
