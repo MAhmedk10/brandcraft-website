@@ -31,8 +31,6 @@ export const backingOptions = [
   "Velcro (Hook & Loop)",
   "Sew-On",
   "Adhesive / Sticker",
-  "Pin Back",
-  "Magnetic",
   "No Backing",
   "Not Sure",
 ] as const

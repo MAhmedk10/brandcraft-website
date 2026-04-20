@@ -10,23 +10,23 @@ import { ArrowRight } from "lucide-react"
 
 const heroImages = [
   {
-    src: "/images/hero-home.jpg",
+    src: "/images/custom-jacket-patches/custom-jacket-patch-6.jpeg",
     alt: "Custom branded patches, embroidered items, and printed materials showcasing premium craftsmanship",
   },
   {
-    src: "/images/portfolio-1.jpg",
+    src: "/images/chenille-patches/chenille-patch-5.jpeg",
     alt: "Custom embroidered patches in various designs and styles",
   },
   {
-    src: "/images/portfolio-2.jpg",
+    src: "/images/letterman-jackets/letterman-jacket-2.jpg",
     alt: "Corporate polo shirts with precision logo embroidery",
   },
   {
-    src: "/images/portfolio-3.jpg",
+    src: "/images/biker-jackets/biker-jacket-2.png",
     alt: "Screen-printed t-shirts and hoodies with custom brand designs",
   },
   {
-    src: "/images/portfolio-4.jpg",
+    src: "/images/hoodies/hoodies-1.jpg",
     alt: "PVC and woven patches in various shapes",
   },
 ]

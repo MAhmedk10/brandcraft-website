@@ -284,9 +284,9 @@ export const products: ProductData[] = [
     ],
     isPatchProduct: true,
     patchOptions: [
-      { name: "Classic Embroidered", description: "Timeless thread-on-twill construction with rich texture and vibrant colors. Perfect for uniforms, branding, and merchandise that needs to make a lasting impression.", image: "/images/patch-options/embroidered/classic-option.png" },
-      { name: "3D Puff Embroidery", description: "Add dimension with raised foam backing beneath the stitching. Creates a playful, modern look that stands out on jackets and apparel.", image: "/images/patch-options/embroidered/3dpuff-option.png" },
-      { name: "Metallic Thread", description: "Elevate your design with shimmering gold, silver, or holographic threads. Ideal for premium branding that catches the light.", image: "/images/patch-options/embroidered/metallic-option.png" },
+      { name: "Classic Embroidered", description: "Timeless thread-on-twill construction with rich texture and vibrant colors. Perfect for uniforms, branding, and merchandise that needs to make a lasting impression.", image: "/images/patch-options/embroidered/classic-embroidered-patch.jpeg" },
+      { name: "3D Puff Embroidery", description: "Add dimension with raised foam backing beneath the stitching. Creates a playful, modern look that stands out on jackets and apparel.", image: "/images/patch-options/embroidered/3d-puff-patch.png" },
+      { name: "Sequin", description: "Elevate your brand with the ultimate high-end finish. Our custom sequin patches are designed for those who want to stand out, offering a brilliant, multi-dimensional sparkle that demands attention.", image: "/images/patch-options/embroidered/sequin-patch.png" },
       { name: "Glow-in-the-Dark", description: "Choose phosphorescent threads for patches that glow at night. Perfect for safety applications, events, or eye-catching merchandise.", image: "/images/patch-options/embroidered/glow-option.png" },
     ],
   },
@@ -363,7 +363,7 @@ export const products: ProductData[] = [
     ],
     isPatchProduct: true,
     patchOptions: [
-      { name: "Classic Chenille", description: "Soft, fuzzy threads create a plush varsity feel. The timeless choice for letterman jackets, school gear, and retro branding.", image: "/images/patch-options/chenille/classic-option.png" },
+      // { name: "Classic Chenille", description: "Soft, fuzzy threads create a plush varsity feel. The timeless choice for letterman jackets, school gear, and retro branding.", image: "/images/patch-options/chenille/classic-option.png" },
       { name: "Shadowed Chenille", description: "Add depth with shadow effects beneath the main design. Creates a sophisticated layered look with added dimension.", image: "/images/patch-options/chenille/shadow-option.png" },
       { name: "Gradient Chenille", description: "Blend multiple colors seamlessly across your design. Perfect for creating ombre effects and smooth color transitions.", image: "/images/patch-options/chenille/gradient-option.png" },
       { name: "Embroidered Accent", description: "Combine chenille texture with embroidered details for intricate designs. Best of both worlds for complex logos.", image: "/images/patch-options/chenille/accent-option.png" },
