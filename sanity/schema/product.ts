@@ -21,6 +21,7 @@ export const product = defineType({
     { name: "patch", title: "Patch Options" },
     { name: "customization", title: "Customization" },
     { name: "social", title: "Social Proof" },
+    { name: "cta", title: "Bottom CTA" },
     { name: "seo", title: "SEO & Related" },
   ],
   fields: [
@@ -61,6 +62,14 @@ export const product = defineType({
       type: "number",
       group: "core",
     }),
+    defineField({
+      name: "isActive",
+      title: "Active",
+      description: "Uncheck to hide this product without deleting it.",
+      type: "boolean",
+      group: "core",
+      initialValue: true,
+    }),
 
     // ---------- 2. HERO ----------
     defineField({
@@ -70,6 +79,25 @@ export const product = defineType({
       group: "core",
       options: { hotspot: true },
       fields: [{ name: "alt", title: "Alt Text", type: "string" }],
+    }),
+    defineField({
+      name: "heroTagline",
+      title: "Hero Tagline",
+      description: "Small eyebrow text shown above the product name in the hero.",
+      type: "string",
+      group: "content",
+    }),
+    defineField({
+      name: "heroPrimaryButtonLabel",
+      title: "Hero Primary Button Label",
+      type: "string",
+      group: "content",
+    }),
+    defineField({
+      name: "heroSecondaryButtonLabel",
+      title: "Hero Secondary Button Label",
+      type: "string",
+      group: "content",
     }),
     defineField({
       name: "heroDescription",
@@ -165,6 +193,20 @@ export const product = defineType({
             defineField({ name: "name", title: "Name", type: "string" }),
             defineField({ name: "description", title: "Description", type: "text", rows: 2 }),
             defineField({
+              name: "bestFor",
+              title: "Best For",
+              description: "e.g. Uniforms, jackets, professional wear",
+              type: "string",
+            }),
+            defineField({
+              name: "highlights",
+              title: "Highlight Pills",
+              description:
+                "Short bullet points e.g. Most durable, Reusable, Works on any surface",
+              type: "array",
+              of: [defineArrayMember({ type: "string" })],
+            }),
+            defineField({
               name: "image",
               title: "Image",
               type: "image",
@@ -235,6 +277,13 @@ export const product = defineType({
       type: "array",
       group: "content",
       of: [defineArrayMember({ type: "string" })],
+    }),
+    defineField({
+      name: "videoUrl",
+      title: "Manufacturing Process Video URL",
+      description: "YouTube URL. If empty, a placeholder will show instead.",
+      type: "url",
+      group: "content",
     }),
 
     // ---------- 8. GALLERY ----------
@@ -324,6 +373,32 @@ export const product = defineType({
           ],
         }),
       ],
+    }),
+
+    // ---------- 10b. BOTTOM CTA ----------
+    defineField({
+      name: "ctaHeading",
+      title: "CTA Heading",
+      type: "string",
+      group: "cta",
+    }),
+    defineField({
+      name: "ctaSubtext",
+      title: "CTA Subtext",
+      type: "string",
+      group: "cta",
+    }),
+    defineField({
+      name: "ctaPrimaryButtonLabel",
+      title: "CTA Primary Button Label",
+      type: "string",
+      group: "cta",
+    }),
+    defineField({
+      name: "ctaSecondaryButtonLabel",
+      title: "CTA Secondary Button Label",
+      type: "string",
+      group: "cta",
     }),
 
     // ---------- 11. FAQ ----------

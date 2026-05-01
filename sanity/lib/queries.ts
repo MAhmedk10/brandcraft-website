@@ -28,6 +28,10 @@ export const productBySlugQuery = groq`
     "slug": slug.current,
     category,
     order,
+    isActive,
+    heroTagline,
+    heroPrimaryButtonLabel,
+    heroSecondaryButtonLabel,
     heroDescription,
     shortDescription,
     valueProposition,
@@ -54,6 +58,8 @@ export const productBySlugQuery = groq`
     backingOptions[]{
       name,
       description,
+      bestFor,
+      highlights,
       image{
         ...,
         asset->,
@@ -76,6 +82,7 @@ export const productBySlugQuery = groq`
       description
     },
     manufacturingProcess,
+    videoUrl,
     gallery[]{
       image{
         ...,
@@ -101,6 +108,10 @@ export const productBySlugQuery = groq`
       title,
       description
     },
+    ctaHeading,
+    ctaSubtext,
+    ctaPrimaryButtonLabel,
+    ctaSecondaryButtonLabel,
     faqs[]{
       question,
       answer
