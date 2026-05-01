@@ -215,9 +215,14 @@ export default async function ProductPage({
     sanityDoc = await client.fetch(
       productBySlugQuery,
       { slug },
-      { next: { revalidate: 3600 } }
+      { next: { revalidate: 60 } } // reduced to 60s for faster iteration
     )
-  } catch {
+    console.log("[v0] Sanity fetch for slug:", slug, "returned:", sanityDoc ? "document found" : "null")
+    if (sanityDoc) {
+      console.log("[v0] Sanity doc title:", sanityDoc.title)
+    }
+  } catch (err) {
+    console.log("[v0] Sanity fetch error:", err)
     sanityDoc = null
   }
 
@@ -225,6 +230,8 @@ export default async function ProductPage({
   const product: ProductData | undefined = sanityDoc
     ? normaliseSanityProduct(sanityDoc, slug)
     : getProductBySlug(slug)
+  
+  console.log("[v0] Using data source:", sanityDoc ? "SANITY" : "LOCAL FALLBACK")
 
   if (!product) notFound()
 
