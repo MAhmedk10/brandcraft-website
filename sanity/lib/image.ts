@@ -1,4 +1,4 @@
-import imageUrlBuilder from "@sanity/image-url"
+import { createImageUrlBuilder } from "@sanity/image-url"
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 import { client, isSanityConfigured } from "./client"
 
@@ -7,7 +7,7 @@ import { client, isSanityConfigured } from "./client"
  * configured — otherwise `urlFor` returns a no-op builder that yields
  * empty strings, so callers can still chain `.url()` without crashing.
  */
-const builder = isSanityConfigured ? imageUrlBuilder(client) : null
+const builder = isSanityConfigured ? createImageUrlBuilder(client) : null
 
 const noopBuilder = {
   width: () => noopBuilder,
@@ -31,6 +31,9 @@ const noopBuilder = {
  * is the empty string — so callers don't need a configuration check.
  */
 export function urlFor(source: SanityImageSource) {
-  if (!builder) return noopBuilder as unknown as ReturnType<typeof imageUrlBuilder>["image"] extends (s: SanityImageSource) => infer R ? R : never
+  if (!builder) {
+    // Return a chainable no-op so callers can still call `.url()` safely.
+    return noopBuilder as unknown as ReturnType<NonNullable<typeof builder>["image"]>
+  }
   return builder.image(source)
 }
