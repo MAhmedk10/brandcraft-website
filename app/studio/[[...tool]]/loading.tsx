@@ -1,14 +1,16 @@
-/**
- * Loading screen shown while Sanity Studio initialises.
- * Plain neutral fallback — Studio renders its own UI on top once ready.
- */
-export default function StudioLoading() {
+export default function Loading() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="flex flex-col items-center gap-3">
-        <div className="h-10 w-10 animate-spin rounded-full border-2 border-border border-t-foreground" />
-        <p className="text-sm text-muted-foreground">Loading Studio…</p>
-      </div>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#101112",
+        color: "#fff",
+      }}
+    >
+      Loading Studio...
     </div>
   )
 }
