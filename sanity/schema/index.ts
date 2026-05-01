@@ -1,9 +1,8 @@
 import type { SchemaTypeDefinition } from "sanity"
+import { product } from "./product"
+import { siteSettings } from "./siteSettings"
 
 /**
- * Sanity schema registry.
- *
- * Individual schema files (product, siteSettings, etc.) are created in Step 3
- * and should be imported and pushed into this array as they are defined.
+ * Aggregated schema list registered with Sanity Studio in sanity.config.ts.
  */
-export const schemaTypes: SchemaTypeDefinition[] = []
+export const schemaTypes: SchemaTypeDefinition[] = [product, siteSettings]
