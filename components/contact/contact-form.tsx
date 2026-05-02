@@ -25,23 +25,34 @@ export function ContactForm() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    
-    // Validate file upload is present
-    const formData = new FormData(e.currentTarget)
-    const file = formData.get("file") as File | null
-    if (!file || file.size === 0) {
-      setFileError("Please upload your design file")
-      return
-    }
-    setFileError("")
-    
+
     setLoading(true)
     setError("")
 
     try {
       const formData = new FormData(e.currentTarget)
-      const res = await fetch("/api/contact", { method: "POST", body: formData })
+      const body = new FormData(e.currentTarget)
+      const jsonData = {
+        fullName: body.get("name"),
+        email: body.get("email"),
+        phone: body.get("phone"),
+        subject: body.get("service"),
+        message: body.get("message"),
+      }
+
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(jsonData),
+      })
       const data = await res.json()
+
+      if (res.status === 429) {
+        setError(
+          "Too many requests. Please wait before submitting again."
+        )
+        return
+      }
 
       if (!res.ok) {
         setError(data.error || "Something went wrong. Please try again.")
