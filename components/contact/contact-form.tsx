@@ -20,8 +20,6 @@ export function ContactForm() {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
-  const [fileName, setFileName] = useState("")
-  const [fileError, setFileError] = useState("")
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -95,92 +93,7 @@ export function ContactForm() {
       onSubmit={handleSubmit}
       className="flex flex-col gap-6 rounded-lg border border-border bg-card p-6 lg:p-8"
     >
-      {/* 1 — Product Specifications (matches homepage order) */}
-      <fieldset>
-        <legend className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
-          Product Specifications
-        </legend>
-        <div className="grid gap-4 sm:grid-cols-3">
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="contact-width">Width (inches)</Label>
-            <Input
-              id="contact-width"
-              name="width"
-              type="number"
-              step="0.1"
-              min="0"
-              placeholder="e.g. 3.5"
-              className="bg-background"
-            />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="contact-height">Height (inches)</Label>
-            <Input
-              id="contact-height"
-              name="height"
-              type="number"
-              step="0.1"
-              min="0"
-              placeholder="e.g. 3.5"
-              className="bg-background"
-            />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="contact-quantity">Quantity</Label>
-            <Input
-              id="contact-quantity"
-              name="quantity"
-              type="number"
-              min="1"
-              placeholder="e.g. 100"
-              className="bg-background"
-            />
-          </div>
-        </div>
-      </fieldset>
-
-      {/* 2 — Service Details (matches homepage order) */}
-      <fieldset>
-        <legend className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
-          Service Details
-        </legend>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="contact-service">
-              Service <span className="text-destructive">*</span>
-            </Label>
-            <Select name="service" required>
-              <SelectTrigger id="contact-service" className="bg-background">
-                <SelectValue placeholder="Select a service" />
-              </SelectTrigger>
-              <SelectContent>
-                {serviceOptions.map((opt) => (
-                  <SelectItem key={opt} value={opt}>
-                    {opt}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="contact-backing">Backing Type</Label>
-            <Select name="backing">
-              <SelectTrigger id="contact-backing" className="bg-background">
-                <SelectValue placeholder="Select backing type" />
-              </SelectTrigger>
-              <SelectContent>
-                {backingOptions.map((opt) => (
-                  <SelectItem key={opt} value={opt}>
-                    {opt}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-      </fieldset>
-
-      {/* 3 — Your Information (matches homepage order) */}
+      {/* 1 — Your Information */}
       <fieldset>
         <legend className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
           Your Information
@@ -211,55 +124,32 @@ export function ContactForm() {
               className="bg-background"
             />
           </div>
-          <div className="flex flex-col gap-1.5 sm:col-span-2">
-            <Label htmlFor="contact-phone">
-              Contact Number <span className="text-destructive">*</span>
-            </Label>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="contact-phone">Phone (optional)</Label>
             <Input
               id="contact-phone"
               name="phone"
               type="tel"
-              required
               placeholder="+1 (555) 000-0000"
+              className="bg-background"
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="contact-subject">
+              Subject <span className="text-destructive">*</span>
+            </Label>
+            <Input
+              id="contact-subject"
+              name="service"
+              required
+              placeholder="How can we help?"
               className="bg-background"
             />
           </div>
         </div>
       </fieldset>
 
-      {/* 4 — File upload - REQUIRED */}
-      <div className="flex flex-col gap-1.5">
-        <Label htmlFor="contact-file">
-          Upload Your Design <span className="text-destructive">*</span>
-        </Label>
-        <label
-          htmlFor="contact-file"
-          className={`flex cursor-pointer items-center gap-3 rounded-md border border-dashed bg-background px-4 py-3 text-sm transition-colors hover:border-accent hover:text-accent ${
-            fileError ? "border-destructive text-destructive" : "border-border text-muted-foreground"
-          }`}
-        >
-          <Upload className="h-4 w-4 shrink-0" />
-          <span className="truncate">
-            {fileName || "Click to upload (PNG, JPG, PDF, AI, EPS)"}
-          </span>
-        </label>
-        <input
-          id="contact-file"
-          name="file"
-          type="file"
-          accept=".png,.jpg,.jpeg,.pdf,.ai,.eps,.svg"
-          className="sr-only"
-          onChange={(e) => {
-            setFileName(e.target.files?.[0]?.name ?? "")
-            setFileError("")
-          }}
-        />
-        {fileError && (
-          <p className="text-sm text-destructive">{fileError}</p>
-        )}
-      </div>
-
-      {/* 5 — Project Description - REQUIRED */}
+      {/* 2 — Message */}
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="contact-message">
           Project Description <span className="text-destructive">*</span>

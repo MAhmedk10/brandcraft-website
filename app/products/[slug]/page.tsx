@@ -289,7 +289,7 @@ export default async function ProductPage({
       />
 
       {/* 6. Quote / Order Form */}
-      <ProductQuoteForm serviceTitle={product.title} />
+      <ProductQuoteForm serviceTitle={product.title} productSlug={slug} />
 
       {/* 7. Gallery */}
       <ProductGallery items={product.galleryPlaceholders ?? []} />

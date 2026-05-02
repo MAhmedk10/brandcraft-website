@@ -17,9 +17,10 @@ import { serviceOptions, backingOptions } from "@/lib/form-constants"
 
 interface ProductQuoteFormProps {
   serviceTitle: string
+  productSlug?: string
 }
 
-export function ProductQuoteForm({ serviceTitle }: ProductQuoteFormProps) {
+export function ProductQuoteForm({ serviceTitle, productSlug }: ProductQuoteFormProps) {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
@@ -43,6 +44,9 @@ export function ProductQuoteForm({ serviceTitle }: ProductQuoteFormProps) {
 
     try {
       const formData = new FormData(e.currentTarget)
+      if (productSlug) {
+        formData.append("productSlug", productSlug)
+      }
       const res = await fetch("/api/quote", { method: "POST", body: formData })
       const data = await res.json()
 
