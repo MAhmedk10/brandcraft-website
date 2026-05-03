@@ -11,7 +11,7 @@ import { groq } from "next-sanity"
  * All product slugs — used by `generateStaticParams` to pre-build product pages.
  */
 export const allProductSlugsQuery = groq`
-  *[_type == "product" && defined(slug.current)][].slug.current
+  *[_type == "product" && isActive == true && defined(slug.current)][].slug.current
 `
 
 /**
