@@ -42,6 +42,13 @@ export function QuickQuoteForm() {
       const res = await fetch("/api/quote", { method: "POST", body: formData })
       const data = await res.json()
 
+      if (res.status === 429) {
+        setError(
+          "Too many requests. Please wait before submitting again."
+        )
+        return
+      }
+
       if (!res.ok) {
         setError(data.error || "Something went wrong. Please try again.")
         return
