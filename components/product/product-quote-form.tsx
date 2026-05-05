@@ -28,47 +28,48 @@ export function ProductQuoteForm({ serviceTitle, productSlug }: ProductQuoteForm
   const [fileError, setFileError] = useState("")
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    
-    // Validate file upload is present
-    const formData = new FormData(e.currentTarget)
-    const file = formData.get("file") as File | null
-    if (!file || file.size === 0) {
-      setFileError("Please upload your design file")
+  e.preventDefault()
+
+  const formData = new FormData(e.currentTarget)
+
+  const file = formData.get("file") as File | null
+  if (!file || file.size === 0) {
+    setFileError("Please upload your design file")
+    return
+  }
+  setFileError("")
+
+  if (productSlug) {
+    formData.append("productSlug", productSlug)
+  }
+
+  setLoading(true)
+  setError("")
+
+  try {
+    const res = await fetch("/api/quote", {
+      method: "POST",
+      body: formData,
+    })
+    const data = await res.json()
+
+    if (res.status === 429) {
+      setError("Too many requests. Please wait before submitting again.")
       return
     }
-    setFileError("")
-    
-    setLoading(true)
-    setError("")
 
-    try {
-      const formData = new FormData(e.currentTarget)
-      if (productSlug) {
-        formData.append("productSlug", productSlug)
-      }
-      const res = await fetch("/api/quote", { method: "POST", body: formData })
-      const data = await res.json()
-
-      if (res.status === 429) {
-        setError(
-          "Too many requests. Please wait before submitting again."
-        )
-        return
-      }
-
-      if (!res.ok) {
-        setError(data.error || "Something went wrong. Please try again.")
-        return
-      }
-
-      setSubmitted(true)
-    } catch {
-      setError("Network error. Please check your connection and try again.")
-    } finally {
-      setLoading(false)
+    if (!res.ok) {
+      setError(data.error || "Something went wrong. Please try again.")
+      return
     }
+
+    setSubmitted(true)
+  } catch {
+    setError("Network error. Please check your connection and try again.")
+  } finally {
+    setLoading(false)
   }
+}
 
   if (submitted) {
     return (
