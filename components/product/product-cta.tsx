@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
+import { QuoteCtaButton } from "@/components/quote-cta-button"
 
 interface ProductCTAProps {
   title: string
@@ -18,16 +18,12 @@ export function ProductCTA({ title, ctaText }: ProductCTAProps) {
           {"Let's bring your vision to life. Get in touch today for a free, no-obligation quote with fast turnaround."}
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <Button
-            asChild
-            size="lg"
+          <QuoteCtaButton
+            href="#quote"
             className="bg-accent text-accent-foreground hover:bg-accent/90"
           >
-            <Link href="#quote">
-              {ctaText}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
+            {ctaText}
+          </QuoteCtaButton>
           <Button
             asChild
             variant="outline"
