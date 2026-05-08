@@ -191,15 +191,20 @@ export function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className="fixed right-8 z-50 flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
+            className="fixed right-8 z-50 overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
             style={{
               bottom: '104px',
               width: 'min(380px, calc(100vw - 32px))',
               height: 'min(520px, 70vh)',
+              display: 'grid',
+              gridTemplateRows: 'auto minmax(0, 1fr) auto',
             }}
           >
-            {/* Header */}
-            <div className="flex flex-shrink-0 items-center justify-between border-b border-border bg-secondary px-4 py-3">
+            {/* Header — row 1 (auto) */}
+            <div
+              className="flex items-center justify-between border-b border-border bg-secondary px-4 py-3"
+              style={{ gridRow: 1 }}
+            >
               <div className="flex items-center gap-2">
                 <div className="flex h-7 w-7 items-center justify-center rounded-full bg-accent/15">
                   <Bot className="h-4 w-4 text-accent" />
@@ -220,54 +225,60 @@ export function ChatWidget() {
               </button>
             </div>
 
-            {/* Messages */}
-            <div className="min-h-0 flex-1 overflow-y-auto">
+            {/* Messages — row 2 (1fr, scrolls independently) */}
+            <div
+              className="overflow-y-auto overflow-x-hidden"
+              style={{ gridRow: 2, minHeight: 0 }}
+            >
               <div className="flex flex-col gap-3 p-4">
-              {messages.map((msg, i) =>
-                msg.role === 'user' ? (
-                  <div
-                    key={i}
-                    className="ml-auto max-w-[80%] rounded-[16px_16px_4px_16px] bg-accent px-3.5 py-2.5 text-sm text-accent-foreground"
-                  >
-                    {msg.content}
-                  </div>
-                ) : (
-                  <div
-                    key={i}
-                    className="mr-auto max-w-[85%] rounded-[16px_16px_16px_4px] bg-secondary px-3.5 py-2.5 text-sm text-foreground"
-                    dangerouslySetInnerHTML={{
-                      __html: sanitizeAndRenderHtml(msg.content),
-                    }}
-                  />
-                )
-              )}
+                {messages.map((msg, i) =>
+                  msg.role === 'user' ? (
+                    <div
+                      key={i}
+                      className="ml-auto max-w-[80%] rounded-[16px_16px_4px_16px] bg-accent px-3.5 py-2.5 text-sm text-accent-foreground"
+                    >
+                      {msg.content}
+                    </div>
+                  ) : (
+                    <div
+                      key={i}
+                      className="mr-auto max-w-[85%] rounded-[16px_16px_16px_4px] bg-secondary px-3.5 py-2.5 text-sm text-foreground"
+                      dangerouslySetInnerHTML={{
+                        __html: sanitizeAndRenderHtml(msg.content),
+                      }}
+                    />
+                  )
+                )}
 
-              {/* Typing indicator */}
-              {isLoading && (
-                <div className="mr-auto max-w-[85%] rounded-[16px_16px_16px_4px] bg-secondary px-3.5 py-3">
-                  <div className="flex items-center gap-1">
-                    {[0, 1, 2].map((i) => (
-                      <span
-                        key={i}
-                        className="h-1.5 w-1.5 rounded-full bg-accent"
-                        style={{
-                          animation: 'chat-dot-pulse 1.2s ease-in-out infinite',
-                          animationDelay: `${i * 0.2}s`,
-                        }}
-                        aria-hidden="true"
-                      />
-                    ))}
-                    <span className="sr-only">AI is typing</span>
+                {/* Typing indicator */}
+                {isLoading && (
+                  <div className="mr-auto max-w-[85%] rounded-[16px_16px_16px_4px] bg-secondary px-3.5 py-3">
+                    <div className="flex items-center gap-1">
+                      {[0, 1, 2].map((i) => (
+                        <span
+                          key={i}
+                          className="h-1.5 w-1.5 rounded-full bg-accent"
+                          style={{
+                            animation: 'chat-dot-pulse 1.2s ease-in-out infinite',
+                            animationDelay: `${i * 0.2}s`,
+                          }}
+                          aria-hidden="true"
+                        />
+                      ))}
+                      <span className="sr-only">AI is typing</span>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              <div ref={messagesEndRef} />
+                <div ref={messagesEndRef} />
               </div>
             </div>
 
-            {/* Input area */}
-            <div className="flex flex-shrink-0 items-center gap-2 border-t border-border px-4 py-3">
+            {/* Input area — row 3 (auto, locked at bottom) */}
+            <div
+              className="flex items-center gap-2 border-t border-border bg-card px-4 py-3"
+              style={{ gridRow: 3 }}
+            >
               <input
                 ref={inputRef}
                 type="text"
@@ -278,7 +289,7 @@ export function ChatWidget() {
                 maxLength={1000}
                 disabled={isLoading}
                 aria-label="Message input"
-                className="flex-1 rounded-xl border border-border bg-secondary px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50"
+                className="min-w-0 flex-1 rounded-xl border border-border bg-secondary px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50"
               />
               <button
                 onClick={sendMessage}
