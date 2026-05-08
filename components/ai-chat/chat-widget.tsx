@@ -149,36 +149,35 @@ export function ChatWidget() {
   return (
     <>
       {/* Pulse ring + floating button */}
-      <div className="fixed bottom-8 right-8 z-50 flex items-center gap-3">
-        {/* Text label — only show when chat is closed */}
-        {!isOpen && (
-          <div className="flex items-center rounded-full border border-border bg-card px-3.5 py-2 shadow-md">
-            <span className="text-xs font-medium text-foreground whitespace-nowrap">
-              Ask our AI
-            </span>
-          </div>
-        )}
-
-        {/* Pulse ring + button */}
+      <div className="fixed bottom-8 right-8 z-50 flex items-center">
         <div className="relative flex items-center justify-center">
           {!isOpen && (
             <span
-              className="absolute inset-0 rounded-full bg-accent/40"
+              className="absolute -inset-1 rounded-full bg-accent/30"
               style={{ animation: 'chat-pulse 2s ease-out infinite' }}
               aria-hidden="true"
             />
           )}
-          <button
-            onClick={() => setIsOpen((v) => !v)}
-            aria-label={isOpen ? 'Close AI chat' : 'Open AI chat assistant'}
-            className="relative flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lg transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-          >
-            {isOpen ? (
+          {isOpen ? (
+            <button
+              onClick={() => setIsOpen((v) => !v)}
+              aria-label="Close AI chat"
+              className="relative flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lg transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
               <X className="h-5 w-5" />
-            ) : (
-              <Sparkles className="h-5 w-5" />
-            )}
-          </button>
+            </button>
+          ) : (
+            <button
+              onClick={() => setIsOpen((v) => !v)}
+              aria-label="Open AI chat assistant"
+              className="relative flex items-center gap-2 rounded-full bg-accent px-5 py-3.5 text-accent-foreground shadow-lg transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              <Sparkles className="h-5 w-5 flex-shrink-0" />
+              <span className="text-sm font-semibold whitespace-nowrap pr-1">
+                Ask our AI
+              </span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -192,7 +191,7 @@ export function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className="fixed right-6 z-50 flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
+            className="fixed right-8 z-50 flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
             style={{
               bottom: '104px',
               width: 'min(380px, calc(100vw - 32px))',
@@ -200,7 +199,7 @@ export function ChatWidget() {
             }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-border bg-secondary px-4 py-3">
+            <div className="flex flex-shrink-0 items-center justify-between border-b border-border bg-secondary px-4 py-3">
               <div className="flex items-center gap-2">
                 <div className="flex h-7 w-7 items-center justify-center rounded-full bg-accent/15">
                   <Bot className="h-4 w-4 text-accent" />
@@ -222,7 +221,8 @@ export function ChatWidget() {
             </div>
 
             {/* Messages */}
-            <div className="flex flex-1 flex-col gap-3 overflow-y-auto p-4 min-h-0">
+            <div className="min-h-0 flex-1 overflow-y-auto">
+              <div className="flex flex-col gap-3 p-4">
               {messages.map((msg, i) =>
                 msg.role === 'user' ? (
                   <div
@@ -263,10 +263,11 @@ export function ChatWidget() {
               )}
 
               <div ref={messagesEndRef} />
+              </div>
             </div>
 
             {/* Input area */}
-            <div className="flex items-center gap-2 border-t border-border px-4 py-3">
+            <div className="flex flex-shrink-0 items-center gap-2 border-t border-border px-4 py-3">
               <input
                 ref={inputRef}
                 type="text"
