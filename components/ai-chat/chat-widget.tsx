@@ -31,6 +31,7 @@ export function ChatWidget() {
 
   const inputRef = useRef<HTMLInputElement>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const messagesContainerRef = useRef<HTMLDivElement>(null)
 
   // Don't render on admin pages
   if (pathname?.startsWith('/admin')) return null
@@ -60,9 +61,11 @@ export function ChatWidget() {
     }
   }, [isOpen])
 
-  // Scroll to bottom when messages change
+  // Scroll only the messages container to bottom (NOT the page) when messages change
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    const container = messagesContainerRef.current
+    if (!container) return
+    container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' })
   }, [messages, isLoading])
 
   // Focus input when panel opens
@@ -227,6 +230,7 @@ export function ChatWidget() {
 
             {/* Messages — row 2 (1fr, scrolls independently) */}
             <div
+              ref={messagesContainerRef}
               className="overflow-y-auto overflow-x-hidden"
               style={{ gridRow: 2, minHeight: 0 }}
             >
