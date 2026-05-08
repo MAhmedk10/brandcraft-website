@@ -50,8 +50,8 @@ export function HeroSection() {
   }, [emblaApi, onSelect])
 
   return (
-    <section className="relative overflow-hidden bg-primary text-primary-foreground">
-      <div className="mx-auto max-w-7xl px-4 py-24 lg:px-8 lg:py-32">
+    <section className="relative flex h-[calc(100vh-4rem)] items-center overflow-hidden bg-primary text-primary-foreground">
+      <div className="mx-auto w-full max-w-7xl px-4 py-8 lg:px-8 lg:py-12">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           {/* Text content */}
           <div className="flex flex-col gap-6">
@@ -70,7 +70,7 @@ export function HeroSection() {
                 size="lg"
                 className="bg-accent text-accent-foreground hover:bg-accent/90"
               >
-                <Link href="/contact">
+                <Link href="#quote">
                   Get Your Free Quote
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>

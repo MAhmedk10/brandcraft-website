@@ -29,7 +29,7 @@ export function ProductHero({ title, description, valueProposition, ctaText }: P
               size="lg"
               className="bg-accent text-accent-foreground hover:bg-accent/90"
             >
-              <Link href="/contact">
+              <Link href="#quote">
                 {ctaText}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>

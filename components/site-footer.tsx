@@ -1,6 +1,17 @@
 import Link from "next/link"
 import { Mail, Phone } from "lucide-react"
 
+type NavProduct = {
+  _id?: string
+  title?: string | null
+  slug?: string | null
+  category?: string | null
+}
+
+interface SiteFooterProps {
+  products?: NavProduct[]
+}
+
 const quickLinks = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
@@ -8,50 +19,51 @@ const quickLinks = [
   { href: "/contact", label: "Contact" },
 ]
 
-const productCategories = [
-  {
-    label: "Patches",
-    items: [
-      { href: "/products/custom-patches", label: "Custom Patches" },
-      { href: "/products/custom-jacket-patches", label: "Jacket Patches" },
-      { href: "/products/embroidered-patches", label: "Embroidered Patches" },
-      { href: "/products/chenille-patches", label: "Chenille Patches" },
-      { href: "/products/leather-patches", label: "Leather Patches" },
-      { href: "/products/woven-patches", label: "Woven Patches" },
-      { href: "/products/iron-on-patches", label: "Iron On Patches" },
-      { href: "/products/velcro-patches", label: "Velcro Patches" },
-      { href: "/products/pvc-patches", label: "PVC Patches" },
-      { href: "/products/sublimation-patches", label: "Sublimation Patches" },
-    ],
-  },
-  {
-    label: "Stickers & Labels",
-    items: [
-      { href: "/products/die-cut-stickers", label: "Die Cut Stickers" },
-      { href: "/products/holographic-stickers", label: "Holographic Stickers" },
-      { href: "/products/hangtags-labels", label: "Hangtags & Labels" },
-    ],
-  },
-  {
-    label: "Apparel",
-    items: [
-      { href: "/products/custom-apparel", label: "Custom Apparel" },
-      { href: "/products/hoodies-tracksuits", label: "Hoodies & Tracksuits" },
-      { href: "/products/letterman-jackets", label: "Letterman Jackets" },
-      { href: "/products/biker-jackets", label: "Biker Jackets" },
-    ],
-  },
-  {
-    label: "Design Services",
-    items: [
-      { href: "/products/vector-art", label: "Vector Art" },
-      { href: "/products/embroidery-digitizing", label: "Embroidery Digitizing" },
-      { href: "/products/heat-transfer-dtf-print", label: "Heat Transfer DTF" },
-    ],
-  },
+/**
+ * Category column ordering for the footer "All Products" grid.
+ * Matches the navbar mapping for visual consistency.
+ */
+const categoryColumns: { key: string; label: string }[] = [
+  { key: "patches", label: "Patches" },
+  { key: "stickers", label: "Stickers & Labels" },
+  { key: "apparel", label: "Apparel" },
+  { key: "design", label: "Design Services" },
 ]
 
-export function SiteFooter() {
+type FooterCategory = {
+  label: string
+  items: { href: string; label: string }[]
+}
+
+function groupByCategory(products: NavProduct[]): FooterCategory[] {
+  const safe = Array.isArray(products) ? products : []
+  return categoryColumns
+    .map((col) => ({
+      label: col.label,
+      items: safe
+        .filter(
+          (p): p is NavProduct & { slug: string; title: string } =>
+            !!p?.slug && !!p?.title && p?.category === col.key
+        )
+        .map((p) => ({
+          href: `/products/${p.slug}`,
+          label: p.title,
+        })),
+    }))
+    .filter((col) => col.items.length > 0)
+}
+
+export function SiteFooter({ products = [] }: SiteFooterProps) {
+  const productCategories = groupByCategory(products)
+  const hasProducts = productCategories.length > 0
+
+  // Top 6 popular products: pick first product from each category, then fill.
+  const popularProducts = (() => {
+    if (!hasProducts) return []
+    const flat = productCategories.flatMap((c) => c.items)
+    return flat.slice(0, 6)
+  })()
+
   return (
     <footer className="border-t border-border bg-primary text-primary-foreground">
       <div className="mx-auto max-w-7xl px-4 py-16 lg:px-8">
@@ -92,30 +104,25 @@ export function SiteFooter() {
           </div>
 
           {/* Quick product links (top 6) */}
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-primary-foreground/90">
-              Popular Products
-            </h3>
-            <ul className="mt-4 flex flex-col gap-3">
-              {[
-                { href: "/products/custom-patches", label: "Custom Patches" },
-                { href: "/products/embroidered-patches", label: "Embroidered Patches" },
-                { href: "/products/pvc-patches", label: "PVC Patches" },
-                { href: "/products/die-cut-stickers", label: "Die Cut Stickers" },
-                { href: "/products/custom-apparel", label: "Custom Apparel" },
-                { href: "/products/embroidery-digitizing", label: "Embroidery Digitizing" },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-primary-foreground/70 transition-colors hover:text-primary-foreground"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {popularProducts.length > 0 && (
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-primary-foreground/90">
+                Popular Products
+              </h3>
+              <ul className="mt-4 flex flex-col gap-3">
+                {popularProducts.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-primary-foreground/70 transition-colors hover:text-primary-foreground"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Contact */}
           <div>
@@ -139,32 +146,34 @@ export function SiteFooter() {
         </div>
 
         {/* Products grid: all categories */}
-        <div className="mt-12 border-t border-primary-foreground/10 pt-10">
-          <h3 className="mb-6 text-sm font-semibold uppercase tracking-wider text-primary-foreground/90">
-            All Products
-          </h3>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {productCategories.map((category) => (
-              <div key={category.label}>
-                <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-primary-foreground/50">
-                  {category.label}
-                </p>
-                <ul className="flex flex-col gap-2">
-                  {category.items.map((item) => (
-                    <li key={item.href}>
-                      <Link
-                        href={item.href}
-                        className="text-sm text-primary-foreground/70 transition-colors hover:text-primary-foreground"
-                      >
-                        {item.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+        {hasProducts && (
+          <div className="mt-12 border-t border-primary-foreground/10 pt-10">
+            <h3 className="mb-6 text-sm font-semibold uppercase tracking-wider text-primary-foreground/90">
+              All Products
+            </h3>
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              {productCategories.map((category) => (
+                <div key={category.label}>
+                  <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-primary-foreground/50">
+                    {category.label}
+                  </p>
+                  <ul className="flex flex-col gap-2">
+                    {category.items.map((item) => (
+                      <li key={item.href}>
+                        <Link
+                          href={item.href}
+                          className="text-sm text-primary-foreground/70 transition-colors hover:text-primary-foreground"
+                        >
+                          {item.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Bottom bar */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-primary-foreground/10 pt-8 md:flex-row">

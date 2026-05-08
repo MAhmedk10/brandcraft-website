@@ -34,7 +34,7 @@ export default function ContactPage() {
       <ContactInfo />
 
       {/* Contact Form — side-by-side layout matching homepage */}
-      <section className="bg-secondary py-20 lg:py-28">
+      <section id="contact-form" className="bg-secondary py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="grid items-start gap-12 lg:grid-cols-5">
             {/* Left copy */}

@@ -1,7 +1,4 @@
-"use client"
-
-import { useState, useRef } from "react"
-import { Check, Play, Pause } from "lucide-react"
+import { Check, Play } from "lucide-react"
 
 const differentiators = [
   {
@@ -31,58 +28,46 @@ const differentiators = [
   },
 ]
 
-export function WhyChooseUs() {
-  const [isPlaying, setIsPlaying] = useState(false)
-  const videoRef = useRef<HTMLVideoElement>(null)
+// Replace with YouTube URL when ready (e.g. "https://www.youtube.com/watch?v=...")
+const HOME_PROCESS_VIDEO_URL = ""
 
-  function togglePlay() {
-    if (!videoRef.current) return
-    if (isPlaying) {
-      videoRef.current.pause()
-    } else {
-      videoRef.current.play()
-    }
-    setIsPlaying(!isPlaying)
-  }
+export function WhyChooseUs() {
+  const videoUrl = HOME_PROCESS_VIDEO_URL
+  const embedUrl = videoUrl
+    .replace("watch?v=", "embed/")
+    .replace("youtu.be/", "youtube.com/embed/")
 
   return (
     <section className="bg-background py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2">
-          {/* Video */}
-          <div className="relative aspect-video overflow-hidden rounded-lg bg-primary/5">
-            {/*
-              Replace the src below with your video file path, e.g. "/videos/showcase.mp4"
-              Place your video file in the /public/videos/ folder.
-            */}
-            <video
-              ref={videoRef}
-              className="h-full w-full object-cover"
-              loop
-              muted
-              playsInline
-              poster="/images/hero-about.jpg"
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
-              // src="/videos/your-video.mp4"
+          {/* Video / Placeholder */}
+          {videoUrl ? (
+            <div className="overflow-hidden rounded-lg">
+              <iframe
+                src={embedUrl}
+                title="Manufacturing process video"
+                className="w-full aspect-video rounded-lg"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          ) : (
+            <div
+              className="relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-lg border border-border bg-card"
+              role="img"
+              aria-label="Video coming soon"
             >
-              {/* <source src="/videos/your-video.mp4" type="video/mp4" /> */}
-            </video>
-            {/* Play / Pause overlay button */}
-            <button
-              onClick={togglePlay}
-              aria-label={isPlaying ? "Pause video" : "Play video"}
-              className="absolute inset-0 flex items-center justify-center bg-primary/30 transition-colors hover:bg-primary/40"
-            >
-              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lg transition-transform hover:scale-110">
-                {isPlaying ? (
-                  <Pause className="h-6 w-6" />
-                ) : (
+              <div className="flex flex-col items-center gap-3 text-center">
+                <span className="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lg">
                   <Play className="ml-1 h-6 w-6" />
-                )}
-              </span>
-            </button>
-          </div>
+                </span>
+                <p className="text-sm font-semibold text-foreground">
+                  Video Coming Soon
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* Content */}
           <div className="flex flex-col gap-8">

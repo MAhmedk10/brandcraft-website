@@ -71,7 +71,7 @@ export function ProcessSection() {
 
         <div className="mt-14 text-center">
           <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-            <Link href="/contact">
+            <Link href="/#quote">
               Start Your Project
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>

@@ -129,7 +129,7 @@ export function ServiceCategorySection({
               </ul>
             </div>
             <Button asChild size="lg" className="w-fit bg-accent text-accent-foreground hover:bg-accent/90">
-              <Link href="/contact">
+              <Link href="/#quote">
                 Get a Quote for {title}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
