@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { DM_Sans, Playfair_Display } from 'next/font/google'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
+import { ChatWidgetWrapper } from '@/components/ai-chat/chat-widget-wrapper'
 import './globals.css'
 
 const dmSans = DM_Sans({
@@ -59,6 +60,7 @@ export default function RootLayout({
         <SiteHeader />
         <main >{children}</main>
         <SiteFooter />
+        <ChatWidgetWrapper />
       </body>
     </html>
   )
