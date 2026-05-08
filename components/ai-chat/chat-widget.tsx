@@ -149,27 +149,37 @@ export function ChatWidget() {
   return (
     <>
       {/* Pulse ring + floating button */}
-      <div className="fixed bottom-6 right-6 z-50 flex items-center justify-center">
-        {/* Pulse ring — only when closed */}
+      <div className="fixed bottom-8 right-8 z-50 flex items-center gap-3">
+        {/* Text label — only show when chat is closed */}
         {!isOpen && (
-          <span
-            className="absolute inset-0 rounded-full bg-accent/40"
-            style={{ animation: 'chat-pulse 2s ease-out infinite' }}
-            aria-hidden="true"
-          />
+          <div className="flex items-center rounded-full border border-border bg-card px-3.5 py-2 shadow-md">
+            <span className="text-xs font-medium text-foreground whitespace-nowrap">
+              Ask our AI
+            </span>
+          </div>
         )}
 
-        <button
-          onClick={() => setIsOpen((v) => !v)}
-          aria-label={isOpen ? 'Close AI chat' : 'Open AI chat assistant'}
-          className="relative flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lg transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-        >
-          {isOpen ? (
-            <X className="h-5 w-5" />
-          ) : (
-            <Sparkles className="h-5 w-5" />
+        {/* Pulse ring + button */}
+        <div className="relative flex items-center justify-center">
+          {!isOpen && (
+            <span
+              className="absolute inset-0 rounded-full bg-accent/40"
+              style={{ animation: 'chat-pulse 2s ease-out infinite' }}
+              aria-hidden="true"
+            />
           )}
-        </button>
+          <button
+            onClick={() => setIsOpen((v) => !v)}
+            aria-label={isOpen ? 'Close AI chat' : 'Open AI chat assistant'}
+            className="relative flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lg transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            {isOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Sparkles className="h-5 w-5" />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Chat panel */}
@@ -184,7 +194,7 @@ export function ChatWidget() {
             transition={{ duration: 0.2 }}
             className="fixed right-6 z-50 flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
             style={{
-              bottom: '88px',
+              bottom: '104px',
               width: 'min(380px, calc(100vw - 32px))',
               height: 'min(520px, 70vh)',
             }}
@@ -212,7 +222,7 @@ export function ChatWidget() {
             </div>
 
             {/* Messages */}
-            <div className="flex flex-1 flex-col gap-3 overflow-y-auto p-4">
+            <div className="flex flex-1 flex-col gap-3 overflow-y-auto p-4 min-h-0">
               {messages.map((msg, i) =>
                 msg.role === 'user' ? (
                   <div
