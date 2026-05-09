@@ -45,21 +45,47 @@ export function AnnouncementStrip({ items, enabled }: AnnouncementStripProps) {
       aria-label="Site announcements"
       className="relative flex w-full items-center bg-accent text-accent-foreground md:h-10"
     >
-      {/* Static spaced content — only shows the first 2 items on mobile */}
-      <div className="flex flex-1 items-center overflow-hidden py-2 md:py-0">
-        <div className="flex w-full items-center justify-between px-4 md:px-8">
+      {/* Mobile: continuous marquee so users can see every item as it scrolls
+          past. The list is duplicated to create a seamless loop. */}
+      <div
+        className="group relative flex flex-1 items-center overflow-hidden py-2 md:hidden"
+        aria-label="Announcements"
+      >
+        <div className="flex shrink-0 animate-strip-marquee items-center gap-6 whitespace-nowrap pr-6 group-hover:[animation-play-state:paused]">
           {items.map((item, i) => (
-            <span
-              key={i}
-              className={`items-center gap-3 ${i >= 2 ? "hidden md:flex" : "flex"}`}
-            >
+            <span key={`a-${i}`} className="flex items-center gap-6">
+              <span className="text-xs font-medium">{item}</span>
+              <span aria-hidden="true" className="text-accent-foreground/40">
+                {"\u00B7"}
+              </span>
+            </span>
+          ))}
+        </div>
+        <div
+          aria-hidden="true"
+          className="flex shrink-0 animate-strip-marquee items-center gap-6 whitespace-nowrap pr-6 group-hover:[animation-play-state:paused]"
+        >
+          {items.map((item, i) => (
+            <span key={`b-${i}`} className="flex items-center gap-6">
+              <span className="text-xs font-medium">{item}</span>
+              <span className="text-accent-foreground/40">{"\u00B7"}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop: static, evenly-spread items */}
+      <div className="hidden flex-1 items-center overflow-hidden md:flex">
+        <div className="flex w-full items-center justify-between px-8">
+          {items.map((item, i) => (
+            <span key={i} className="flex items-center gap-3">
               <span className="whitespace-nowrap text-xs font-medium">
                 {item}
               </span>
               {i < items.length - 1 && (
                 <span
                   aria-hidden="true"
-                  className="hidden text-accent-foreground/40 md:inline"
+                  className="text-accent-foreground/40"
                 >
                   {"\u00B7"}
                 </span>

@@ -59,7 +59,7 @@ function PortfolioCard({
       aria-label={
         item.title ? `Open ${item.title} in lightbox` : "Open image in lightbox"
       }
-      className={`group relative h-full w-full cursor-pointer overflow-hidden rounded-lg bg-muted ${positionClass}`}
+      className={`group relative w-full cursor-pointer overflow-hidden rounded-lg bg-muted ${positionClass}`}
     >
       <Image
         src={item.src}
@@ -91,7 +91,7 @@ function PortfolioCard({
 function PlaceholderCard({ positionClass }: { positionClass: string }) {
   return (
     <div
-      className={`flex h-full w-full items-center justify-center overflow-hidden rounded-lg bg-muted text-muted-foreground/40 ${positionClass}`}
+      className={`flex w-full items-center justify-center overflow-hidden rounded-lg bg-muted text-muted-foreground/40 ${positionClass}`}
       aria-hidden="true"
     >
       <Camera className="h-10 w-10" />
@@ -116,24 +116,27 @@ function PortfolioSlide({
   const cells = Array.from({ length: ITEMS_PER_SLIDE }, (_, i) => pageItems[i])
 
   return (
-    <div
-      className="grid grid-cols-2 gap-3 md:grid-cols-3 md:grid-rows-2"
-      style={{ height: "460px" }}
-    >
+    <div className="grid grid-cols-2 gap-3 md:h-[460px] md:grid-cols-3 md:grid-rows-2">
       {cells.map((item, i) => {
-        const isWide = i === 0
-        const isTall = i === 1
-        const posClass = isWide
-          ? "col-span-2 md:col-span-2 row-span-1"
-          : isTall
-            ? "col-span-1 row-span-1 md:row-span-2"
-            : "col-span-1 row-span-1"
+        // Mobile: every cell is a 1×1 square so 6 items form a clean 2×3
+        // grid (no empty corner). Desktop: bento — item 0 wide, item 1 tall.
+        const posClass =
+          i === 0
+            ? "col-span-1 row-span-1 md:col-span-2"
+            : i === 1
+              ? "col-span-1 row-span-1 md:row-span-2"
+              : "col-span-1 row-span-1"
+
+        // Square aspect on mobile so each card has explicit height for the
+        // <Image fill /> children to render. Desktop gets its size from the
+        // fixed grid container height.
+        const sizingClass = "aspect-square md:aspect-auto md:h-full"
 
         if (!item) {
           return (
             <div
               key={`ph-${i}`}
-              className={`${posClass} rounded-lg bg-muted`}
+              className={`${posClass} ${sizingClass} rounded-lg bg-muted`}
               aria-hidden="true"
             />
           )
@@ -142,7 +145,7 @@ function PortfolioSlide({
           <PortfolioCard
             key={`item-${baseIndex + i}`}
             item={item}
-            positionClass={posClass}
+            positionClass={`${posClass} ${sizingClass}`}
             onClick={() => onItemClick(baseIndex + i)}
           />
         )
