@@ -145,12 +145,24 @@ export function ProductGallery({ items }: ProductGalleryProps) {
       {/* Lightbox */}
       {slides.length > 0 && (
         <Lightbox
-          open={lightboxOpen}
-          close={() => setLightboxOpen(false)}
-          index={lightboxIndex}
-          slides={slides}
-          plugins={[Zoom, Counter]}
-        />
+  open={lightboxOpen}
+  close={() => setLightboxOpen(false)}
+  index={lightboxIndex}
+  slides={slides}
+  plugins={[Zoom, Counter]}
+  styles={{
+    container: { backgroundColor: "rgba(0,0,0,0.95)" },
+  }}
+  toolbar={{
+    buttons: [
+      "close",
+    ],
+  }}
+  controller={{
+    closeOnBackdropClick: true,
+    closeOnPullDown: true,
+  }}
+/>
       )}
     </section>
   )

@@ -94,7 +94,7 @@ function PortfolioCard({
         src={item.src}
         alt={item.alt}
         fill
-        className="object-cover transition-transform duration-500 group-hover:scale-105"
+        className="object-cover transition-transform duration-300 group-hover:scale-105"
         sizes="(max-width: 768px) 50vw, 33vw"
       />
 
@@ -257,7 +257,7 @@ export function PortfolioSection({ items }: PortfolioSectionProps) {
         {/* Carousel viewport */}
         <div className="mt-14">
           <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex">
+            <div className="flex will-change-transform">
               {pages.map((page, pageIdx) => (
                 <div
                   key={`slide-${pageIdx}`}
