@@ -50,7 +50,7 @@ export function HeroSection() {
   }, [emblaApi, onSelect])
 
   return (
-    <section className="relative flex h-[calc(100vh-4rem)] items-center overflow-hidden bg-primary text-primary-foreground">
+    <section className="relative flex min-h-screen items-start overflow-hidden bg-primary text-primary-foreground pt-16 lg:h-[calc(100vh-4rem)] lg: items-center lg:pt-8">
       <div className="mx-auto w-full max-w-7xl px-4 py-8 lg:px-8 lg:py-12">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           {/* Text content */}
