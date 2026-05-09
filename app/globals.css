@@ -125,3 +125,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes strip-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-strip-marquee {
+  animation: strip-marquee 25s linear infinite;
+  will-change: transform;
+}

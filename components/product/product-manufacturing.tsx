@@ -5,25 +5,6 @@ interface ProductManufacturingProps {
   videoUrl?: string
 }
 
-/**
- * Splits a Sanity manufacturing-process string like:
- *   "Design Approval — We create mockups for your review."
- * into a { title, description } pair. Falls back to a description-only
- * item when no separator is present.
- */
-function parseStep(step: string): { title?: string; description: string } {
-  const separator = step.match(/[—:-]/)
-  if (!separator) return { description: step.trim() }
-
-  const idx = step.indexOf(separator[0])
-  const rawTitle = step.slice(0, idx).trim()
-  const rawDesc = step.slice(idx + 1).trim()
-
-  // If either side is empty, treat the whole thing as a description.
-  if (!rawTitle || !rawDesc) return { description: step.trim() }
-  return { title: rawTitle, description: rawDesc }
-}
-
 export function ProductManufacturing({ steps, videoUrl }: ProductManufacturingProps) {
   const hasVideo = !!videoUrl && videoUrl.trim() !== ""
   const embedUrl = hasVideo
@@ -77,33 +58,18 @@ export function ProductManufacturing({ steps, videoUrl }: ProductManufacturingPr
                 A transparent look at how we produce your order from start to finish.
               </p>
             </div>
-            <ul className="flex flex-col gap-6">
-              {steps.map((step, index) => {
-                const { title, description } = parseStep(step)
-                return (
-                  <li key={`${step}-${index}`} className="flex gap-4">
-                    <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent/10">
-                      <Check className="h-3.5 w-3.5 text-accent" />
-                    </div>
-                    <div>
-                      {title ? (
-                        <>
-                          <h3 className="font-semibold text-secondary-foreground">
-                            {title}
-                          </h3>
-                          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                            {description}
-                          </p>
-                        </>
-                      ) : (
-                        <p className="text-sm leading-relaxed text-secondary-foreground">
-                          {description}
-                        </p>
-                      )}
-                    </div>
-                  </li>
-                )
-              })}
+            <ul className="flex flex-col gap-4">
+              {steps.map((step, index) => (
+                <li
+                  key={`${step}-${index}`}
+                  className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground"
+                >
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
+                    <Check className="h-3 w-3" aria-hidden="true" />
+                  </span>
+                  <span>{step}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { defineType, defineField } from "sanity"
+import { defineType, defineField, defineArrayMember } from "sanity"
 
 /**
  * Site-wide settings — singleton document.
@@ -73,6 +73,72 @@ export const siteSettings = defineType({
       title: "Default Open Graph Image",
       type: "image",
       options: { hotspot: true },
+    }),
+    defineField({
+      name: "announcementStrip",
+      title: "Announcement Strip",
+      type: "object",
+      fields: [
+        defineField({
+          name: "enabled",
+          title: "Show Strip",
+          type: "boolean",
+          initialValue: true,
+        }),
+        defineField({
+          name: "items",
+          title: "Strip Items",
+          description:
+            "Each item scrolls across the strip. Add phone, email, offers etc.",
+          type: "array",
+          of: [defineArrayMember({ type: "string" })],
+        }),
+      ],
+    }),
+    defineField({
+      name: "portfolioItems",
+      title: "Portfolio Items",
+      description:
+        "Images shown in the portfolio/recent work section on the homepage.",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          fields: [
+            defineField({
+              name: "image",
+              title: "Image",
+              type: "image",
+              options: { hotspot: true },
+              fields: [
+                defineField({
+                  name: "alt",
+                  title: "Alt Text",
+                  type: "string",
+                }),
+              ],
+            }),
+            defineField({
+              name: "title",
+              title: "Project Title",
+              type: "string",
+            }),
+            defineField({
+              name: "category",
+              title: "Category",
+              type: "string",
+              options: {
+                list: [
+                  { title: "Patches", value: "patches" },
+                  { title: "Apparel", value: "apparel" },
+                  { title: "Stickers", value: "stickers" },
+                  { title: "Design Services", value: "design" },
+                ],
+              },
+            }),
+          ],
+        }),
+      ],
     }),
   ],
   preview: {
