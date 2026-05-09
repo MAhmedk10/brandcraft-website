@@ -119,13 +119,11 @@ function PortfolioSlide({
     <div className="grid grid-cols-2 gap-3 md:h-[460px] md:grid-cols-3 md:grid-rows-2">
       {cells.map((item, i) => {
         // Mobile: every cell is a 1×1 square so 6 items form a clean 2×3
-        // grid (no empty corner). Desktop: bento — item 0 wide, item 1 tall.
+        // grid (no empty corner). Desktop: bento — item 0 wide.
         const posClass =
           i === 0
             ? "col-span-1 row-span-1 md:col-span-2"
-            : i === 1
-              ? "col-span-1 row-span-1 md:row-span-2"
-              : "col-span-1 row-span-1"
+            : "col-span-1 row-span-1"
 
         // Square aspect on mobile so each card has explicit height for the
         // <Image fill /> children to render. Desktop gets its size from the
