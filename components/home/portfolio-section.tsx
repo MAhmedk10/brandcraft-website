@@ -261,7 +261,7 @@ export function PortfolioSection({ items }: PortfolioSectionProps) {
               {pages.map((page, pageIdx) => (
                 <div
                   key={`slide-${pageIdx}`}
-                  className="min-w-0 flex-[0_0_100%]"
+                  className="min-w-0 flex-[0_0_100%] will-change-transform"
                 >
                   <PortfolioSlide
                     cells={page}
