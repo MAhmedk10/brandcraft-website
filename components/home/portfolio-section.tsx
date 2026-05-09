@@ -119,26 +119,39 @@ function PortfolioSlide({
   // Pad to exactly ITEMS_PER_SLIDE cells.
   const cells = Array.from({ length: ITEMS_PER_SLIDE }, (_, i) => pageItems[i])
 
+  // A "full" slide has all cells filled. On mobile we only span item 0
+  // across both columns when the slide is full — that turns 5 items into
+  // 1 wide row + 2 square rows with NO empty bottom-right corner. Partial
+  // slides (e.g. last page with 2 items) just stack normally so we never
+  // leave a half-empty row.
+  const isFullSlide = pageItems.length === ITEMS_PER_SLIDE
+
   return (
     <div className="grid grid-cols-2 gap-3 md:h-[460px] md:grid-cols-3 md:grid-rows-2">
       {cells.map((item, i) => {
-        // Mobile: every cell is a 1×1 square in a 2-col grid.
-        // Desktop: bento — item 0 wide (2 cols), rest 1×1 in a 3×2 grid.
-        const posClass =
-          i === 0
-            ? "col-span-1 row-span-1 md:col-span-2"
-            : "col-span-1 row-span-1"
+        // Mobile: item 0 is wide on full slides, otherwise every cell is
+        // a 1×1 square. Desktop: item 0 always spans 2 cols.
+        const mobileSpan =
+          i === 0 && isFullSlide ? "col-span-2" : "col-span-1"
+        const posClass = `${mobileSpan} row-span-1 md:row-span-1 ${
+          i === 0 ? "md:col-span-2" : "md:col-span-1"
+        }`
 
         // Square aspect on mobile so each card has explicit height for the
-        // <Image fill /> children to render. Desktop gets its size from the
-        // fixed grid container height.
-        const sizingClass = "aspect-square md:aspect-auto md:h-full"
+        // <Image fill /> children to render. Item 0 when wide on mobile
+        // gets a 2:1 ratio so it doesn't tower over the rest. Desktop gets
+        // its size from the fixed grid container height.
+        const mobileAspect =
+          i === 0 && isFullSlide ? "aspect-[2/1]" : "aspect-square"
+        const sizingClass = `${mobileAspect} md:aspect-auto md:h-full`
 
         if (!item) {
+          // Hide empty placeholders on mobile entirely so partial slides
+          // (e.g. last page with fewer items) don't show muted gaps.
           return (
             <div
               key={`ph-${i}`}
-              className={`${posClass} ${sizingClass} rounded-lg bg-muted`}
+              className={`hidden ${posClass} ${sizingClass} rounded-lg bg-muted md:block`}
               aria-hidden="true"
             />
           )
