@@ -21,7 +21,11 @@ interface PortfolioSectionProps {
   items?: PortfolioItem[]
 }
 
-const ITEMS_PER_SLIDE = 6
+// 5 cells per slide on desktop: item 0 spans 2 cols (the wide bento card),
+// the remaining 4 fill the rest of a 3×2 grid for a total of 6 occupied
+// grid cells. Going higher than 5 causes items to overflow into an
+// implicit row 3 that gets clipped by the fixed grid height.
+const ITEMS_PER_SLIDE = 5
 
 const CATEGORY_LABELS: Record<string, string> = {
   patches: "Patches",
@@ -30,7 +34,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   design: "Design Services",
 }
 
-/** Split items into pages of 6 (one bento grid per page). */
+/** Split items into pages (one bento grid per page). */
 function chunk<T>(arr: T[], size: number): T[][] {
   const chunks: T[][] = []
   for (let i = 0; i < arr.length; i += size) {
@@ -100,8 +104,8 @@ function PlaceholderCard({ positionClass }: { positionClass: string }) {
 }
 
 /**
- * Renders one bento grid slide. Always renders 6 cells — fills any
- * shortfall with placeholder cards so layout never breaks.
+ * Renders one bento grid slide. Always renders ITEMS_PER_SLIDE cells —
+ * fills any shortfall with placeholder cards so layout never breaks.
  */
 function PortfolioSlide({
   pageItems,
@@ -112,14 +116,14 @@ function PortfolioSlide({
   baseIndex: number
   onItemClick: (globalIndex: number) => void
 }) {
-  // Pad to exactly 6 cells.
+  // Pad to exactly ITEMS_PER_SLIDE cells.
   const cells = Array.from({ length: ITEMS_PER_SLIDE }, (_, i) => pageItems[i])
 
   return (
     <div className="grid grid-cols-2 gap-3 md:h-[460px] md:grid-cols-3 md:grid-rows-2">
       {cells.map((item, i) => {
-        // Mobile: every cell is a 1×1 square so 6 items form a clean 2×3
-        // grid (no empty corner). Desktop: bento — item 0 wide.
+        // Mobile: every cell is a 1×1 square in a 2-col grid.
+        // Desktop: bento — item 0 wide (2 cols), rest 1×1 in a 3×2 grid.
         const posClass =
           i === 0
             ? "col-span-1 row-span-1 md:col-span-2"
