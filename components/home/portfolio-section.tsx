@@ -1,79 +1,200 @@
-import Image from "next/image"
+"use client"
 
-const portfolioItems = [
-  {
-    src: "/images/portfolio-1.jpg",
-    alt: "Custom embroidered patches in various designs and styles",
-    caption: "Custom Embroidered Patches",
-    tag: "Patches",
-  },
-  {
-    src: "/images/portfolio-2.jpg",
-    alt: "Corporate polo shirts with precision logo embroidery",
-    caption: "Corporate Uniform Embroidery",
-    tag: "Embroidery",
-  },
-  {
-    src: "/images/portfolio-3.jpg",
-    alt: "Screen-printed t-shirts and hoodies with custom brand designs",
-    caption: "Custom Screen-Printed Apparel",
-    tag: "Printing",
-  },
-  {
-    src: "/images/portfolio-4.jpg",
-    alt: "PVC and woven patches in various shapes displayed on dark surface",
-    caption: "Premium Woven & PVC Patches",
-    tag: "Patches",
-  },
-  {
-    src: "/images/portfolio-5.jpg",
-    alt: "Embroidered caps and hats with custom logo designs",
-    caption: "Embroidered Caps & Headwear",
-    tag: "Embroidery",
-  },
-  {
-    src: "/images/portfolio-6.jpg",
-    alt: "Collection of custom branded merchandise including bags and jackets",
-    caption: "Branded Merchandise Collection",
-    tag: "Full Branding",
-  },
+import { useCallback, useEffect, useState } from "react"
+import Image from "next/image"
+import useEmblaCarousel from "embla-carousel-react"
+import Autoplay from "embla-carousel-autoplay"
+import { ArrowLeft, ArrowRight, Camera } from "lucide-react"
+import Lightbox from "yet-another-react-lightbox"
+import Zoom from "yet-another-react-lightbox/plugins/zoom"
+import Counter from "yet-another-react-lightbox/plugins/counter"
+import "yet-another-react-lightbox/styles.css"
+import "yet-another-react-lightbox/plugins/counter.css"
+
+export interface PortfolioItem {
+  src: string
+  alt: string
+  title?: string
+  category?: string
+}
+
+interface PortfolioSectionProps {
+  items?: PortfolioItem[]
+}
+
+const ITEMS_PER_SLIDE = 6
+
+const CATEGORY_LABELS: Record<string, string> = {
+  patches: "Patches",
+  apparel: "Apparel",
+  stickers: "Stickers",
+  design: "Design Services",
+}
+
+/** Split items into pages of 6 (one bento grid per page). */
+function chunk<T>(arr: T[], size: number): T[][] {
+  const chunks: T[][] = []
+  for (let i = 0; i < arr.length; i += size) {
+    chunks.push(arr.slice(i, i + size))
+  }
+  return chunks
+}
+
+/** Bento grid positioning for the 6 cells in a slide. */
+const BENTO_POSITIONS = [
+  "md:col-span-2 md:row-span-1", // 1 — wide
+  "md:col-span-1 md:row-span-2", // 2 — tall
+  "md:col-span-1 md:row-span-1", // 3
+  "md:col-span-1 md:row-span-1", // 4
+  "md:col-span-1 md:row-span-1", // 5
+  "md:col-span-1 md:row-span-1", // 6
 ]
 
-function BentoCard({
+function PortfolioCard({
   item,
-  className,
+  positionClass,
+  onClick,
 }: {
-  item: (typeof portfolioItems)[number]
-  className?: string
+  item: PortfolioItem
+  positionClass: string
+  onClick: () => void
 }) {
+  const categoryLabel = item.category
+    ? CATEGORY_LABELS[item.category] ?? item.category
+    : null
+
   return (
-    <div
-      className={`group relative h-full w-full overflow-hidden rounded-lg bg-muted ${className ?? ""}`}
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={
+        item.title ? `Open ${item.title} in lightbox` : "Open image in lightbox"
+      }
+      className={`group relative w-full cursor-pointer overflow-hidden rounded-lg bg-muted ${positionClass}`}
     >
       <Image
         src={item.src}
         alt={item.alt}
         fill
         className="object-cover transition-transform duration-500 group-hover:scale-105"
+        sizes="(max-width: 768px) 50vw, 33vw"
       />
-      {/* Hover overlay */}
-      <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-primary/80 via-primary/20 to-transparent p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-        <span className="mb-1 w-fit rounded-full bg-accent px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-accent-foreground">
-          {item.tag}
+
+      {/* Hover dark overlay with title + category */}
+      <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-primary/85 via-primary/30 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        {item.title && (
+          <p className="text-sm font-semibold text-primary-foreground">
+            {item.title}
+          </p>
+        )}
+      </div>
+
+      {/* Category badge — bottom-left */}
+      {categoryLabel && (
+        <span className="absolute bottom-3 left-3 rounded-full bg-accent px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-accent-foreground shadow">
+          {categoryLabel}
         </span>
-        <p className="text-sm font-semibold text-primary-foreground">
-          {item.caption}
-        </p>
-      </div>
-      {/* Permanent tag */}
-      <div className="absolute right-3 top-3 rounded-full bg-primary/70 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary-foreground backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-0">
-        {item.tag}
-      </div>
+      )}
+    </button>
+  )
+}
+
+function PlaceholderCard({ positionClass }: { positionClass: string }) {
+  return (
+    <div
+      className={`flex w-full items-center justify-center overflow-hidden rounded-lg bg-muted text-muted-foreground/40 ${positionClass}`}
+      aria-hidden="true"
+    >
+      <Camera className="h-10 w-10" />
     </div>
   )
 }
 
-export function PortfolioSection() {
+/**
+ * Renders one bento grid slide. Always renders 6 cells — fills any
+ * shortfall with placeholder cards so layout never breaks.
+ */
+function PortfolioSlide({
+  pageItems,
+  baseIndex,
+  onItemClick,
+}: {
+  pageItems: PortfolioItem[]
+  baseIndex: number
+  onItemClick: (globalIndex: number) => void
+}) {
+  // Pad to exactly 6 cells.
+  const cells = Array.from({ length: ITEMS_PER_SLIDE }, (_, i) => pageItems[i])
+
+  return (
+    <div
+      className="grid w-full grid-cols-2 gap-3 md:grid-cols-3"
+      style={{ gridAutoRows: "180px" }}
+    >
+      {cells.map((item, i) => {
+        const positionClass = BENTO_POSITIONS[i]
+        if (!item) {
+          return (
+            <PlaceholderCard key={`ph-${i}`} positionClass={positionClass} />
+          )
+        }
+        return (
+          <PortfolioCard
+            key={`item-${baseIndex + i}`}
+            item={item}
+            positionClass={positionClass}
+            onClick={() => onItemClick(baseIndex + i)}
+          />
+        )
+      })}
+    </div>
+  )
+}
+
+export function PortfolioSection({ items }: PortfolioSectionProps) {
+  const sourceItems: PortfolioItem[] = items && items.length > 0 ? items : []
+  const hasItems = sourceItems.length > 0
+
+  // For the empty state we still show a single bento page of placeholders.
+  const pages = hasItems ? chunk(sourceItems, ITEMS_PER_SLIDE) : [[]]
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: pages.length > 1 },
+    pages.length > 1
+      ? [Autoplay({ delay: 4000, stopOnInteraction: false })]
+      : []
+  )
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [lightboxIndex, setLightboxIndex] = useState(0)
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return
+    setSelectedIndex(emblaApi.selectedScrollSnap())
+  }, [emblaApi])
+
+  useEffect(() => {
+    if (!emblaApi) return
+    onSelect()
+    emblaApi.on("select", onSelect)
+    emblaApi.on("reInit", onSelect)
+    return () => {
+      emblaApi.off("select", onSelect)
+      emblaApi.off("reInit", onSelect)
+    }
+  }, [emblaApi, onSelect])
+
+  // Lightbox slides — full source list (across pages).
+  const slides = sourceItems.map((it) => ({
+    src: it.src,
+    alt: it.alt || it.title || "Portfolio item",
+  }))
+
+  const openLightboxAt = (globalIndex: number) => {
+    setLightboxIndex(globalIndex)
+    setLightboxOpen(true)
+  }
+
   return (
     <section className="bg-background py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -86,46 +207,78 @@ export function PortfolioSection() {
           </p>
         </div>
 
-        {/*
-          Bento layout using explicit grid-template-rows via style prop
-          Row 1 & 2: main content area
-          Row 3: full-width panoramic strip
-        */}
-        <div
-          className="mt-14 grid gap-3 md:grid-cols-4"
-          style={{
-            gridTemplateRows: "minmax(0, 1fr)",
-          }}
-        >
-          {/* --- Top section: 2x2 hero + 4 standard tiles --- */}
-
-          {/* Large hero — spans 2 cols, 2 rows */}
-          <div className="relative min-h-[220px] md:col-span-2 md:row-span-2 md:min-h-[520px] lg:min-h-[580px]">
-            <BentoCard item={portfolioItems[0]} />
+        {/* Carousel viewport */}
+        <div className="relative mt-14">
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex">
+              {pages.map((page, pageIdx) => (
+                <div
+                  key={`slide-${pageIdx}`}
+                  className="min-w-0 flex-[0_0_100%]"
+                >
+                  <PortfolioSlide
+                    pageItems={page}
+                    baseIndex={pageIdx * ITEMS_PER_SLIDE}
+                    onItemClick={openLightboxAt}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Top-right tiles */}
-          <div className="relative min-h-[220px] md:min-h-0">
-            <BentoCard item={portfolioItems[1]} />
-          </div>
-          <div className="relative min-h-[220px] md:min-h-0">
-            <BentoCard item={portfolioItems[2]} />
-          </div>
-
-          {/* Bottom-right tiles */}
-          <div className="relative min-h-[220px] md:min-h-0">
-            <BentoCard item={portfolioItems[3]} />
-          </div>
-          <div className="relative min-h-[220px] md:min-h-0">
-            <BentoCard item={portfolioItems[4]} />
-          </div>
-
-          {/* --- Full-width panoramic strip --- */}
-          <div className="relative min-h-[180px] md:col-span-4 md:min-h-[200px] lg:min-h-[240px]">
-            <BentoCard item={portfolioItems[5]} />
-          </div>
+          {/* Arrow navigation — hidden when only one slide */}
+          {pages.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={() => emblaApi?.scrollPrev()}
+                aria-label="Previous portfolio slide"
+                className="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/90 text-foreground shadow-md transition-colors hover:bg-primary hover:text-primary-foreground"
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => emblaApi?.scrollNext()}
+                aria-label="Next portfolio slide"
+                className="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/90 text-foreground shadow-md transition-colors hover:bg-primary hover:text-primary-foreground"
+              >
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </>
+          )}
         </div>
+
+        {/* Dot indicators */}
+        {pages.length > 1 && (
+          <div className="mt-8 flex justify-center gap-2">
+            {pages.map((_, i) => (
+              <button
+                key={`dot-${i}`}
+                type="button"
+                onClick={() => emblaApi?.scrollTo(i)}
+                aria-label={`Go to slide ${i + 1}`}
+                className={`h-2 rounded-full transition-all ${
+                  i === selectedIndex
+                    ? "w-6 bg-accent"
+                    : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/60"
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
+
+      {/* Lightbox */}
+      {hasItems && (
+        <Lightbox
+          open={lightboxOpen}
+          close={() => setLightboxOpen(false)}
+          index={lightboxIndex}
+          slides={slides}
+          plugins={[Zoom, Counter]}
+        />
+      )}
     </section>
   )
 }

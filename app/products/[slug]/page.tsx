@@ -246,6 +246,31 @@ export default async function ProductPage({
           .filter(Boolean) as ProductData[])
       : getRelatedProducts(product.relatedSlugs ?? [])
 
+  // Hero background images — prefer Sanity heroGallery, fall back to heroImage.
+  const heroGalleryImages: { src: string; alt?: string }[] = Array.isArray(
+    sanityDoc?.heroGallery
+  )
+    ? (sanityDoc.heroGallery as Array<{
+        asset?: unknown
+        alt?: string | null
+      }>)
+        .map((img) => {
+          const url = imgUrl(img as SanityImage)
+          if (!url) return null
+          return { src: url, alt: img?.alt ?? product.title }
+        })
+        .filter((v): v is { src: string; alt?: string } => v !== null)
+    : []
+
+  const heroImageFallback = (() => {
+    const url = imgUrl(sanityDoc?.heroImage)
+    if (!url) return undefined
+    return {
+      src: url,
+      alt: sanityDoc?.heroImage?.alt ?? product.title,
+    }
+  })()
+
   return (
     <>
       {/* 1. Hero */}
@@ -254,6 +279,8 @@ export default async function ProductPage({
         description={product.heroDescription}
         valueProposition={product.valueProposition}
         ctaText={product.ctaText}
+        galleryImages={heroGalleryImages}
+        heroImage={heroImageFallback}
       />
 
       {/* 2. Key Features */}

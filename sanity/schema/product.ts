@@ -81,6 +81,28 @@ export const product = defineType({
       fields: [{ name: "alt", title: "Alt Text", type: "string" }],
     }),
     defineField({
+      name: "heroGallery",
+      title: "Hero Carousel Images",
+      description:
+        "Images that cycle in the hero background. Upload 3-5 images. If empty, heroImage will be used as static background.",
+      type: "array",
+      group: "core",
+      of: [
+        defineArrayMember({
+          type: "image",
+          options: { hotspot: true },
+          fields: [
+            defineField({
+              name: "alt",
+              title: "Alt Text",
+              type: "string",
+            }),
+          ],
+        }),
+      ],
+      validation: (Rule) => Rule.max(5),
+    }),
+    defineField({
       name: "heroTagline",
       title: "Hero Tagline",
       description: "Small eyebrow text shown above the product name in the hero.",

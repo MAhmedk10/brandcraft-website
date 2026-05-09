@@ -41,6 +41,10 @@ export const productBySlugQuery = groq`
       asset->,
       alt
     },
+    heroGallery[]{
+      asset->,
+      alt
+    },
     keyFeatures[]{
       title,
       description
@@ -177,6 +181,15 @@ export const siteSettingsQuery = groq`
     ogImage{
       ...,
       asset->
+    },
+    announcementStrip{
+      enabled,
+      items
+    },
+    portfolioItems[]{
+      image{ asset->, alt },
+      title,
+      category
     }
   }
 `

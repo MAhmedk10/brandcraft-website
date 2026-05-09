@@ -2,9 +2,10 @@ import type { Metadata, Viewport } from 'next'
 import { DM_Sans, Playfair_Display } from 'next/font/google'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
+import { AnnouncementStrip } from '@/components/announcement-strip'
 import { ChatWidgetWrapper } from '@/components/ai-chat/chat-widget-wrapper'
 import { client } from '@/sanity/lib/client'
-import { allProductsQuery } from '@/sanity/lib/queries'
+import { allProductsQuery, siteSettingsQuery } from '@/sanity/lib/queries'
 import './globals.css'
 
 const dmSans = DM_Sans({
@@ -60,6 +61,13 @@ export type NavProduct = {
   category?: string | null
 }
 
+type SiteSettingsForLayout = {
+  announcementStrip?: {
+    enabled?: boolean | null
+    items?: string[] | null
+  } | null
+} | null
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -78,13 +86,31 @@ export default async function RootLayout({
     products = []
   }
 
+  // Fetch site settings (used here for the announcement strip).
+  let siteSettings: SiteSettingsForLayout = null
+  try {
+    siteSettings = await client.fetch<SiteSettingsForLayout>(
+      siteSettingsQuery,
+      {},
+      { next: { revalidate: 3600 } }
+    )
+  } catch {
+    siteSettings = null
+  }
+
+  const strip = siteSettings?.announcementStrip ?? null
+
   return (
-    <html lang="en">
+    <html lang="en" className="bg-background">
       <body
         className={`${dmSans.variable} ${playfairDisplay.variable} font-sans antialiased`}
       >
+        <AnnouncementStrip
+          items={strip?.items ?? []}
+          enabled={strip?.enabled ?? false}
+        />
         <SiteHeader products={products ?? []} />
-        <main >{children}</main>
+        <main>{children}</main>
         <SiteFooter products={products ?? []} />
         <ChatWidgetWrapper />
       </body>
