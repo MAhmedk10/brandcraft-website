@@ -9,14 +9,16 @@ interface AnnouncementStripProps {
 }
 
 /**
- * Full-width marquee strip rendered above the navbar.
+ * Full-width announcement strip rendered above the navbar.
  *
  * - Content (items + enabled) is fetched server-side from Sanity siteSettings
  *   and passed in as props.
  * - Hidden when `enabled === false`, when `items` is empty, or when the user
  *   has previously dismissed the strip in the current session
  *   (sessionStorage key: `strip-dismissed`).
- * - Marquee animation: 30s linear infinite, paused on hover.
+ * - Layout: items are centered horizontally and static (no scrolling). On
+ *   narrow viewports, items that don't fit are simply clipped via
+ *   `overflow-hidden` — nothing animates.
  */
 export function AnnouncementStrip({ items, enabled }: AnnouncementStripProps) {
   const [dismissed, setDismissed] = useState(false)
@@ -32,9 +34,6 @@ export function AnnouncementStrip({ items, enabled }: AnnouncementStripProps) {
   if (!items || items.length === 0) return null
   if (dismissed) return null
 
-  // Duplicate the array so the marquee loops seamlessly.
-  const doubled = [...items, ...items]
-
   const handleDismiss = () => {
     sessionStorage.setItem("strip-dismissed", "true")
     setDismissed(true)
@@ -46,21 +45,22 @@ export function AnnouncementStrip({ items, enabled }: AnnouncementStripProps) {
       aria-label="Site announcements"
       className="relative flex w-full items-center bg-accent text-accent-foreground md:h-10"
     >
-      {/* Marquee viewport */}
-      <div className="group flex-1 overflow-hidden py-2 md:py-0">
-        <div
-          className="flex w-max animate-[announcement-marquee_30s_linear_infinite] whitespace-nowrap group-hover:[animation-play-state:paused]"
-          style={{ willChange: "transform" }}
-        >
-          {doubled.map((item, idx) => (
-            <span
-              key={idx}
-              className="flex shrink-0 items-center text-xs font-medium"
-            >
-              <span className="px-4">{item}</span>
-              <span aria-hidden="true" className="opacity-60">
-                {"·"}
+      {/* Static centered content */}
+      <div className="flex flex-1 items-center justify-center overflow-hidden py-2 md:py-0">
+        <div className="flex items-center justify-center gap-6 px-10">
+          {items.map((item, i) => (
+            <span key={i} className="flex items-center gap-6">
+              <span className="whitespace-nowrap text-xs font-medium">
+                {item}
               </span>
+              {i < items.length - 1 && (
+                <span
+                  aria-hidden="true"
+                  className="text-accent-foreground/40"
+                >
+                  {"\u00B7"}
+                </span>
+              )}
             </span>
           ))}
         </div>

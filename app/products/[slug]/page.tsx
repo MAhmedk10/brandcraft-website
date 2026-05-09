@@ -246,7 +246,8 @@ export default async function ProductPage({
           .filter(Boolean) as ProductData[])
       : getRelatedProducts(product.relatedSlugs ?? [])
 
-  // Hero background images — prefer Sanity heroGallery, fall back to heroImage.
+  // Hero background images — Sanity heroGallery only. When empty the hero
+  // falls back to its solid bg-primary background (no image fallback).
   const heroGalleryImages: { src: string; alt?: string }[] = Array.isArray(
     sanityDoc?.heroGallery
   )
@@ -262,15 +263,6 @@ export default async function ProductPage({
         .filter((v): v is { src: string; alt?: string } => v !== null)
     : []
 
-  const heroImageFallback = (() => {
-    const url = imgUrl(sanityDoc?.heroImage)
-    if (!url) return undefined
-    return {
-      src: url,
-      alt: sanityDoc?.heroImage?.alt ?? product.title,
-    }
-  })()
-
   return (
     <>
       {/* 1. Hero */}
@@ -280,7 +272,6 @@ export default async function ProductPage({
         valueProposition={product.valueProposition}
         ctaText={product.ctaText}
         galleryImages={heroGalleryImages}
-        heroImage={heroImageFallback}
       />
 
       {/* 2. Key Features */}
