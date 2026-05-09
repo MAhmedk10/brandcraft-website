@@ -257,7 +257,7 @@ export function PortfolioSection({ items }: PortfolioSectionProps) {
         {/* Carousel viewport */}
         <div className="mt-14">
           <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex will-change-transform">
+            <div className="flex">
               {pages.map((page, pageIdx) => (
                 <div
                   key={`slide-${pageIdx}`}
