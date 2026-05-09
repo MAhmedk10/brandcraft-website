@@ -45,18 +45,21 @@ export function AnnouncementStrip({ items, enabled }: AnnouncementStripProps) {
       aria-label="Site announcements"
       className="relative flex w-full items-center bg-accent text-accent-foreground md:h-10"
     >
-      {/* Static centered content */}
-      <div className="flex flex-1 items-center justify-center overflow-hidden py-2 md:py-0">
-        <div className="flex items-center justify-center gap-6 px-10">
+      {/* Static spaced content — only shows the first 2 items on mobile */}
+      <div className="flex flex-1 items-center overflow-hidden py-2 md:py-0">
+        <div className="flex w-full items-center justify-between px-4 md:px-8">
           {items.map((item, i) => (
-            <span key={i} className="flex items-center gap-6">
+            <span
+              key={i}
+              className={`items-center gap-3 ${i >= 2 ? "hidden md:flex" : "flex"}`}
+            >
               <span className="whitespace-nowrap text-xs font-medium">
                 {item}
               </span>
               {i < items.length - 1 && (
                 <span
                   aria-hidden="true"
-                  className="text-accent-foreground/40"
+                  className="hidden text-accent-foreground/40 md:inline"
                 >
                   {"\u00B7"}
                 </span>

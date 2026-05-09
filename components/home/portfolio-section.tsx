@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from "react"
 import Image from "next/image"
 import useEmblaCarousel from "embla-carousel-react"
-import Autoplay from "embla-carousel-autoplay"
 import { ArrowLeft, ArrowRight, Camera } from "lucide-react"
 import Lightbox from "yet-another-react-lightbox"
 import Zoom from "yet-another-react-lightbox/plugins/zoom"
@@ -40,16 +39,6 @@ function chunk<T>(arr: T[], size: number): T[][] {
   return chunks
 }
 
-/** Bento grid positioning for the 6 cells in a slide. */
-const BENTO_POSITIONS = [
-  "md:col-span-2 md:row-span-1", // 1 — wide
-  "md:col-span-1 md:row-span-2", // 2 — tall
-  "md:col-span-1 md:row-span-1", // 3
-  "md:col-span-1 md:row-span-1", // 4
-  "md:col-span-1 md:row-span-1", // 5
-  "md:col-span-1 md:row-span-1", // 6
-]
-
 function PortfolioCard({
   item,
   positionClass,
@@ -70,7 +59,7 @@ function PortfolioCard({
       aria-label={
         item.title ? `Open ${item.title} in lightbox` : "Open image in lightbox"
       }
-      className={`group relative w-full cursor-pointer overflow-hidden rounded-lg bg-muted ${positionClass}`}
+      className={`group relative h-full w-full cursor-pointer overflow-hidden rounded-lg bg-muted ${positionClass}`}
     >
       <Image
         src={item.src}
@@ -102,7 +91,7 @@ function PortfolioCard({
 function PlaceholderCard({ positionClass }: { positionClass: string }) {
   return (
     <div
-      className={`flex w-full items-center justify-center overflow-hidden rounded-lg bg-muted text-muted-foreground/40 ${positionClass}`}
+      className={`flex h-full w-full items-center justify-center overflow-hidden rounded-lg bg-muted text-muted-foreground/40 ${positionClass}`}
       aria-hidden="true"
     >
       <Camera className="h-10 w-10" />
@@ -128,21 +117,32 @@ function PortfolioSlide({
 
   return (
     <div
-      className="grid w-full grid-cols-2 gap-3 md:grid-cols-3"
-      style={{ gridAutoRows: "180px" }}
+      className="grid grid-cols-2 gap-3 md:grid-cols-3 md:grid-rows-2"
+      style={{ height: "460px" }}
     >
       {cells.map((item, i) => {
-        const positionClass = BENTO_POSITIONS[i]
+        const isWide = i === 0
+        const isTall = i === 1
+        const posClass = isWide
+          ? "col-span-2 md:col-span-2 row-span-1"
+          : isTall
+            ? "col-span-1 row-span-1 md:row-span-2"
+            : "col-span-1 row-span-1"
+
         if (!item) {
           return (
-            <PlaceholderCard key={`ph-${i}`} positionClass={positionClass} />
+            <div
+              key={`ph-${i}`}
+              className={`${posClass} rounded-lg bg-muted`}
+              aria-hidden="true"
+            />
           )
         }
         return (
           <PortfolioCard
             key={`item-${baseIndex + i}`}
             item={item}
-            positionClass={positionClass}
+            positionClass={posClass}
             onClick={() => onItemClick(baseIndex + i)}
           />
         )
@@ -158,12 +158,9 @@ export function PortfolioSection({ items }: PortfolioSectionProps) {
   // For the empty state we still show a single bento page of placeholders.
   const pages = hasItems ? chunk(sourceItems, ITEMS_PER_SLIDE) : [[]]
 
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: pages.length > 1 },
-    pages.length > 1
-      ? [Autoplay({ delay: 4000, stopOnInteraction: false })]
-      : []
-  )
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: pages.length > 1,
+  })
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
@@ -208,7 +205,7 @@ export function PortfolioSection({ items }: PortfolioSectionProps) {
         </div>
 
         {/* Carousel viewport */}
-        <div className="relative mt-14">
+        <div className="mt-14">
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
               {pages.map((page, pageIdx) => (
@@ -225,46 +222,44 @@ export function PortfolioSection({ items }: PortfolioSectionProps) {
               ))}
             </div>
           </div>
-
-          {/* Arrow navigation — hidden when only one slide */}
-          {pages.length > 1 && (
-            <>
-              <button
-                type="button"
-                onClick={() => emblaApi?.scrollPrev()}
-                aria-label="Previous portfolio slide"
-                className="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/90 text-foreground shadow-md transition-colors hover:bg-primary hover:text-primary-foreground"
-              >
-                <ArrowLeft className="h-4 w-4" />
-              </button>
-              <button
-                type="button"
-                onClick={() => emblaApi?.scrollNext()}
-                aria-label="Next portfolio slide"
-                className="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/90 text-foreground shadow-md transition-colors hover:bg-primary hover:text-primary-foreground"
-              >
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </>
-          )}
         </div>
 
-        {/* Dot indicators */}
+        {/* Controls row — arrows + dots, hidden when only one slide */}
         {pages.length > 1 && (
-          <div className="mt-8 flex justify-center gap-2">
-            {pages.map((_, i) => (
-              <button
-                key={`dot-${i}`}
-                type="button"
-                onClick={() => emblaApi?.scrollTo(i)}
-                aria-label={`Go to slide ${i + 1}`}
-                className={`h-2 rounded-full transition-all ${
-                  i === selectedIndex
-                    ? "w-6 bg-accent"
-                    : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/60"
-                }`}
-              />
-            ))}
+          <div className="mt-6 flex items-center justify-center gap-4">
+            <button
+              type="button"
+              onClick={() => emblaApi?.scrollPrev()}
+              aria-label="Previous"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </button>
+
+            <div className="flex items-center gap-2">
+              {pages.map((_, i) => (
+                <button
+                  key={`dot-${i}`}
+                  type="button"
+                  onClick={() => emblaApi?.scrollTo(i)}
+                  aria-label={`Go to slide ${i + 1}`}
+                  className={`h-2 rounded-full transition-all ${
+                    i === selectedIndex
+                      ? "w-6 bg-accent"
+                      : "w-2 bg-muted-foreground/30"
+                  }`}
+                />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => emblaApi?.scrollNext()}
+              aria-label="Next"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
+              <ArrowRight className="h-4 w-4" />
+            </button>
           </div>
         )}
       </div>
