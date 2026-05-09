@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Phone } from "lucide-react"
+import { ArrowRight, Layers } from "lucide-react"
 
 export function ContactCta() {
   return (
@@ -18,8 +18,8 @@ export function ContactCta() {
             size="lg"
             className="bg-accent text-accent-foreground hover:bg-accent/90"
           >
-            <Link href="/contact">
-              Request a Quote
+            <Link href="#contact-form">
+              Send a Message
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
@@ -29,9 +29,9 @@ export function ContactCta() {
             size="lg"
             className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
           >
-            <Link href="tel:5551234567">
-              <Phone className="mr-2 h-4 w-4" />
-              Call Us Today
+            <Link href="/services">
+              <Layers className="mr-2 h-4 w-4" />
+              View Our Services
             </Link>
           </Button>
         </div>

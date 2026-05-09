@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
+import { QuoteCtaButton } from "@/components/quote-cta-button"
 
 interface ProductHeroProps {
   title: string
@@ -24,16 +24,12 @@ export function ProductHero({ title, description, valueProposition, ctaText }: P
             {description}
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Button
-              asChild
-              size="lg"
+            <QuoteCtaButton
+              href="#quote"
               className="bg-accent text-accent-foreground hover:bg-accent/90"
             >
-              <Link href="/contact">
-                {ctaText}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+              {ctaText}
+            </QuoteCtaButton>
             <Button
               asChild
               variant="outline"

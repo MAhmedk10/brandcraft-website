@@ -1,6 +1,5 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, MessageSquare, PenTool, Factory, PackageCheck } from "lucide-react"
+import { MessageSquare, PenTool, Factory, PackageCheck } from "lucide-react"
+import { QuoteCtaButton } from "@/components/quote-cta-button"
 
 const stepIcons = [MessageSquare, PenTool, Factory, PackageCheck]
 
@@ -48,16 +47,12 @@ export function ProductHowToOrder({ steps, ctaText }: ProductHowToOrderProps) {
         </div>
 
         <div className="mt-14 text-center">
-          <Button
-            asChild
-            size="lg"
+          <QuoteCtaButton
+            href="#quote"
             className="bg-accent text-accent-foreground hover:bg-accent/90"
           >
-            <Link href="/contact">
-              {ctaText}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
+            {ctaText}
+          </QuoteCtaButton>
         </div>
       </div>
     </section>

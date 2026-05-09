@@ -73,7 +73,7 @@ export function ProductQuoteForm({ serviceTitle, productSlug }: ProductQuoteForm
 
   if (submitted) {
     return (
-      <section className="bg-secondary py-16 lg:py-20">
+      <section id="quote" className="bg-secondary py-16 lg:py-20">
         <div className="mx-auto max-w-3xl px-4 text-center lg:px-8">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-accent/10">
             <CheckCircle2 className="h-8 w-8 text-accent" />
@@ -97,7 +97,7 @@ export function ProductQuoteForm({ serviceTitle, productSlug }: ProductQuoteForm
   }
 
   return (
-    <section className="bg-secondary py-16 lg:py-20">
+    <section id="quote" className="bg-secondary py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <div className="grid items-start gap-12 lg:grid-cols-5">
           <div className="flex flex-col gap-4 lg:col-span-2 lg:sticky lg:top-28">

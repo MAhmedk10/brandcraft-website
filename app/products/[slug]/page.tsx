@@ -295,7 +295,10 @@ export default async function ProductPage({
       <ProductGallery items={product.galleryPlaceholders ?? []} />
 
       {/* 8. Manufacturing Process */}
-      <ProductManufacturing steps={product.manufacturingProcess ?? []} />
+      <ProductManufacturing
+        steps={product.manufacturingProcess ?? []}
+        videoUrl={typeof sanityDoc?.videoUrl === "string" ? sanityDoc.videoUrl : ""}
+      />
 
       {/* 9. Why Choose Us */}
       <ProductWhyChooseUs items={product.whyChooseUs ?? []} />

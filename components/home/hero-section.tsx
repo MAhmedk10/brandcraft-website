@@ -6,7 +6,7 @@ import Image from "next/image"
 import useEmblaCarousel from "embla-carousel-react"
 import Autoplay from "embla-carousel-autoplay"
 import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
+import { QuoteCtaButton } from "@/components/quote-cta-button"
 
 const heroImages = [
   {
@@ -50,8 +50,8 @@ export function HeroSection() {
   }, [emblaApi, onSelect])
 
   return (
-    <section className="relative overflow-hidden bg-primary text-primary-foreground">
-      <div className="mx-auto max-w-7xl px-4 py-24 lg:px-8 lg:py-32">
+    <section className="relative flex min-h-screen items-start overflow-hidden bg-primary text-primary-foreground pt-16 lg:h-[calc(100vh-4rem)] lg: items-center lg:pt-8">
+      <div className="mx-auto w-full max-w-7xl px-4 py-8 lg:px-8 lg:py-12">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           {/* Text content */}
           <div className="flex flex-col gap-6">
@@ -65,16 +65,12 @@ export function HeroSection() {
               High-quality patches, logos, printing, and embroidery designed to elevate your brand identity. From concept to delivery, we create customized branding that makes an impact.
             </p>
             <div className="flex flex-wrap items-center gap-4 pt-2">
-              <Button
-                asChild
-                size="lg"
+              <QuoteCtaButton
+                href="#quote"
                 className="bg-accent text-accent-foreground hover:bg-accent/90"
               >
-                <Link href="/contact">
-                  Get Your Free Quote
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+                Get Your Free Quote
+              </QuoteCtaButton>
               <Button
                 asChild
                 variant="outline"

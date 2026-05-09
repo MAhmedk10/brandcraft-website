@@ -2,52 +2,31 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useMemo } from "react"
 import { Menu, X, ChevronDown, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
-const productCategories = [
-  {
-    label: "Patches",
-    items: [
-      { href: "/products/custom-patches", label: "Custom Patches" },
-      { href: "/products/custom-jacket-patches", label: "Custom Jacket Patches" },
-      { href: "/products/embroidered-patches", label: "Embroidered Patches" },
-      { href: "/products/chenille-patches", label: "Chenille Patches" },
-      { href: "/products/leather-patches", label: "Leather Patches" },
-      { href: "/products/woven-patches", label: "Woven Patches" },
-      { href: "/products/iron-on-patches", label: "Iron On Patches" },
-      { href: "/products/velcro-patches", label: "Velcro Patches" },
-      { href: "/products/pvc-patches", label: "PVC Patches" },
-      { href: "/products/sublimation-patches", label: "Sublimation Patches" },
-    ],
-  },
-  {
-    label: "Stickers & Labels",
-    items: [
-      { href: "/products/die-cut-stickers", label: "Die Cut Stickers" },
-      { href: "/products/holographic-stickers", label: "Holographic Stickers" },
-      { href: "/products/hangtags-labels", label: "Hangtags & Labels" },
-    ],
-  },
-  {
-    label: "Apparel",
-    items: [
-      { href: "/products/custom-apparel", label: "Custom Apparel" },
-      { href: "/products/hoodies-tracksuits", label: "Hoodies & Tracksuits" },
-      { href: "/products/letterman-jackets", label: "Letterman Jackets" },
-      { href: "/products/biker-jackets", label: "Biker Jackets" },
-    ],
-  },
-  {
-    label: "Design Services",
-    items: [
-      { href: "/products/vector-art", label: "Vector Art" },
-      { href: "/products/embroidery-digitizing", label: "Embroidery Digitizing" },
-      { href: "/products/heat-transfer-dtf-print", label: "Heat Transfer DTF Print" },
-    ],
-  },
+type NavProduct = {
+  _id?: string
+  title?: string | null
+  slug?: string | null
+  category?: string | null
+}
+
+interface SiteHeaderProps {
+  products?: NavProduct[]
+}
+
+/**
+ * Category column ordering for the Products mega-dropdown.
+ * Sanity `category` values: "patches" | "stickers" | "apparel" | "design".
+ */
+const categoryColumns: { key: string; label: string }[] = [
+  { key: "patches", label: "Patches" },
+  { key: "apparel", label: "Apparel" },
+  { key: "stickers", label: "Stickers & Labels" },
+  { key: "design", label: "Design Services" },
 ]
 
 const navLinks = [
@@ -57,13 +36,32 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ]
 
-export function SiteHeader() {
+export function SiteHeader({ products = [] }: SiteHeaderProps) {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [productsOpen, setProductsOpen] = useState(false)
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Group Sanity products by category for the dropdown columns.
+  const productCategories = useMemo(() => {
+    const safe = Array.isArray(products) ? products : []
+    return categoryColumns
+      .map((col) => ({
+        label: col.label,
+        items: safe
+          .filter(
+            (p): p is NavProduct & { slug: string; title: string } =>
+              !!p?.slug && !!p?.title && p?.category === col.key
+          )
+          .map((p) => ({
+            href: `/products/${p.slug}`,
+            label: p.title,
+          })),
+      }))
+      .filter((col) => col.items.length > 0)
+  }, [products])
 
   // Close desktop dropdown on outside click
   useEffect(() => {
@@ -93,6 +91,7 @@ export function SiteHeader() {
   }
 
   const isProductPage = pathname.startsWith("/products")
+  const hasProducts = productCategories.length > 0
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background backdrop-blur-none" style={{ WebkitBackfaceVisibility: "hidden" }}>
@@ -121,61 +120,63 @@ export function SiteHeader() {
           </Link>
 
           {/* Products mega-dropdown */}
-          <div
-            ref={dropdownRef}
-            className="relative"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <button
-              onClick={() => setProductsOpen(!productsOpen)}
-              className={cn(
-                "inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
-                isProductPage ? "text-foreground" : "text-muted-foreground"
-              )}
-              aria-expanded={productsOpen}
-              aria-haspopup="true"
+          {hasProducts && (
+            <div
+              ref={dropdownRef}
+              className="relative"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
-              Products
-              <ChevronDown
+              <button
+                onClick={() => setProductsOpen(!productsOpen)}
                 className={cn(
-                  "h-3.5 w-3.5 transition-transform",
-                  productsOpen && "rotate-180"
+                  "inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
+                  isProductPage ? "text-foreground" : "text-muted-foreground"
                 )}
-              />
-            </button>
+                aria-expanded={productsOpen}
+                aria-haspopup="true"
+              >
+                Products
+                <ChevronDown
+                  className={cn(
+                    "h-3.5 w-3.5 transition-transform",
+                    productsOpen && "rotate-180"
+                  )}
+                />
+              </button>
 
-            {productsOpen && (
-              <div className="absolute left-1/2 top-full z-50 mt-1 w-[680px] -translate-x-1/2 rounded-lg border border-border bg-card p-5 shadow-xl">
-                <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
-                  {productCategories.map((category) => (
-                    <div key={category.label}>
-                      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                        {category.label}
-                      </p>
-                      <ul className="flex flex-col gap-0.5">
-                        {category.items.map((item) => (
-                          <li key={item.href}>
-                            <Link
-                              href={item.href}
-                              className={cn(
-                                "block rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-secondary hover:text-foreground",
-                                pathname === item.href
-                                  ? "bg-secondary font-medium text-foreground"
-                                  : "text-muted-foreground"
-                              )}
-                            >
-                              {item.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
+              {productsOpen && (
+                <div className="absolute left-1/2 top-full z-50 mt-1 w-[680px] -translate-x-1/2 rounded-lg border border-border bg-card p-5 shadow-xl">
+                  <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+                    {productCategories.map((category) => (
+                      <div key={category.label}>
+                        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                          {category.label}
+                        </p>
+                        <ul className="flex flex-col gap-0.5">
+                          {category.items.map((item) => (
+                            <li key={item.href}>
+                              <Link
+                                href={item.href}
+                                className={cn(
+                                  "block rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-secondary hover:text-foreground",
+                                  pathname === item.href
+                                    ? "bg-secondary font-medium text-foreground"
+                                    : "text-muted-foreground"
+                                )}
+                              >
+                                {item.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          )}
 
           {/* Services, About, Contact */}
           {navLinks.slice(1).map((link) => (
@@ -227,46 +228,50 @@ export function SiteHeader() {
             </Link>
 
             {/* Products accordion */}
-            <button
-              onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
-              className={cn(
-                "flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-secondary",
-                isProductPage ? "bg-secondary text-foreground" : "text-muted-foreground"
-              )}
-            >
-              Products
-              <ChevronRight
-                className={cn(
-                  "h-4 w-4 transition-transform",
-                  mobileProductsOpen && "rotate-90"
-                )}
-              />
-            </button>
-            {mobileProductsOpen && (
-              <div className="ml-3 flex flex-col gap-3 border-l border-border pl-3">
-                {productCategories.map((category) => (
-                  <div key={category.label}>
-                    <p className="mb-1.5 px-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                      {category.label}
-                    </p>
-                    {category.items.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={() => setMobileOpen(false)}
-                        className={cn(
-                          "block rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-secondary",
-                          pathname === item.href
-                            ? "font-medium text-foreground"
-                            : "text-muted-foreground"
-                        )}
-                      >
-                        {item.label}
-                      </Link>
+            {hasProducts && (
+              <>
+                <button
+                  onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-secondary",
+                    isProductPage ? "bg-secondary text-foreground" : "text-muted-foreground"
+                  )}
+                >
+                  Products
+                  <ChevronRight
+                    className={cn(
+                      "h-4 w-4 transition-transform",
+                      mobileProductsOpen && "rotate-90"
+                    )}
+                  />
+                </button>
+                {mobileProductsOpen && (
+                  <div className="ml-3 flex flex-col gap-3 border-l border-border pl-3">
+                    {productCategories.map((category) => (
+                      <div key={category.label}>
+                        <p className="mb-1.5 px-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                          {category.label}
+                        </p>
+                        {category.items.map((item) => (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            onClick={() => setMobileOpen(false)}
+                            className={cn(
+                              "block rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-secondary",
+                              pathname === item.href
+                                ? "font-medium text-foreground"
+                                : "text-muted-foreground"
+                            )}
+                          >
+                            {item.label}
+                          </Link>
+                        ))}
+                      </div>
                     ))}
                   </div>
-                ))}
-              </div>
+                )}
+              </>
             )}
 
             {/* Other links */}

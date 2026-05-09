@@ -1,6 +1,5 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, MessageSquare, PenTool, Factory, PackageCheck } from "lucide-react"
+import { MessageSquare, PenTool, Factory, PackageCheck } from "lucide-react"
+import { QuoteCtaButton } from "@/components/quote-cta-button"
 
 const steps = [
   {
@@ -70,12 +69,9 @@ export function ProcessSection() {
         </div>
 
         <div className="mt-14 text-center">
-          <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-            <Link href="/contact">
-              Start Your Project
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
+          <QuoteCtaButton href="/#quote" className="bg-accent text-accent-foreground hover:bg-accent/90">
+            Start Your Project
+          </QuoteCtaButton>
         </div>
       </div>
     </section>
