@@ -105,13 +105,14 @@ export default async function HomePage() {
     sanityProducts = []
   }
 
-  // Fetch site settings (portfolio items live here).
+  // Fetch site settings (portfolio items live here). Short revalidate so
+  // newly-added portfolio images surface quickly after editors update Sanity.
   let siteSettings: SanitySiteSettingsForHome = null
   try {
     siteSettings = await client.fetch<SanitySiteSettingsForHome>(
       siteSettingsQuery,
       {},
-      { next: { revalidate: 3600 } }
+      { next: { revalidate: 60 } }
     )
   } catch {
     siteSettings = null

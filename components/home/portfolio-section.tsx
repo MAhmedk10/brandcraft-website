@@ -34,13 +34,38 @@ const CATEGORY_LABELS: Record<string, string> = {
   design: "Design Services",
 }
 
-/** Split items into pages (one bento grid per page). */
-function chunk<T>(arr: T[], size: number): T[][] {
-  const chunks: T[][] = []
+/**
+ * Each grid cell carries its source index so the lightbox always opens at
+ * the correct original image — even when a cell is a "looped" copy used
+ * to pad out a partial last slide.
+ */
+type PortfolioCell = { item: PortfolioItem; sourceIndex: number }
+
+/**
+ * Split items into pages of `size` cells. If the final page would be
+ * partial AND we have more than one page total, pad it by looping back
+ * to the start of the list so every slide renders the same bento layout
+ * (and the user never sees an inconsistent half-empty last slide).
+ */
+function buildPages(arr: PortfolioItem[], size: number): PortfolioCell[][] {
+  if (arr.length === 0) return [[]]
+  const pages: PortfolioCell[][] = []
   for (let i = 0; i < arr.length; i += size) {
-    chunks.push(arr.slice(i, i + size))
+    const page: PortfolioCell[] = []
+    for (let j = 0; j < size; j++) {
+      const idx = i + j
+      if (idx < arr.length) {
+        page.push({ item: arr[idx], sourceIndex: idx })
+      } else if (arr.length > size) {
+        // Loop padding — only when paginating (avoid duplicating items
+        // when the entire collection fits on a single slide).
+        const padIdx = (idx - arr.length) % arr.length
+        page.push({ item: arr[padIdx], sourceIndex: padIdx })
+      }
+    }
+    pages.push(page)
   }
-  return chunks
+  return pages
 }
 
 function PortfolioCard({
@@ -104,31 +129,35 @@ function PlaceholderCard({ positionClass }: { positionClass: string }) {
 }
 
 /**
- * Renders one bento grid slide. Always renders ITEMS_PER_SLIDE cells —
- * fills any shortfall with placeholder cards so layout never breaks.
+ * Renders one bento grid slide. Pages from `buildPages` are pre-padded so
+ * every slide either has ITEMS_PER_SLIDE cells (paginated case) or fewer
+ * (when the entire collection fits on a single slide).
  */
 function PortfolioSlide({
-  pageItems,
-  baseIndex,
+  cells,
+  pageIndex,
   onItemClick,
 }: {
-  pageItems: PortfolioItem[]
-  baseIndex: number
-  onItemClick: (globalIndex: number) => void
+  cells: PortfolioCell[]
+  pageIndex: number
+  onItemClick: (sourceIndex: number) => void
 }) {
-  // Pad to exactly ITEMS_PER_SLIDE cells.
-  const cells = Array.from({ length: ITEMS_PER_SLIDE }, (_, i) => pageItems[i])
+  // Pad to ITEMS_PER_SLIDE so the grid template always allocates space
+  // consistently (slot may be undefined when the whole collection fits
+  // on a single slide).
+  const slots = Array.from(
+    { length: ITEMS_PER_SLIDE },
+    (_, i) => cells[i]
+  )
 
-  // A "full" slide has all cells filled. On mobile we only span item 0
-  // across both columns when the slide is full — that turns 5 items into
-  // 1 wide row + 2 square rows with NO empty bottom-right corner. Partial
-  // slides (e.g. last page with 2 items) just stack normally so we never
-  // leave a half-empty row.
-  const isFullSlide = pageItems.length === ITEMS_PER_SLIDE
+  // When the entire list fits in a single slide we may have fewer than
+  // ITEMS_PER_SLIDE cells — fall back to the simple square layout in
+  // that case so we don't render a wide hero on top of nothing.
+  const isFullSlide = cells.length === ITEMS_PER_SLIDE
 
   return (
     <div className="grid grid-cols-2 gap-3 md:h-[460px] md:grid-cols-3 md:grid-rows-2">
-      {cells.map((item, i) => {
+      {slots.map((cell, i) => {
         // Mobile: item 0 is wide on full slides, otherwise every cell is
         // a 1×1 square. Desktop: item 0 always spans 2 cols.
         const mobileSpan =
@@ -137,20 +166,21 @@ function PortfolioSlide({
           i === 0 ? "md:col-span-2" : "md:col-span-1"
         }`
 
-        // Square aspect on mobile so each card has explicit height for the
-        // <Image fill /> children to render. Item 0 when wide on mobile
-        // gets a 2:1 ratio so it doesn't tower over the rest. Desktop gets
-        // its size from the fixed grid container height.
+        // Square aspect on mobile so each card has explicit height for
+        // the <Image fill /> children to render. Item 0 when wide on
+        // mobile gets a 2:1 ratio. Desktop gets its size from the fixed
+        // grid container height.
         const mobileAspect =
           i === 0 && isFullSlide ? "aspect-[2/1]" : "aspect-square"
         const sizingClass = `${mobileAspect} md:aspect-auto md:h-full`
 
-        if (!item) {
+        if (!cell) {
           // Hide empty placeholders on mobile entirely so partial slides
-          // (e.g. last page with fewer items) don't show muted gaps.
+          // (e.g. when the whole collection fits on a single slide) don't
+          // show muted gaps.
           return (
             <div
-              key={`ph-${i}`}
+              key={`ph-${pageIndex}-${i}`}
               className={`hidden ${posClass} ${sizingClass} rounded-lg bg-muted md:block`}
               aria-hidden="true"
             />
@@ -158,10 +188,10 @@ function PortfolioSlide({
         }
         return (
           <PortfolioCard
-            key={`item-${baseIndex + i}`}
-            item={item}
+            key={`item-${pageIndex}-${i}`}
+            item={cell.item}
             positionClass={`${posClass} ${sizingClass}`}
-            onClick={() => onItemClick(baseIndex + i)}
+            onClick={() => onItemClick(cell.sourceIndex)}
           />
         )
       })}
@@ -174,7 +204,9 @@ export function PortfolioSection({ items }: PortfolioSectionProps) {
   const hasItems = sourceItems.length > 0
 
   // For the empty state we still show a single bento page of placeholders.
-  const pages = hasItems ? chunk(sourceItems, ITEMS_PER_SLIDE) : [[]]
+  const pages = hasItems
+    ? buildPages(sourceItems, ITEMS_PER_SLIDE)
+    : [[] as PortfolioCell[]]
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: pages.length > 1,
@@ -232,8 +264,8 @@ export function PortfolioSection({ items }: PortfolioSectionProps) {
                   className="min-w-0 flex-[0_0_100%]"
                 >
                   <PortfolioSlide
-                    pageItems={page}
-                    baseIndex={pageIdx * ITEMS_PER_SLIDE}
+                    cells={page}
+                    pageIndex={pageIdx}
                     onItemClick={openLightboxAt}
                   />
                 </div>
