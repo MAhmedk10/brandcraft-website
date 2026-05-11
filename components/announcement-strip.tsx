@@ -43,7 +43,7 @@ export function AnnouncementStrip({ items, enabled }: AnnouncementStripProps) {
     <div
       role="region"
       aria-label="Site announcements"
-      className="relative flex w-full items-center bg-accent text-accent-foreground md:h-10"
+      className="relative flex w-full items-center bg-black text-accent-foreground md:h-10"
     >
       {/* Mobile: continuous marquee so users can see every item as it scrolls
           past. The list is duplicated to create a seamless loop. */}
